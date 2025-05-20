@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация API</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение пользовательских стилей -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Mobile Navbar (появляется только на маленьких экранах) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mobile-navbar d-lg-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">API Документация</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"
+                aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mobileMenu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="api-acquiring-dropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            API Интернет-Эквайринга
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="api-acquiring-dropdown">
+                            <li><a class="dropdown-item" href="#acquiring-overview">Общее описание</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-signature">Алгоритм вычисления поля
+                                    signature</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-signature-examples">Примеры расчёта signature
+                                    на разных языках</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-payment-request">Формирование запроса на
+                                    оплату</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-hold">Холдирование (двухстадийный платёж)</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#acquiring-recurring">Рекуррентные платежи</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-invoice-link">Создание счёт-ссылки</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-sbp-qrcode">СБП: Получение QR-кода или ссылки
+                                    напрямую</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-notifications">Уведомления о транзакциях</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#acquiring-transactions-list">Получение списка
+                                    транзакций</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-transaction-info">Получение информации о
+                                    транзакции</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-full-refund">Формирование запроса на полную
+                                    отмену платежа</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-partial-refund">Формирование запроса на
+                                    частичную отмену платежа</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-fz54">54-ФЗ: Отправка чеков</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="api-payouts-dropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            API Массовые Выплаты
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="api-payouts-dropdown">
+                            <li><a class="dropdown-item" href="#payouts-general-info">1_Общая информация</a></li>
+                            <li><a class="dropdown-item" href="#payouts-account">2_Работа со счётом</a></li>
+                            <li><a class="dropdown-item" href="#payouts-card">3_Работа с картой</a></li>
+                            <li><a class="dropdown-item" href="#payouts-card-payment">4_Выплаты по номеру карты</a></li>
+                            <li><a class="dropdown-item" href="#payouts-sbp">5_Выплаты по номеру телефона (СБП: B2C)</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Search Bar -->
+    <div class="search-bar-container d-flex align-items-center justify-content-end p-3">
+        <input type="text" id="searchInput" class="form-control search-bar me-2" placeholder="Поиск...">
+        <div class="search-results dropdown-menu p-0" style="display: none; max-height: 150px; overflow-y: auto;">
+            <!-- Результаты поиска будут динамически добавляться сюда -->
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <br>
+    <br>
+    <br>
+    <div class="sidebar d-none d-lg-block">
+        <h5 class="mt-4 mb-2 text-white">API Интернет-Эквайринга</h5>
+        <ul>
+            <li><a href="#acquiring-overview">Общее описание</a></li>
+            <li><a href="#acquiring-signature">Алгоритм вычисления поля signature</a></li>
+            <li><a href="#acquiring-signature-examples">Примеры расчёта signature на разных языках</a></li>
+            <li><a href="#acquiring-payment-request">Формирование запроса на оплату</a></li>
+            <li><a href="#acquiring-hold">Холдирование (двухстадийный платёж)</a></li>
+            <li><a href="#acquiring-recurring">Рекуррентные платежи</a></li>
+            <li><a href="#acquiring-invoice-link">Создание счёт-ссылки</a></li>
+            <li><a href="#acquiring-sbp-qrcode">СБП: Получение QR-кода или ссылки напрямую</a></li>
+            <li><a href="#acquiring-notifications">Уведомления о транзакциях</a></li>
+            <li><a href="#acquiring-transactions-list">Получение списка транзакций</a></li>
+            <li><a href="#acquiring-transaction-info">Получение информации о транзакции</a></li>
+            <li><a href="#acquiring-full-refund">Формирование запроса на полную отмену платежа</a></li>
+            <li><a href="#acquiring-partial-refund">Формирование запроса на частичную отмену платежа</a></li>
+            <li><a href="#acquiring-fz54">54-ФЗ: Отправка чеков</a></li>
+        </ul>
+
+        <h5 class="mt-4 mb-2 text-white">API Массовые Выплаты</h5>
+        <ul>
+            <li><a href="#payouts-general-info">1_Общая информация</a></li>
+            <li><a href="#payouts-account">2_Работа со счётом</a></li>
+            <li><a href="#payouts-card">3_Работа с картой</a></li>
+            <li><a href="#payouts-card-payment">4_Выплаты по номеру карты</a></li>
+            <li><a href="#payouts-sbp">5_Выплаты по номеру телефона (СБП: B2C)</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1 class="mt-5">Документация API</h1>
+        <hr>
+
+        <!-- API Интернет-Эквайринга -->
+        <section id="api-acquiring">
+            <h2>API Интернет-Эквайринга</h2>
+
+            <!-- Общее описание -->
+            <article id="acquiring-overview">
+                <h3>Общее описание</h3>
+                <p>API Интернет-Эквайринга позволяет обрабатывать онлайн-платежи через различные каналы.</p>
+            </article>
+
+            <!-- Алгоритм вычисления поля signature -->
+            <article id="acquiring-signature">
+                <h3>Алгоритм вычисления поля signature</h3>
+                <p>Для обеспечения безопасности используется подпись запроса:</p>
+                <pre><code>signature = HMAC-SHA256(secret_key, string_to_sign)</code></pre>
+            </article>
+
+            <!-- Калькулятор signature -->
+            <article id="acquiring-signature-calculator">
+                <h3>Калькулятор signature</h3>
+                <p>Для просмотра примера расчёта:</p>
+                <!-- Поле secret_key расположено вне формы -->
+                <div class="form-group">
+                    <label for="secret_key">Secret Key:</label>
+                    <input type="text" id="secret_key" required>
+                </div>
+
+                <form id="payment-form" action="https://pay.modulbank.ru/pay" method="POST"
+                    onsubmit="return validateForm()" target="_blank">
+                    <!-- Обязательные поля -->
+                    <div class="form-group">
+                        <label for="merchant">Merchant ID:</label>
+                        <input type="text" id="merchant" name="merchant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="text" id="amount" name="amount" pattern="\d*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="order_id">Order ID:</label>
+                        <input type="text" id="order_id" name="order_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="success_url">Success URL:</label>
+                        <input type="text" id="success_url" name="success_url" required
+                            value="https://pay.modulbank.ru/success">
+                    </div>
+                    <div class="form-group">
+                        <label for="unix_timestamp">Unix Timestamp:</label>
+                        <input type="text" id="unix_timestamp" name="unix_timestamp" pattern="\d*" required>
+                    </div>
+                    <!-- Кнопка и выпадающий список для добавления дополнительных полей -->
+                    <div class="field-adder">
+                        <select id="field-selector">
+                            <option value="">--Select Additional Field--</option>
+                            <option value="custom_order_id">Custom Order ID</option>
+                            <option value="testing">Testing</option>
+                            <option value="callback_url">Callback URL</option>
+                            <option value="client_phone">Client Phone</option>
+                            <option value="client_name">Client Name</option>
+                            <option value="client_email">Client Email</option>
+                            <option value="client_id">Client ID</option>
+                            <option value="receipt_contact">Receipt Contact</option>
+                            <option value="receipt_items">Receipt Items</option>
+                            <option value="lifetime">Lifetime</option>
+                            <option value="timeout_url">Timeout URL</option>
+                            <option value="start_recurrent">Start Recurrent</option>
+                            <option value="preauth">Preauth</option>
+                            <option value="show_payment_methods">Show Payment Methods</option>
+                        </select>
+                        <button type="button" id="add-field-btn">Добавить поле</button>
+                    </div>
+
+                    <!-- Дополнительные поля будут добавляться здесь -->
+                    <div id="optional-fields-container"></div>
+
+                    <!-- Кнопка для расчета подписи -->
+                    <button type="button" id="calculate-signature-btn">Calculate Signature</button>
+
+                    <!-- Кнопка отправки формы -->
+                    <button type="submit">Submit Payment</button>
+                </form>
+                <p id="result"></p>
+            </article>
+            <!-- Примеры расчёта signature на разных языках -->
+            <article id="acquiring-signature-examples">
+                <h3>Примеры расчёта signature на разных языках</h3>
+                <article>
+                    <h4>Python</h4>
+                    <pre><code>
+import hmac
+import hashlib
+
+secret_key = b'your_secret_key'
+string_to_sign = 'example_string'
+
+signature = hmac.new(secret_key, string_to_sign.encode('utf-8'), hashlib.sha256).hexdigest()
+print(signature)
+                    </code></pre>
+                </article>
+                <article>
+                    <h4>PHP</h4>
+                    <pre><code>
+$secret_key = 'your_secret_key';
+$string_to_sign = 'example_string';
+
+$signature = hash_hmac('sha256', $string_to_sign, $secret_key);
+echo $signature;
+                    </code></pre>
+                </article>
+            </article>
+            <!-- Формирование запроса на оплату -->
+            <article id="acquiring-payment-request">
+                <h3>Формирование запроса на оплату</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Создайте запрос для инициации платежа.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /payments/initiate</code></p>
+                </article>
+                <article>
+                    <h4>Параметры</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип</th>
+                                    <th>Описание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>amount</code></td>
+                                    <td><code>number</code></td>
+                                    <td>Сумма платежа</td>
+                                </tr>
+                                <tr>
+                                    <td><code>currency</code></td>
+                                    <td><code>string</code></td>
+                                    <td>Валюта платежа</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+                <article>
+                    <h4>Ответ</h4>
+                    <pre><code>{
+    "payment_id": "12345",
+    "status": "pending"
+}</code></pre>
+                </article>
+            </article>
+            <!-- Холдирование (двухстадийный платёж) -->
+            <article id="acquiring-hold">
+                <h3>Холдирование (двухстадийный платёж)</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Используйте холдирование для двухстадийных платежей.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /payments/hold</code></p>
+                </article>
+                <article>
+                    <h4>Параметры</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип</th>
+                                    <th>Описание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>amount</code></td>
+                                    <td><code>number</code></td>
+                                    <td>Сумма платежа</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </article>
+            <!-- Рекуррентные платежи -->
+            <article id="acquiring-recurring">
+                <h3>Рекуррентные платежи</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Настройте периодические платежи.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /payments/recurring</code></p>
+                </article>
+            </article>
+            <!-- Создание счёт-ссылки -->
+            <article id="acquiring-invoice-link">
+                <h3>Создание счёт-ссылки</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Создайте ссылку для оплаты счета.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /invoices/create</code></p>
+                </article>
+                <article>
+                    <h4>Пример запроса</h4>
+                    <pre><code>{
+    "amount": 100.00,
+    "currency": "USD",
+    "description": "Invoice Payment"
+}</code></pre>
+                </article>
+            </article>
+            <!-- СБП: Получение QR-кода или ссылки напрямую -->
+            <article id="acquiring-sbp-qrcode">
+                <h3>СБП: Получение QR-кода или ссылки напрямую</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Получите QR-код или ссылку для оплаты через СБП.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /sbp/qrcode</code></p>
+                </article>
+            </article>
+            <!-- Уведомления о транзакциях -->
+            <article id="acquiring-notifications">
+                <h3>Уведомления о транзакциях</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Настройте уведомления о статусе транзакций.</p>
+                </article>
+            </article>
+            <!-- Получение списка транзакций -->
+            <article id="acquiring-transactions-list">
+                <h3>Получение списка транзакций</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Получите список всех транзакций.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>GET /transactions/list</code></p>
+                </article>
+            </article>
+            <!-- Получение информации о транзакции -->
+            <article id="acquiring-transaction-info">
+                <h3>Получение информации о транзакции</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Получите детальную информацию о конкретной транзакции.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>GET /transactions/{transaction_id}</code></p>
+                </article>
+            </article>
+            <!-- Формирование запроса на полную отмену платежа -->
+            <article id="acquiring-full-refund">
+                <h3>Формирование запроса на полную отмену платежа</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Отмените платеж целиком.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /payments/refund/full</code></p>
+                </article>
+            </article>
+            <!-- Формирование запроса на частичную отмену платежа -->
+            <article id="acquiring-partial-refund">
+                <h3>Формирование запроса на частичную отмену платежа</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Отмените часть платежа.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /payments/refund/partial</code></p>
+                </article>
+            </article>
+            <!-- 54-ФЗ: Отправка чеков -->
+            <article id="acquiring-fz54">
+                <h3>54-ФЗ: Отправка чеков</h3>
+                <article>
+                    <h4>Описание</h4>
+                    <p>Отправляйте чеки в соответствии с законом 54-ФЗ.</p>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /fiscal/receipt</code></p>
+                </article>
+            </article>
+        </section>
+        <!-- API Массовые Выплаты -->
+        <section id="api-payouts">
+            <h2>API Массовые Выплаты</h2>
+            <!-- 1_Общая информация -->
+            <article id="payouts-general-info">
+                <h3>1_Общая информация</h3>
+                <article>
+                    <h4>Базовый адрес</h4>
+                    <p>Базовый URL для всех запросов: <code>https://api.example.com/payouts</code>.</p>
+                </article>
+                <article>
+                    <h4>Получение токена для авторизации запросов</h4>
+                    <p>Для получения токена используйте следующий эндпоинт:</p>
+                    <pre><code>POST /auth/token</code></pre>
+                </article>
+                <article>
+                    <h4>Авторизация запросов</h4>
+                    <p>Добавьте полученный токен в заголовок запроса:</p>
+                    <pre><code>Authorization: Bearer YOUR_ACCESS_TOKEN</code></pre>
+                </article>
+            </article>
+            <!-- 2_Работа со счётом -->
+            <article id="payouts-account">
+                <h3>2_Работа со счётом</h3>
+                <!-- 2.1_Получение данных о счёте по фильтру -->
+                <article id="payouts-account-filter">
+                    <h4>2.1_Получение данных о счёте по фильтру</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Получите данные о счёте, применив фильтр.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>account_id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>ID счёта</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "account": {
+        "id": "12345",
+        "balance": 10000.00,
+        "currency": "USD"
+    }
+}</code></pre>
+                    </article>
+                    <article>
+                        <h5>Расшифровка статусов счёта</h5>
+                        <ul class="no-bullets">
+                            <li><code>active</code>: Активный счёт</li>
+                            <li><code>frozen</code>: Заблокированный счёт</li>
+                        </ul>
+                    </article>
+                </article>
+                <!-- 2.2_Получение данных по ID расчётного счёта -->
+                <article id="payouts-account-id">
+                    <h4>2.2_Получение данных по ID расчётного счёта</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Получите детальную информацию о конкретном счёте.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>account_id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>ID счёта</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "account": {
+        "id": "12345",
+        "balance": 10000.00,
+        "currency": "USD"
+    }
+}</code></pre>
+                    </article>
+                </article>
+            </article>
+            <!-- 3_Работа с картой -->
+            <article id="payouts-card">
+                <h3>3_Работа с картой</h3>
+                <!-- 3.1_Присвоение токена для карты -->
+                <article id="payouts-card-token">
+                    <h4>3.1_Присвоение токена для карты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Присвойте токен для работы с картой.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>card_number</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Номер карты</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Запрос</h5>
+                        <pre><code>POST /cards/token</code></pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "token": "abc123"
+}</code></pre>
+                    </article>
+                </article>
+                <!-- 3.2_Запрос формы для токенизации карты -->
+                <article id="payouts-card-form">
+                    <h4>3.2_Запрос формы для токенизации карты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Получите форму для ввода данных карты.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>redirect_url</code></td>
+                                        <td><code>string</code></td>
+                                        <td>URL для перенаправления после сохранения карты</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <pre><code>GET /cards/form?redirect_url=https://example.com/success</code></pre>
+                    </article>
+                </article>
+                <!-- 3.3_Проверка статуса сохранения номера карты -->
+                <article id="payouts-card-status">
+                    <h4>3.3_Проверка статуса сохранения номера карты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Проверьте статус сохранения карты.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>session_id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>ID сессии</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "status": "completed",
+    "card_token": "xyz789"
+}</code></pre>
+                    </article>
+                </article>
+            </article>
+            <!-- 4_Выплаты по номеру карты -->
+            <article id="payouts-card-payment">
+                <h3>4_Выплаты по номеру карты</h3>
+                <!-- 4.1_Запрос выплаты на карту -->
+                <article id="payouts-card-request">
+                    <h4>4.1_Запрос выплаты на карту</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Создайте выплату на карту.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>card_token</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Токен карты</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>amount</code></td>
+                                        <td><code>number</code></td>
+                                        <td>Сумма выплаты</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <pre><code>POST /payouts/card</code></pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "payout_id": "payout123",
+    "status": "pending"
+}</code></pre>
+                    </article>
+                </article>
+
+                <!-- 4.2_Получение статуса выплаты -->
+                <article id="payouts-card-status-check">
+                    <h4>4.2_Получение статуса выплаты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Получите текущий статус выплаты.</p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>payout_id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>ID выплаты</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "status": "completed"
+}</code></pre>
+                    </article>
+                </article>
+                <!-- 4.3_Получение списка выплат -->
+                <article id="payouts-card-list">
+                    <h4>4.3_Получение списка выплат</h4>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>date_from</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Дата начала периода</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>[
+    {
+        "payout_id": "payout123",
+        "amount": 1000.00,
+        "status": "completed"
+    }
+]</code></pre>
+                    </article>
+                </article>
+                <!-- 4.4_Коды ошибок -->
+                <article id="payouts-card-errors">
+                    <h4>4.4_Коды ошибок</h4>
+                    <ul class="no-bullets">
+                        <li><code>401 Unauthorized</code>: Неверный токен</li>
+                        <li><code>404 Not Found</code>: Счёт не найден</li>
+                    </ul>
+                </article>
+            </article>
+            <!-- 5_Выплаты по номеру телефона (СБП: B2C) -->
+            <article id="payouts-sbp">
+                <h3>5_Выплаты по номеру телефона (СБП: B2C)</h3>
+                <!-- 5.1_Регистрация ЮЛ в СБП -->
+                <article id="payouts-sbp-register">
+                    <h4>5.1_Регистрация ЮЛ в СБП</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Зарегистрируйте юридическое лицо в СБП.</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code>POST /sbp/register</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>company_name</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Название компании</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <pre><code>POST /sbp/register</code></pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+    "registration_id": "reg123",
+    "status": "pending"
+}</code></pre>
+                    </article>
+                </article>
+            </article>
+        </section>
+        <!-- Подключение Bootstrap JS и Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script_calculator.js"></script>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
