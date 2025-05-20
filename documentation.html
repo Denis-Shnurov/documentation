@@ -1,1 +1,3229 @@
-<!-- Generate API documentation using Protocol template from Tailwind CSS -->
+e
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация API</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение пользовательских стилей -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Mobile Navbar (появляется только на маленьких экранах) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mobile-navbar d-lg-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">API Документация</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"
+                aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mobileMenu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="api-acquiring-dropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            API Интернет-Эквайринга
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="api-acquiring-dropdown">
+                            <li><a class="dropdown-item" href="#acquiring-overview">Общее описание</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-signature">Алгоритм вычисления поля
+                                    signature</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-signature-examples">Примеры расчёта signature
+                                    на разных языках</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-payment-request">Формирование запроса на
+                                    оплату</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-hold">Холдирование (двухстадийный платёж)</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#acquiring-recurring">Рекуррентные платежи</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-invoice-link">Создание счёт-ссылки</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-sbp-qrcode">СБП: Получение QR-кода или ссылки
+                                    напрямую</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-notifications">Уведомления о транзакциях</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#acquiring-transactions-list">Получение списка
+                                    транзакций</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-transaction-info">Получение информации о
+                                    транзакции</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-full-refund">Формирование запроса на полную
+                                    отмену платежа</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-partial-refund">Формирование запроса на
+                                    частичную отмену платежа</a></li>
+                            <li><a class="dropdown-item" href="#acquiring-fz54">54-ФЗ: Отправка чеков</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="api-payouts-dropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            API Массовые Выплаты
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="api-payouts-dropdown">
+                            <li><a class="dropdown-item" href="#payouts-general-info">Общая информация</a></li>
+                            <li><a class="dropdown-item" href="#payouts-account">Работа со счётом</a></li>
+                            <li><a class="dropdown-item" href="#payouts-card">Работа с картой</a></li>
+                            <li><a class="dropdown-item" href="#payouts-card-payment">Выплаты по номеру карты</a></li>
+                            <li><a class="dropdown-item" href="#payouts-sbp">Выплаты по номеру телефона (СБП: B2C)</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Search Bar -->
+    <div class="search-bar-container d-flex align-items-center justify-content-end p-3">
+        <input type="text" id="searchInput" class="form-control search-bar me-2" placeholder="Поиск...">
+        <div class="search-results dropdown-menu p-0" style="display: none; max-height: 150px; overflow-y: auto;">
+            <!-- Результаты поиска будут динамически добавляться сюда -->
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <br>
+    <br>
+    <br>
+    <div class="sidebar d-none d-lg-block">
+        <h5 class="mt-4 mb-2 text-white">API Интернет-Эквайринга</h5>
+        <ul>
+            <li><a href="#acquiring-overview">Общее описание</a></li>
+            <li><a href="#acquiring-signature">Алгоритм вычисления поля signature</a></li>
+            <li><a href="#acquiring-signature-examples">Примеры расчёта signature на разных языках</a></li>
+            <li><a href="#acquiring-payment-request">Формирование запроса на оплату</a></li>
+            <li><a href="#acquiring-hold">Холдирование (двухстадийный платёж)</a></li>
+            <li><a href="#acquiring-recurring">Рекуррентные платежи</a></li>
+            <li><a href="#acquiring-invoice-link">Создание счёт-ссылки</a></li>
+            <li><a href="#acquiring-sbp-qrcode">СБП: Получение QR-кода или ссылки напрямую</a></li>
+            <li><a href="#acquiring-notifications">Уведомления о транзакциях</a></li>
+            <li><a href="#acquiring-transactions-list">Получение списка транзакций</a></li>
+            <li><a href="#acquiring-transaction-info">Получение информации о транзакции</a></li>
+            <li><a href="#acquiring-full-refund">Формирование запроса на полную отмену платежа</a></li>
+            <li><a href="#acquiring-partial-refund">Формирование запроса на частичную отмену платежа</a></li>
+            <li><a href="#acquiring-fz54">54-ФЗ: Отправка чеков</a></li>
+        </ul>
+
+        <h5 class="mt-4 mb-2 text-white">API Массовые Выплаты</h5>
+        <ul>
+            <li><a href="#payouts-general-info">Общая информация</a></li>
+            <li><a href="#payouts-account">Работа со счётом</a></li>
+            <li><a href="#payouts-card">Работа с картой</a></li>
+            <li><a href="#payouts-card-payment">Выплаты по номеру карты</a></li>
+            <li><a href="#payouts-sbp">Выплаты по номеру телефона (СБП: B2C)</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+
+    </div>
+    <div class="main-content">
+        <h1 class="mt-5">Документация API</h1>
+        <hr>
+
+        <!-- API Интернет-Эквайринга -->
+        <section id="api-acquiring">
+            <h2>API Интернет-Эквайринга</h2>
+
+            <!-- Общее описание -->
+            <article id="acquiring-overview">
+                <h3>Общее описание</h3>
+                <p>Эта документация предназначена для настройки онлайн оплаты в самостоятельно разработанной системе или
+                    интеграции с платформой управления сайтом, для которой нет готового решения. </p>
+                <p> Доступные методы для интеграции </p>
+                <p> Настройте необходимый функционал для решения бизнес потребностей </p>
+                <ul>
+                    <li><b>Одностадийный платёж</b><br>
+                        Классический онлайн-платёж, который позволяет принимать оплату сразу после формирования заказа
+                    </li>
+                    <li><b>Холдирование</b><br>С помощью этого способа вы сможете зарезервировать необходимую сумму на
+                        карте плательщика, а после согласования заказа подтвердить списание полной или частичной суммы
+                    </li>
+                    <li><b>Рекуррентный платёж</b><br>Этот метод позволяет отправлять периодические запросы на списание
+                        с сохранённой карты клиента без повторного подтверждения. Как правило используется для
+                        реализации подписной модели</li>
+                    <li><b>Формирование счёт-ссылки</b><br>Плательщику можно отправить письмо на электронную почту, в
+                        которой будет ссылка для удобной оплаты в любой момент</li>
+                    <li><b>Формирование запроса на полную или частичную отмену платежа</b><br>В случае отказа от части
+                        или всего заказа вы можете отменить необходимую сумму</li>
+                    <li><b>Получение информации о транзакциях</b><br>Получение списка операций и их актуальных статусов.
+                        Можно использовать для сверки статуса во внешней системе</li>
+                </ul>
+                <ul>
+                    <b>Общий порядок взаимодействия </b><br>
+                    <li> В зависимости от особенностей оформления заказа сервис партнера формирует запрос для
+                        направления плательщика на платежную страницу с помощью POST-запроса, в котором передаются:<br>
+                        <ul>
+                            <li> Данные о платеже<br></li>
+                            <li> ID партнёра<br></li>
+                            <li> URL для возврата пользователя<br></li>
+                            <li> Криптографическая подпись (signature)<br></li>
+                            <ul>
+                                <li>Важно: Для расчёта используется «Идентификатор магазина» + «Рабочий секретный ключ»
+                                    ИЛИ «Тестовый секретный ключ». Для получения данных воспользуйтесь инструкцией</li>
+                            </ul>
+                        </ul>
+                    </li>
+                    <li>Пользователь заполняет платёжные данные на странице, проходит 3-DS аутентификацию (при
+                        необходимости), и завершает платеж</li>
+                    <li>Пользователь перенаправляется по адресу, указанному в п.1</li>
+                    <li>Интернет-эквайринг уведомляет партнёра о совершении транзакции (по электронной почте, с помощью
+                        callback-запроса - в зависимости от настроек)</li>
+                </ul>
+            </article>
+
+            <!-- Алгоритм вычисления поля signature -->
+            <article id="acquiring-signature">
+                <h3>Алгоритм вычисления поля signature</h3>
+                <p>В каждом запросе со стороны вашего сервиса обязательно передаётся поле signature с уникальным
+                    значением. Значение этого поля используется для проверки целостности сообщения и аутентификации
+                    запроса.
+
+                    Для формирования потребуется секретный ключ, который выдается в личном кабинете банка. В тестовом
+                    режиме используйте тестовый секретный ключ. При выполнении любого запроса значение поля формируется
+                    на стороне вашего ресурса на основе тех полей, которые будут отправлены в API.
+
+                    На стороне эквайринга сигнатура формируется аналогичным образом на основе полей, полученных от
+                    внешнего источника, значения для параметра "testing" и вашего секретного ключа. Так, сигнатура,
+                    пришедшая в форме от магазина, и сигнатура, высчитанная на стороне интернет-эквайринга, должны
+                    оказаться одинаковыми, иначе сервис выдаст ошибку.
+
+                    Удостоверьтесь, что все поля, передаваемые в html-форме, участвуют в расчете сигнатуры. Первым шагом
+                    при вычислении поля signature является формирование строки, которая содержит все значения не пустых
+                    полей, передаваемые в запросе. Эта строка имеет вид «field1=value1&field2=value2», в которой поля
+                    (строчными буквами) и их значения перечислены в алфавитном порядке, а значения закодированы с
+                    помощью алгоритма base64.
+
+                    Затем от этой строки необходимо вычислить подпись с помощью хеш-функции SHA1, следующим образом:
+                    «SHA1(secret_key + SHA1(secret_key + values)».
+                </p>
+                <p><b>Пример вычисления поля signature.</b></p>
+                <ul>
+                    <li>Первое действие</li>
+
+                    <p>Рассмотрим вычисление поля signature на примере следующего запроса:</p>
+                    <table>
+                        <tr>
+                            <td>
+                                <p><b>Название</b></p>
+                            </td>
+                            <td>
+                                <p><b>Описание</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>merchant</td>
+                            <td>ad25ef06-1824-413f-8ef1-c08115b9b979</td>
+                        </tr>
+                        <tr>
+                            <td>amount</td>
+                            <td>973</td>
+                        </tr>
+                        <tr>
+                            <td>order_id</td>
+                            <td>14425840</td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td>Заказ №14425840</td>
+                        </tr>
+                        <tr>
+                            <td>success_url</td>
+                            <td>http://myawesomesite.com/payment_success</td>
+                        </tr>
+                        <tr>
+                            <td>unix_timestamp</td>
+                            <td>1573451160</td>
+                        </tr>
+                        <tr>
+                            <td>salt</td>
+                            <td>dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI</td>
+                        </tr>
+                        <tr>
+                            <td>testing</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>client_phone</td>
+                            <td>+7 912 9876543</td>
+                        </tr>
+                        <tr>
+                            <td>client_email</td>
+                            <td>test@test.ru</td>
+                        </tr>
+                        <tr>
+                            <td>receipt_contact</td>
+                            <td>test@mail.com</td>
+                        </tr>
+                        <tr>
+                            <td>receipt_items</td>
+                            <td>[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment",
+                                "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat":
+                                "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object":
+                                "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]</td>
+                        </tr>
+                        <tr>
+                            <td>callback_url</td>
+                            <td>(пусто)</td>
+                        </tr>
+                    </table>
+                    <li>Второе действие</li>
+                    <table>
+                        <tr>
+                            <td>merchant</td>
+                            <td>YWQyNWVmMDYtMTgyNC00MTNmLThlZjEtYzA4MTE1YjliOTc5</td>
+                        </tr>
+                        <tr>
+                            <td>amount</td>
+                            <td>OTcz</td>
+                        </tr>
+                        <tr>
+                            <td>order_id</td>
+                            <td>MTQ0MjU4NDA=</td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td>0JfQsNC60LDQtyDihJYxNDQyNTg0MA==</td>
+                        </tr>
+                        <tr>
+                            <td>success_url</td>
+                            <td>aHR0cDovL215YXdlc29tZXNpdGUuY29tL3BheW1lbnRfc3VjY2Vzcw==</td>
+                        </tr>
+                        <tr>
+                            <td>unix_timestamp</td>
+                            <td>MTU3MzQ1MTE2MA==</td>
+                        </tr>
+                        <tr>
+                            <td>salt</td>
+                            <td>ZFBVVEx0Yk1mY1RHemthQm5HdHNlS2xjUXltQ0xyWUk=</td>
+                        </tr>
+                        <tr>
+                            <td>testing</td>
+                            <td>MQ==</td>
+                        </tr>
+                        <tr>
+                            <td>client_phone</td>
+                            <td>KzcgOTEyIDk4NzY1NDM=</td>
+                        </tr>
+                        <tr>
+                            <td>client_email</td>
+                            <td>dGVzdEB0ZXN0LnJ1</td>
+                        </tr>
+                        <tr>
+                            <td>receipt_contact</td>
+                            <td>dGVzdEBtYWlsLmNvbQ==</td>
+                        </tr>
+                        <tr>
+                            <td>receipt_items</td>
+                            <td>W3siZGlzY291bnRfc3VtIjogNDAsICJuYW1lIjogItCi0L7QstCw0YAgMSIsICJwYXltZW50X
+                                21ldGhvZCI6ICJmdWxsX3ByZXBheW1lbnQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5I
+                                iwgInByaWNlIjogNDgsICJxdWFudGl0eSI6IDEwLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifS
+                                wgeyJuYW1lIjogItCi0L7QstCw0YAgMiIsICJwYXltZW50X21ldGhvZCI6ICJmdWxsX3ByZXBheW1lb
+                                nQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5IiwgInByaWNlIjogNTMzLCAicXVhbnRpdH
+                                kiOiAxLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifV0</td>
+                        </tr>
+                        <tr>
+                            <td>callback_url</td>
+                            <td>(пустое значение — поле не будет включено в подпись)</td>
+                        </tr>
+                    </table>
+                    <li>Третье действие</li>
+                    <br>
+                    <p>Объединим все полученные параметры в одну строку (через символ "& "). Данные будут выглядеть
+                        следующим образом:</p>
+                    <p>amount=OTcz&client_email=dGVzdEB0ZXN0LnJ1&client_phone=KzcgOTEyIDk4NzY1NDM=&de
+                        scription=0JfQsNC60LDQtyDihJYxNDQyNTg0MA==&merchant=YWQyNWVmMDYtMTgyNC00
+                        MTNmLThlZjEtYzA4MTE1YjliOTc5&order_id=MTQ0MjU4NDA=&receipt_contact=dGVzdEBtYWls
+                        LmNvbQ==&receipt_items=W3siZGlzY291bnRfc3VtIjogNDAsICJuYW1lIjogItCi0L7QstCw0YAgMS
+                        IsICJwYXltZW50X21ldGhvZCI6ICJmdWxsX3ByZXBheW1lbnQiLCAicGF5bWVudF9vYmplY3QiOiA
+                        iY29tbW9kaXR5IiwgInByaWNlIjogNDgsICJxdWFudGl0eSI6IDEwLCAic25vIjogIm9zbiIsICJ2YXQi
+                        OiAidmF0MTAifSwgeyJuYW1lIjogItCi0L7QstCw0YAgMiIsICJwYXltZW50X21ldGhvZCI6ICJmdWxs
+                        X3ByZXBheW1lbnQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5IiwgInByaWNlIjogNTMzL
+                        CAicXVhbnRpdHkiOiAxLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifV0=&salt=ZFBVVEx0Yk1m
+                        Y1RHemthQm5HdHNlS2xjUXltQ0xyWUk=&success_url=aHR0cDovL215YXdlc29tZXNpdGUuY29t
+                        L3BheW1lbnRfc3VjY2Vzcw==&testing=MQ==&unix_timestamp=MTU3MzQ1MTE2MA==</p>
+                    <li>Последнее дейтсвие</li>
+                    <br>
+                    <p>Обратите внимание, что необязательное поле cancel_url, которое не было заполнено, не включено в
+                        эту строку.</p>
+                    <p>Вычисляем полученные параметры с помощью хеш-функции SHA1. Для вышеприведенной строки с
+                        параметрами и тестового ключа — "00112233445566778899aabbccddeeff", финальное значение поля
+                        signature будет таким: "9b28fa592922dc8a0c1ba2e40f2c0432aa617afd"</p>
+                    <p><b>Примеры реализации вычисления</b> поля signature на разных языках можно найти здесь.</p>
+                </ul>
+
+                <pre><code>signature = SHA1(sicret_key+(SHA1(sicret_key+params)))</code></pre>
+                <p>Где:<br>
+                    SHA1 — Это метод шифрования SHA1<br>
+                    sicret_key — Это секретный ключ(рабочий или тестовый, в зависимости от режима запроса)<br>
+                    params — строка из полей запроса в виде ключ=зашифрованное_значение_в_base64 с разделителем &.<br>
+                </p>
+            </article>
+
+            <!-- Калькулятор signature -->
+            <article id="acquiring-signature-calculator">
+                <h3>Калькулятор signature</h3>
+                <p>Для просмотра примера расчёта:</p>
+                <!-- Поле secret_key расположено вне формы -->
+                <div class="form-group">
+                    <label for="secret_key">Secret Key:</label>
+                    <input type="text" id="secret_key" required>
+                </div>
+
+                <form id="payment-form" action="https://pay.modulbank.ru/pay" method="POST"
+                    onsubmit="return validateForm()" target="_blank">
+                    <!-- Обязательные поля -->
+                    <div class="form-group">
+                        <label for="merchant">Merchant ID:</label>
+                        <input type="text" id="merchant" name="merchant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="text" id="amount" name="amount" pattern="\d*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="order_id">Order ID:</label>
+                        <input type="text" id="order_id" name="order_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="success_url">Success URL:</label>
+                        <input type="text" id="success_url" name="success_url" required
+                            value="https://pay.modulbank.ru/success">
+                    </div>
+                    <div class="form-group">
+                        <label for="unix_timestamp">Unix Timestamp:</label>
+                        <input type="text" id="unix_timestamp" name="unix_timestamp" pattern="\d*" required>
+                    </div>
+                    <!-- Кнопка и выпадающий список для добавления дополнительных полей -->
+                    <div class="field-adder">
+                        <select id="field-selector">
+                            <option value="">--Select Additional Field--</option>
+                            <option value="custom_order_id">Custom Order ID</option>
+                            <option value="testing">Testing</option>
+                            <option value="callback_url">Callback URL</option>
+                            <option value="client_phone">Client Phone</option>
+                            <option value="client_name">Client Name</option>
+                            <option value="client_email">Client Email</option>
+                            <option value="client_id">Client ID</option>
+                            <option value="receipt_contact">Receipt Contact</option>
+                            <option value="receipt_items">Receipt Items</option>
+                            <option value="lifetime">Lifetime</option>
+                            <option value="timeout_url">Timeout URL</option>
+                            <option value="start_recurrent">Start Recurrent</option>
+                            <option value="preauth">Preauth</option>
+                            <option value="show_payment_methods">Show Payment Methods</option>
+                        </select>
+                        <button type="button" id="add-field-btn">Добавить поле</button>
+                    </div>
+
+                    <!-- Дополнительные поля будут добавляться здесь -->
+                    <div id="optional-fields-container"></div>
+
+                    <!-- Кнопка для расчета подписи -->
+                    <button type="button" id="calculate-signature-btn">Calculate Signature</button>
+
+                    <!-- Кнопка отправки формы -->
+                    <button type="submit">Submit Payment</button>
+                </form>
+                <p id="result"></p>
+            </article>
+            <!-- Примеры расчёта signature на разных языках -->
+            <article id="acquiring-signature-examples">
+                <h3>Примеры расчёта signature на разных языках</h3>
+                <article>
+                    <h4>Python</h4>
+                    <pre><code>
+import base64
+import hashlib
+ 
+ 
+ 
+def get_raw_signature(params):
+    chunks = []
+ 
+    for key in sorted(params.keys()):
+        if key == 'signature':
+            continue
+ 
+        value = params[key]
+ 
+        if isinstance(value, str):
+            value = value.encode('utf8')
+        else:
+            value = str(value).encode('utf-8')
+ 
+        if not value:
+            continue
+ 
+        value_encoded = base64.b64encode(value)
+        chunks.append('%s=%s' % (key, value_encoded.decode()))
+ 
+    raw_signature = '&'.join(chunks)
+    return raw_signature
+ 
+'''Двойное шифрование sha1 на основе секретного ключа'''
+def double_sha1(secret_key, data):
+    sha1_hex = lambda s: hashlib.sha1(s.encode('utf-8')).hexdigest()
+    digest = sha1_hex(secret_key + sha1_hex(secret_key + data))
+    return digest
+ 
+'''Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" '''
+def get_signature(secret_key: str, params: dict) -> str:
+    return double_sha1(secret_key, get_raw_signature(params))
+ 
+ 
+'''Определяем словарь с параметрами для расчета.
+В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
+Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина.
+подставьте ваш секретный ключ вместо 00112233445566778899aabbccddeeff
+'''
+if __name__ == '__main__':
+    items = {       
+        "testing": '1',
+        "salt": 'dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI',
+        "order_id": '14425840',
+        "amount": '973',
+        "merchant": 'ad25ef06-1824-413f-8ef1-c08115b9b979',
+        "description": 'Заказ №14425840',
+        "client_phone": '+7 912 9876543',
+        "client_email": 'test@test.ru',
+        "success_url": 'http://myawesomesite.com/payment_success',
+        "receipt_contact": 'test@mail.com',
+        "receipt_items": '[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat": "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]',
+        "unix_timestamp": '1573451160'
+        }
+    print(get_signature('00112233445566778899aabbccddeeff', items))
+                    </code></pre>
+                </article>
+                <article>
+                    <h4>PHP</h4>
+                    <pre><code>
+/* Определяем массив с параметрами для расчета.
+В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
+Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина. */
+$items = array(
+        'testing' => '1',
+        'salt' => 'dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI',
+        'order_id' => '14425840',
+        'amount' => '973',
+        'merchant' => 'ad25ef06-1824-413f-8ef1-c08115b9b979',
+        'description' => 'Заказ №14425840',
+        'client_phone' => '+7 912 9876543',
+        'client_email' => 'test@test.ru',
+        'success_url' => 'http://myawesomesite.com/payment_success',
+        'receipt_contact' => 'test@mail.com',
+        'receipt_items' => '[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat": "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]',
+        'unix_timestamp' => '1573451160'
+);
+ 
+ 
+echo 'Signature: '. get_signature($items);
+ 
+/* Двойное шифрование sha1 на основе секретного ключа
+подставьте ваш секретный ключ вместо 00112233445566778899aabbccddeeff */
+function double_sha1($data) {
+    for ($i = 0; $i < 2; $i++) {
+        $data = sha1('00112233445566778899aabbccddeeff' . $data);
+    }
+    return $data;
+}
+ 
+/* Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" */
+function get_signature(array $params, $key = 'signature') {
+    $keys = array_keys($params);
+    sort($keys);
+    $chunks = array();
+    foreach ($keys as $k) {
+        $v = (string) $params[$k];
+        if (($v !== '') && ($k != 'signature')) {
+            $chunks[] = $k . '=' . base64_encode($v);
+        }
+    }
+    $data = implode('&', $chunks);
+ 
+    echo 'data: '.$data."\n";
+    $sig = double_sha1($data);
+ 
+    return $sig;
+}
+                    </code></pre>
+                </article>
+                <h4>NodeJS сигнатура</h4>
+                <pre><code>
+const Base64 = require('js-base64').Base64;
+const SHA1 = require('crypto-js/sha1');
+
+/* Определяем массив с параметрами для расчета.
+В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
+Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина. */
+const data = {
+        'testing': '1',
+        'salt': 'dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI',
+        'order_id': '14425840',
+        'amount': '973',
+        'merchant': 'ad25ef06-1824-413f-8ef1-c08115b9b979',
+        'description': 'Заказ №14425840',
+        'client_phone': '+7 912 9876543',
+        'client_email': 'test@test.ru',
+        'success_url': 'http://myawesomesite.com/payment_success',
+        'receipt_contact': 'test@mail.com',
+        'receipt_items': '[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat": "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]',
+        'unix_timestamp': '1573451160'
+};
+
+/* подставьте ваш секретный ключ вместо 00112233445566778899aabbccddeeff */
+const key = '00112233445566778899aabbccddeeff';
+
+console.log('Signature: ', GetSignature(key, data));
+
+/* Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" */
+function GetSignature(secretKey, formData) {
+  const values = Object.keys(formData)
+    .filter(key => key !== 'signature')
+    .filter(key => formData[key] != '')
+    .sort()
+    .map(key => `${key}=${Base64.encode(formData[key])}`)
+    .join('&')
+  ;
+
+  console.log('data: ', values)
+  
+/* Двойное шифрование sha1 на основе секретного ключа */
+  const signature = SHA1(secretKey + SHA1(secretKey + values));
+  
+  return signature.toString();
+}
+                    </code></pre>
+                <h4>package-lock.json</h4>
+                <pre><code>
+{
+  "name": "runner",
+  "version": "1.0.0",
+  "lockfileVersion": 1,
+  "requires": true,
+  "dependencies": {
+    "crypto-js": {
+      "version": "3.1.9-1",
+      "resolved": "https://registry.npmjs.org/crypto-js/-/crypto-js-3.1.9-1.tgz",
+      "integrity": "sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg="
+    },
+    "js-base64": {
+      "version": "2.5.1",
+      "resolved": "https://registry.npmjs.org/js-base64/-/js-base64-2.5.1.tgz",
+      "integrity": "sha512-M7kLczedRMYX4L8Mdh4MzyAMM9O5osx+4FcOQuTvr3A9F2D9S5JXheN0ewNbrvK2UatkTRhL5ejGmGSjNMiZuw=="
+    }
+  }
+}
+                    </code></pre>
+                <h4>package.json</h4>
+                <pre><code>
+{
+  "name": "runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "js-base64": "^2.5.1"
+  }
+}
+                    </code></pre>
+                <h4>С#</h4>
+                <pre><code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+ 
+ 
+class MainClass {
+  public static void Main (string[] args) {
+      var data = new Dictionary<string, string>()
+        {
+        {"testing", "1"},
+        {"salt", "dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI"},
+        {"order_id", "14425840"},
+        {"amount", "973"},
+        {"merchant", "ad25ef06-1824-413f-8ef1-c08115b9b979"},
+        {"description", "Заказ №14425840"},
+        {"client_phone", "+7 912 9876543"},
+        {"client_email", "test@test.ru"},
+        {"success_url", "http://myawesomesite.com/payment_success"},
+        {"receipt_contact", "test@mail.com"},
+        {"receipt_items", "[{\"discount_sum\": 40, \"name\": \"Товар 1\", \"payment_method\": \"full_prepayment\", \"payment_object\": \"commodity\", \"price\": 48, \"quantity\": 10, \"sno\": \"osn\", \"vat\": \"vat10\"}, {\"name\": \"Товар 2\", \"payment_method\": \"full_prepayment\", \"payment_object\": \"commodity\", \"price\": 533, \"quantity\": 1, \"sno\": \"osn\", \"vat\": \"vat10\"}]"},
+        {"unix_timestamp", "1573451160"}
+        };
+ 
+        Console.WriteLine(SignatureCalculator.GetSignature("00112233445566778899aabbccddeeff", data));
+  }
+}
+ 
+public static class SignatureCalculator
+    {
+ 
+        public static string GetSignature(string secretKey, IDictionary<string, string> formData)
+        {
+ 
+            var keys = formData
+            .Where(x=>x.Value != "")
+            .Where(x=> x.Key != "signature")
+            .Select(x => new { x.Key, Value = $"{x.Key}={GetBase64Val(x.Value)}" })
+            .OrderBy(x => x.Key)
+            .ToArray();
+ 
+            var values = string.Join("&", keys.Select(x => x.Value));
+            
+           Console.WriteLine(values);
+            var signature = SHA1(secretKey + SHA1(secretKey + values));
+ 
+            return signature;
+        }
+ 
+        private static string GetBase64Val(object plainText)
+        {
+            var value = plainText == null ? string.Empty : plainText.ToString();
+ 
+            var plainTextBytes = Encoding.UTF8.GetBytes(value);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+ 
+ 
+        // ReSharper disable once InconsistentNaming
+        private static string SHA1(string input)
+        {
+            using (var sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var sb = new StringBuilder(hash.Length * 2);
+ 
+                foreach (var b in hash)
+                {
+                    // can be "x2" if you want lowercase
+                    sb.Append(b.ToString("x2"));
+                }
+ 
+                return sb.ToString();
+            }
+        }
+    }
+                    </code></pre>
+            </article>
+            <!-- Формирование запроса на оплату -->
+            <article id="acquiring-payment-request">
+                <h3>Формирование запроса на оплату</h3>
+                <article>
+                    <h5>Данный метод предназначен для создания запроса на оплату. В случае корректного составления
+                        запроса, откроется платёжная форма для плательщика.</h5>
+                    <p><b>Формат запроса</b></p>
+                    <p>POST — https://pay.modulbank.ru/pay</p>
+                    <p>Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
+                    <article>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Описание</th>
+                                        <th>Обязательность</th>
+                                        <th>Формат</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>merchant</code></td>
+                                        <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                        <td>Да</td>
+                                        <td>– Строка (максимум 128 символов)<br>
+                                            – Только печатные ASCII символы</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>amount</code></td>
+                                        <td>Сумма платежа </td>
+                                        <td>Да</td>
+                                        <td>– Вещественное число, два знака после точки<br>
+                                            – Формат: «100» или «200.45»</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>order_id</code></td>
+                                        <td>Уникальный идентификатор заказа в интернет-магазине</td>
+                                        <td>Да</td>
+                                        <td>–Строка (максимум 50 символов)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>custom_order_id</code></td>
+                                        <td>Идентификатор заказа, который будет отображаться покупателю</td>
+                                        <td>Нет</td>
+                                        <td>–Строка (максимум 50 символов)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>Описание платежа</td>
+                                        <td>Да</td>
+                                        <td>–Строка (максимум 250 символов)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>success_url</code></td>
+                                        <td>Адрес для переадресации плательщика в случае успешной оплаты</td>
+                                        <td>Да</td>
+                                        <td>– Строка (максимум 128 символов)<br>*Если хотите использовать страницу
+                                            успешной оплаты Модульбанка, то укажите в этом поле:
+                                            https://pay.modulbank.ru/success </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>testing</code></td>
+                                        <td>Оплаты в тестовом режиме. Кол-во не ограничено.Кассовые чеки не формируются
+                                        </td>
+                                        <td>Нет</td>
+                                        <td>– Значение логического типа<br>• 1 — тестовый платеж,<br>• 0 — реальный
+                                            платеж<br>– По умолчанию реальные платежи</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>callback_url</code></td>
+                                        <td>Адрес для уведомлений в случае успешной оплаты</td>
+                                        <td>Нет</td>
+                                        <td>– Строка (максимум 128 символов)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>callback_on_failure</code></td>
+                                        <td>Отправка уведомления при неуспешной оплате</td>
+                                        <td>Нет</td>
+                                        <td>– Значение логического типа<br>• 1 — отправлять,<br>• 0 — не отправлять<br>–
+                                            По умолчанию не отправляется </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>client_phone</code></td>
+                                        <td>Номер телефона клиента</td>
+                                        <td>Нет</td>
+                                        <td> – Строка (максимум 15 символов)<br>– Формат: «+75559091555»</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>client_name</code></td>
+                                        <td>Имя и фамилия клиента</td>
+                                        <td>Нет</td>
+                                        <td>– Строка (максимум 100 символов</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>client_email</code></td>
+                                        <td>E-mail клиента</td>
+                                        <td>Нет</td>
+                                        <td>– Строка (максимум 64 символа)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>client_id</code></td>
+                                        <td>Идентификатор клиента</td>
+                                        <td>Нет</td>
+                                        <td>– Строка (максимум 128 символов)<br>– Только печатные ASCII символы</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>meta</code></td>
+                                        <td>Поле для дополнительных параметров в формате JSON</td>
+                                        <td>Нет</td>
+                                        <td>– JSON-строка</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>receipt_contact</code></td>
+                                        <td>Еmail получателя чека. Если в ЛК включена удаленная регистрация чеков через
+                                            онлайн-кассу, на этот адрес отправится чек</td>
+                                        <td>Нет</td>
+                                        <td>– Строка (максимум 64 символа)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>receipt_items</code></td>
+                                        <td>Позиции чека (json-объект с позициями чека)</td>
+                                        <td>Да(если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                                        <td>– Обязательные поля и пример json-объекта описаны в разделе "Отправка чеков"
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>unix_timestamp</code></td>
+                                        <td>Текущее время</td>
+                                        <td>Да</td>
+                                        <td> – Дата и время<br>– Формат: UNIX Time</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>lifetime</code></td>
+                                        <td>Время жизни страницы в секундах</td>
+                                        <td>Нет</td>
+                                        <td>– Целое число</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>timeout_url</code></td>
+                                        <td>Адрес для переадресации плательщика по истечении времени, указанного в
+                                            lifetime</td>
+                                        <td>Нет</td>
+                                        <td>– Строка (максимум 128 символов)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>salt</code></td>
+                                        <td>Случайная величина</td>
+                                        <td>Нет</td>
+                                        <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>signature</code></td>
+                                        <td>Криптографическая подпись</td>
+                                        <td>Да</td>
+                                        <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления
+                                            подписи описан в разделе «Алгоритм вычисления поля signature»</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>start_recurrent</code></td>
+                                        <td>Указывает, что платёж будет рекуррентный.<br>Подробнее в разделе
+                                            "Рекуррентные платежи"</td>
+                                        <td>Нет</td>
+                                        <td> – Значение логического типа<br>• 1 — рекуррентная транзакция,<br>• 0 или
+                                            отсутствует — не рекуррентная транзакция<br>– По умолчанию не отправляется
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>preauth</code></td>
+                                        <td>Указывает, что оплата будет двухстадийной. Подробнее в разделе"Холдирование"
+                                        </td>
+                                        <td>Нет</td>
+                                        <td> – Значение логического типа<br>• 1— запрос с холдированием,<br>• 0 или
+                                            отсутствует— одностадийный платёж<br>– По умолчанию не отправляется</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>show_payment_methods</code></td>
+                                        <td>Указывает, какие из доступных способов оплаты показывать покупателю на
+                                            платёжной странице</td>
+                                        <td>Нет</td>
+                                        <td> – Строка<br>– Доступные значения:<br>• card — карты,<br>• sbp — СБП,<br>•
+                                            yandexpay — кнопка<br>– По умолчанию выводятся все подключенные методы.
+                                            Можно передавать один: ["sbp"] или несколько: ["sbp","card"].
+                                            YandexPay – используется только в связке с другим способом.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>callback_with_receipt</code></td>
+                                        <td>Добавляет в коллбек об оплате информацию о сформированных чеках для
+                                            онлайн-кассы</td>
+                                        <td>Нет</td>
+                                        <td>– По умолчанию не отправляется<br>– Значение логического типа<br>• 1 —
+                                            отправлять информацию,<br>• 0 или отсутствует — не отправлять</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Обратите внимание, что все текстовые поля должны быть в кодировке UTF8.</p>
+                            <p><b>Пример отправляемой формы:</b></p>
+                            <pre><code>
+код
+                        </code></pre>
+                        </div>
+                        <p><b>Пример ответа:</b></p>
+                        <p>В ответ пользователь перенаправляется на страницу платежа.</p>
+                        <p>После проведения оплаты произойдет перенаправление на страницу, которая была указана в поле
+                            success_url. В параметры GET будет добавлен id транзакции.</p>
+                        <img src="01_01.png">
+                        <p><b>Пример:</b></p>
+                        <p>https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY </p>
+                    </article>
+                </article>
+                <article>
+                    <h4>Эндпоинт</h4>
+                    <p><code>POST /payments/initiate</code></p>
+                </article>
+                <article>
+                    <h4>Параметры</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип</th>
+                                    <th>Описание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>amount</code></td>
+                                    <td><code>number</code></td>
+                                    <td>Сумма платежа</td>
+                                </tr>
+                                <tr>
+                                    <td><code>currency</code></td>
+                                    <td><code>string</code></td>
+                                    <td>Валюта платежа</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+                <article>
+                    <h4>Ответ</h4>
+                    <pre><code>{
+    "payment_id": "12345",
+    "status": "pending"
+}</code></pre>
+                </article>
+            </article>
+            <!-- Холдирование (двухстадийный платёж) -->
+            <article id="acquiring-hold">
+                <h4>Холдирование (двухстадийный платёж)</h4>
+                <article>
+                    <h5>Создание запроса на платеж с предавторизацией</h5>
+                    <p>Данный метод может использоваться для одного из способов приёма оплаты:</p>
+                    <p>Формирование запроса на оплату<br>Создание счета на оплату</p>
+                    <p></p>
+                    <p>В первичный запрос на генерацию платёжной страницы или счёт ссылки добавляется необязательный
+                        параметр preauth, принимающий 0 или 1 (0 или отсутствие — обычный платеж, 1 — платеж с
+                        предавторизацией)</p>
+                    <p>При включенной онлайн-кассе в случае платежа с предавторизацией чек уходит в момент подтверждения
+                        (и на сумму подтверждения), поэтому на данном этапе поля receipt_contact и receipt_items могут
+                        быть пропущены.</p>
+                    <p>Если холдирование применяется при выставлении счёта на оплату, тогда логика использования
+                        следующая:</p>
+                    <ul>
+                        <li>Формируем запрос, в котором передаём параметр preauth</li>
+                        <li>После успешной оплаты приходит callback, в котором содержится transaction_id.</li>
+                        <li>Далее используя transaction_id</li>
+                        <li class="list-item">Подтвердить полную сумму холдирования</li>
+                        <li class="list-item">Частичную сумму холдирования</li>
+                        <li class="list-item">Отменить полную сумму холдирования</li>
+                    </ul>
+                    <h4><b>Подтверждение предавторизации</b></h4><br>
+                    <p><b>Формат запроса</b></p>
+                    <p></p>
+                </article>
+                <article>
+                    <h4>Формат запроса</h4>
+                    <p>POST — <code>https://pay.modulbank.ru/api/v1/capture/</code></p>
+                </article>
+                <article>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Описание</th>
+                                    <th>Обязательность</th>
+                                    <th>Формат</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>merchant</code></td>
+                                    <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                    <td>Да</td>
+                                    <td>– Строка (максимум 128 символов)<br>
+                                        – Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>amount</code></td>
+                                    <td>Сумма платежа </td>
+                                    <td>Да</td>
+                                    <td>– Вещественное число, два знака после точки<br>
+                                        – Формат: «100» или «200.45»</td>
+                                </tr>
+                                <tr>
+                                    <td><code>transaction</code></td>
+                                    <td>Идентификатор транзакции с предавторизацией</td>
+                                    <td>Да</td>
+                                    <td>–Строка (максимум 50 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>receipt_items</code></td>
+                                    <td>Позиции чека (json-объект с позициями чека)</td>
+                                    <td>Да(если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                                    <td>– Обязательные поля и пример json-объекта описаны в разделе "Отправка чеков"
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code>receipt_contact</code></td>
+                                    <td>Еmail получателя чека. Если в ЛК включена удаленная регистрация чеков через
+                                        онлайн-кассу, на этот адрес отправится чек</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 64 символа)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>unix_timestamp</code></td>
+                                    <td>Текущее время</td>
+                                    <td>Да</td>
+                                    <td> – Дата и время<br>– Формат: UNIX Time</td>
+                                </tr>
+                                <tr>
+                                    <td><code>salt</code></td>
+                                    <td>Случайная величина</td>
+                                    <td>Нет</td>
+                                    <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>signature</code></td>
+                                    <td>Криптографическая подпись</td>
+                                    <td>Да</td>
+                                    <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления
+                                        подписи описан в разделе «Алгоритм вычисления поля signature»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <P>В случае, если сумма списания будет меньше суммы предавторизации, плательщику будет оформлен
+                        возврат разницы в виде отмены платежа.</P>
+                    <p>Callback о подтверждении будет отправлен на тот же адрес, что указан в запросе на предавторизацию
+                        или в личном кабинете.</p>
+                    <h3>Отмена предавторизации</h3>
+                    <p>В случае, если по предавторизации не будет подтверждения, необходимо осуществить ее отмену.</p>
+                    <p>Для отмены предавторизации необходимо отправить запрос на возврат средств согласно "Формирование
+                        запроса на полную отмену платежа". В случае, если транзакция была предавторизована, но не
+                        подтверждена, средства вернутся плательщику в виде отмены, иначе - в виде возврата.</p>
+                    <p>В случае, если по предавторизации не будет получено ни отмены, ни подтверждения, отмена
+                        произойдет автоматически через 30 дней.</p>
+                </article>
+            </article>
+            <!-- Рекуррентные платежи -->
+            <article id="acquiring-recurring">
+                <h3>Рекуррентные платежи</h3>
+                <article>
+                    <h5>Шаги для привязки карты и совершения по ней рекуррентных платежей</h5>
+                    <p>Рекуррентные платежи по умолчанию запрещены. Для включения обратитесь к поддержке в чат банка.
+                    </p>
+                    <p><b>Шаги для привязки карты и совершения по ней рекуррентных платежей:</b></p>
+                    <ul>
+                        <li>
+                            Провести первый рекуррентный платеж, указав в запросе на оплату параметр start_recurrent: 1.
+                            Платеж проводится как обычный, с вводом карты покупателя и проведением 3DS аутентификации.
+                            Покупатель должен быть уведомлен о том, что при проведении этого платежа его карта
+                            сохраняется, и по ней будут впоследствии происходить списания.
+                        </li>
+                        <li>
+                            При успешном завершении первого рекуррентного платежа карта покупателя сохраняется в
+                            карточном хранилище Модульбанка.
+                        </li>
+                        <li>
+                            Для проведения последующих транзакций по этой карте без участия кардхолдера нужно
+                            формировать запрос на платеж с указанием transaction_id первой транзакции. По этой
+                            транзакции будет получена карта из хранилища, проведен платеж и вернется ответ со статусом
+                            транзакции. Если в личном кабинете или запросе на платеж будет указан адрес для колбека, он
+                            также будет прислан.
+                        </li>
+                    </ul>
+                </article>
+                <article>
+                    <h4>Формат запроса</h4>
+                    <p>POST —<code>https://pay.modulbank.ru/api/v1/next_recurrent/</code></p>
+                    <p>Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Описание</th>
+                                    <th>Обязательность</th>
+                                    <th>Формат</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>merchant</code></td>
+                                    <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                    <td>Да</td>
+                                    <td>– Строка (максимум 128 символов)<br>
+                                        – Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>first_recurrent_transaction</code></td>
+                                    <td>Идентификатор первой рекуррентной транзакции по этой карте</td>
+                                    <td>Да</td>
+                                    <td>– Строка</td>
+                                </tr>
+                                <tr>
+                                    <td><code>amount</code></td>
+                                    <td>Сумма платежа </td>
+                                    <td>Да</td>
+                                    <td>– Вещественное число, два знака после точки<br>
+                                        – Формат: «100» или «200.45»</td>
+                                </tr>
+                                <tr>
+                                    <td><code>order_id</code></td>
+                                    <td>Уникальный идентификатор заказа в интернет-магазине</td>
+                                    <td>Да</td>
+                                    <td>–Строка (максимум 50 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>custom_order_id</code></td>
+                                    <td>Идентификатор заказа, который будет отображаться покупателю</td>
+                                    <td>Нет</td>
+                                    <td>–Строка (максимум 50 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>description</code></td>
+                                    <td>Описание платежа</td>
+                                    <td>Да</td>
+                                    <td>–Строка (максимум 250 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>testing</code></td>
+                                    <td>Оплаты в тестовом режиме. Кол-во не ограничено.Кассовые чеки не формируются</td>
+                                    <td>Нет</td>
+                                    <td>– Значение логического типа<br>• 1 — тестовый платеж,<br>• 0 — реальный
+                                        платеж<br>– По умолчанию реальные платежи</td>
+                                </tr>
+                                <tr>
+                                    <td><code>callback_url</code></td>
+                                    <td>Адрес для уведомлений в случае успешной оплаты</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 128 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>client_phone</code></td>
+                                    <td>Номер телефона клиента</td>
+                                    <td>Нет</td>
+                                    <td> – Строка (максимум 15 символов)<br>– Формат: «+75559091555»</td>
+                                </tr>
+                                <tr>
+                                    <td><code>client_name</code></td>
+                                    <td>Имя и фамилия клиента</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 100 символов</td>
+                                </tr>
+                                <tr>
+                                    <td><code>client_email</code></td>
+                                    <td>E-mail клиента</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 64 символа)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>client_id</code></td>
+                                    <td>Идентификатор клиента</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 128 символов)<br>– Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>meta</code></td>
+                                    <td>Поле для дополнительных параметров в формате JSON</td>
+                                    <td>Нет</td>
+                                    <td>– JSON-строка</td>
+                                </tr>
+                                <tr>
+                                    <td><code>receipt_contact</code></td>
+                                    <td>Еmail получателя чека. Если в ЛК включена удаленная регистрация чеков через
+                                        онлайн-кассу, на этот адрес отправится чек</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 64 символа)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>receipt_items</code></td>
+                                    <td>Позиции чека (json-объект с позициями чека)</td>
+                                    <td>Да(если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                                    <td>– Обязательные поля и пример json-объекта описаны в разделе "Отправка чеков"
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code>unix_timestamp</code></td>
+                                    <td>Текущее время</td>
+                                    <td>Да</td>
+                                    <td> – Дата и время<br>– Формат: UNIX Time</td>
+                                </tr>
+                                <tr>
+                                    <td><code>salt</code></td>
+                                    <td>Случайная величина</td>
+                                    <td>Нет</td>
+                                    <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>signature</code></td>
+                                    <td>Криптографическая подпись</td>
+                                    <td>Да</td>
+                                    <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления
+                                        подписи описан в разделе «Алгоритм вычисления поля signature»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </article>
+            </article>
+            <!-- Создание счёт-ссылки -->
+            <article id="acquiring-invoice-link">
+                <h3>Создание счёт-ссылки</h3>
+                <article>
+                    <h4>Метод для создания счета на оплату покупателю</h4>
+                    <p>Данный метод предназначен для создания счета на оплату покупателю. В случае корректного
+                        составления запроса создается ссылка на оплату, которую необходимо отправить покупателю.</p>
+                </article>
+                <article>
+                    <h4>Формат запроса</h4>
+                    <p>POST —<code>https://pay.modulbank.ru/api/v1/bill/</code></p>
+                </article>
+                <article>
+                    <h4>Пример запроса</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Описание</th>
+                                    <th>Обязательность</th>
+                                    <th>Формат</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>merchant</code></td>
+                                    <td>Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                                    </td>
+                                    <td>Да</td>
+                                    <td>– Строка (максимум 128 символов)<br>
+                                        – Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>amount</code></td>
+                                    <td>Сумма платежа </td>
+                                    <td>Да</td>
+                                    <td>– Вещественное число, два знака после точки<br>
+                                        – Формат: «100» или «200.45»</td>
+                                </tr>
+                                <tr>
+                                    <td><code>custom_order_id</code></td>
+                                    <td>Идентификатор заказа, который будет отображаться покупателю</td>
+                                    <td>Нет</td>
+                                    <td>–Строка (максимум 50 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>description</code></td>
+                                    <td>Описание платежа</td>
+                                    <td>Да</td>
+                                    <td>–Строка (максимум 250 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>success_url</code></td>
+                                    <td>Адрес для переадресации плательщика в случае успешной оплаты</td>
+                                    <td>Да</td>
+                                    <td>– Строка (максимум 128 символов)<br>*Если хотите использовать страницу успешной
+                                        оплаты Модульбанка, то укажите в этом поле: https://pay.modulbank.ru/success
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code>testing</code></td>
+                                    <td>Флаг тестового режима, в котором можно совершать произвольное количество
+                                        транзакций с использованием тестовых карт. При включенной интеграции с кассой по
+                                        тестовым оплатам чеки не формируются</td>
+                                    <td>Нет</td>
+                                    <td>– Значение логического типа<br>• 1 — тестовый платеж,<br>• 0 — реальный
+                                        платеж<br>– По умолчанию реальные платежи</td>
+                                </tr>
+                                <tr>
+                                    <td><code>callback_url</code></td>
+                                    <td>Адрес для уведомлений в случае успешной оплаты</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 128 символов)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>callback_on_failure</code></td>
+                                    <td>Отправка уведомления при неуспешной оплате</td>
+                                    <td>Нет</td>
+                                    <td>– Значение логического типа<br>• 1 — отправлять,<br>• 0 — не отправлять<br>– По
+                                        умолчанию не отправляется </td>
+                                </tr>
+                                <tr>
+                                    <td><code>client_name</code></td>
+                                    <td>Имя и фамилия клиента</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 100 символов</td>
+                                </tr>
+                                <tr>
+                                    <td><code>client_email</code></td>
+                                    <td>E-mail клиента. Флаг отправки письма с уведомлением о выставленном счете </td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 64 символа)<br>– Если указано это поле и передано
+                                        "send_letter"=1, то клиенту будет отправлено письмо с уведомлением о выставлении
+                                        счета</td>
+                                </tr>
+                                <tr>
+                                    <td><code>receipt_contact</code></td>
+                                    <td>Еmail получателя чека. Если в ЛК включена удаленная регистрация чеков через
+                                        онлайн-кассу, на этот адрес отправится чек</td>
+                                    <td>Нет</td>
+                                    <td>– Строка (максимум 64 символа)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>receipt_items</code></td>
+                                    <td>Позиции чека (json-объект с позициями чека)</td>
+                                    <td>Да(если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                                    <td>– Обязательные поля и пример json-объекта описаны в разделе "Отправка чеков"
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code>unix_timestamp</code></td>
+                                    <td>Текущее время</td>
+                                    <td>Да</td>
+                                    <td> – Дата и время<br>– Формат: UNIX Time</td>
+                                </tr>
+                                <tr>
+                                    <td><code>lifetime</code></td>
+                                    <td>Время жизни страницы в секундах</td>
+                                    <td>Нет</td>
+                                    <td>– Целое число</td>
+                                </tr>
+                                <tr>
+                                    <td><code>salt</code></td>
+                                    <td>Случайная величина</td>
+                                    <td>Нет</td>
+                                    <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                                </tr>
+                                <tr>
+                                    <td><code>signature</code></td>
+                                    <td>Криптографическая подпись</td>
+                                    <td>Да</td>
+                                    <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления
+                                        подписи описан в разделе «Алгоритм вычисления поля signature»</td>
+                                </tr>
+                                <tr>
+                                    <td><code>start_recurrent</code></td>
+                                    <td>Указывает, что карту, с которой проводится транзакция, нужно сохранить в
+                                        карточном хранилище для последующих рекуррентных платежей по ней. Для
+                                        последующих рекуррентных платежей по этой карте будет необходимо использовать ID
+                                        этой транзакции. (см. 08 Рекуррентные платежи)Доступно только после одобрения
+                                        заявки на проведение рекуррентных платежей в личном кабинете</td>
+                                    <td>Нет</td>
+                                    <td> – Значение логического типа<br>• 1 — рекуррентная транзакция,<br>• 0 или
+                                        отсутствует — не рекуррентная транзакция<br>– По умолчанию не отправляется</td>
+                                </tr>
+                                <tr>
+                                    <td><code>preauth</code></td>
+                                    <td>Указывает, что оплата будет двухстадийной. Подробнее в разделе"Холдирование"
+                                    </td>
+                                    <td>Нет</td>
+                                    <td> – Значение логического типа<br>• 1— запрос с холдированием,<br>• 0 или
+                                        отсутствует— одностадийный платёж<br>– По умолчанию не отправляется</td>
+                                </tr>
+                                <tr>
+                                    <td><code>show_payment_methods</code></td>
+                                    <td>Указывает, какие из доступных способов оплаты показывать покупателю на платёжной
+                                        странице</td>
+                                    <td>Нет</td>
+                                    <td> – Строка<br>– Доступные значения:<br>• card — карты,<br>• sbp — СБП,<br>•
+                                        yandexpay — кнопка<br>– По умолчанию выводятся все подключенные методы.
+                                        Можно передавать один: ["sbp"] или несколько: ["sbp","card"].
+                                        YandexPay – используется только в связке с другим способом.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>reusable</code></td>
+                                    <td>Одноразовый/многоразовый счетМногоразовый счет предоставляет ссылку, по которой
+                                        оплата может быть проведена неограниченное количество раз любыми покупателями.
+                                        Для многоразового счета не указываются поля send_letter, receipt_contact,
+                                        client_email и lifetime, так как конечного получателя для счета нет. Email
+                                        указывает сам покупатель на платежной странице</td>
+                                    <td>Нет</td>
+                                    <td> – Значение логического типа<br>• 1 — многоразовый<br>• 0 — одноразовый<br>– По
+                                        умолчанию не отправляется</td>
+                                </tr>
+                                <tr>
+                                    <td><code>send_letter</code></td>
+                                    <td>Флаг отправки письма с уведомлением о выставленном счете</td>
+                                    <td>Нет</td>
+                                    <td> – Значение логического типа<br>•1 — отправить письмо со ссылкой на
+                                        оплату,<br>•0 — не отправлять письмо<br>–Если указать этот флаг (и
+                                        client_email), то клиенту будет отправлено письмо, в котором будет ссылка на
+                                        оплату</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </article>
+            <!-- СБП: Получение QR-кода или ссылки напрямую -->
+            <article id="acquiring-sbp-qrcode">
+                <h3>СБП: Получение QR-кода или ссылки напрямую</h3>
+                <article>
+                    <h5>По запросу можно получить либо json с ссылкой на СБП-оплату, либо картинку с QR-кодом
+                        (image/png)</h5>
+                    <p>Получите QR-код или ссылку для оплаты через СБП.</p>
+                    <p>Если ваш покупатель заходит с десктопного устройства, ему нужно отобразить картинку, чтобы он мог
+                        сосканировать ее с помощью банковского приложения на смартфоне.</p>
+                    <p>Если же покупатель хочет оплатить с мобильного устройства, стоит запросить ссылку на СБП-оплату и
+                        провести редирект пользователя на эту ссылку - мобильное устройство предложит открыть эту ссылку
+                        в банковском приложении.</p>
+                </article>
+                <article>
+                    <h4>Формирование запроса на оплату по СБП</h4>
+                    <p>POST —<code>https://pay.modulbank.ru/api/v1/sbp_payment</code></p>
+                    <p><b>ВНИМАНИЕ! </b>Через 10 минут после получения QR (ссылки) операция переходит в таймаут, и
+                        оплата по ней зарегистрирована в ИЭ не будет.</p>
+                </article>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Обязательность</th>
+                                <th>Формат</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>merchant</code></td>
+                                <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                <td>Да</td>
+                                <td>– Строка (максимум 128 символов)<br>
+                                    – Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>Сумма платежа </td>
+                                <td>Да</td>
+                                <td>– Вещественное число, два знака после точки<br>
+                                    – Формат: «100» или «200.45»</td>
+                            </tr>
+                            <tr>
+                                <td><code>order_id</code></td>
+                                <td>Уникальный идентификатор заказа в интернет-магазине</td>
+                                <td>Да</td>
+                                <td>–Строка (максимум 50 символов)</td>
+                            </tr>
+                            <tr>
+                                <td><code>custom_order_id</code></td>
+                                <td>Идентификатор заказа, который будет отображаться покупателю</td>
+                                <td>Нет</td>
+                                <td>–Строка (максимум 50 символов)</td>
+                            </tr>
+                            <tr>
+                                <td><code>description</code></td>
+                                <td>Описание платежа</td>
+                                <td>Да</td>
+                                <td>–Строка (максимум 250 символов)</td>
+                            </tr>
+                            <tr>
+                                <td><code>callback_url</code></td>
+                                <td>Адрес для уведомлений в случае успешной оплаты</td>
+                                <td>Нет</td>
+                                <td>– Строка (максимум 128 символов)</td>
+                            </tr>
+                            <tr>
+                                <td><code>callback_on_failure</code></td>
+                                <td>Отправка уведомления при неуспешной оплате</td>
+                                <td>Нет</td>
+                                <td>– Значение логического типа<br>• 1 — отправлять,<br>• 0 — не отправлять<br>– По
+                                    умолчанию не отправляется </td>
+                            </tr>
+                            <tr>
+                                <td><code>client_phone</code></td>
+                                <td>Номер телефона клиента</td>
+                                <td>Нет</td>
+                                <td> – Строка (максимум 15 символов)<br>– Формат: «+75559091555»</td>
+                            </tr>
+                            <tr>
+                                <td><code>client_name</code></td>
+                                <td>Имя и фамилия клиента</td>
+                                <td>Нет</td>
+                                <td>– Строка (максимум 100 символов</td>
+                            </tr>
+                            <tr>
+                                <td><code>client_email</code></td>
+                                <td>E-mail клиента</td>
+                                <td>Нет</td>
+                                <td>– Строка (максимум 64 символа)</td>
+                            </tr>
+                            <tr>
+                                <td><code>client_id</code></td>
+                                <td>Идентификатор клиента</td>
+                                <td>Нет</td>
+                                <td>– Строка (максимум 128 символов)<br>– Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>meta</code></td>
+                                <td>Поле для дополнительных параметров в формате JSON</td>
+                                <td>Нет</td>
+                                <td>– JSON-строка</td>
+                            </tr>
+                            <tr>
+                                <td><code>receipt_contact</code></td>
+                                <td>Еmail получателя чека. Если в ЛК включена удаленная регистрация чеков через
+                                    онлайн-кассу, на этот адрес отправится чек</td>
+                                <td>Нет</td>
+                                <td>– Строка (максимум 64 символа)</td>
+                            </tr>
+                            <tr>
+                                <td><code>receipt_items</code></td>
+                                <td>Позиции чека (json-объект с позициями чека)</td>
+                                <td>Да(если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                                <td>– Обязательные поля и пример json-объекта описаны в разделе "Отправка чеков"</td>
+                            </tr>
+                            <tr>
+                                <td><code>unix_timestamp</code></td>
+                                <td>Текущее время</td>
+                                <td>Да</td>
+                                <td> – Дата и время<br>– Формат: UNIX Time</td>
+                            </tr>
+                            <tr>
+                                <td><code>salt</code></td>
+                                <td>Случайная величина</td>
+                                <td>Нет</td>
+                                <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>signature</code></td>
+                                <td>Криптографическая подпись</td>
+                                <td>Да</td>
+                                <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления подписи
+                                    описан в разделе «Алгоритм вычисления поля signature»</td>
+                            </tr>
+                            <tr>
+                                <td><code>qr_image</code></td>
+                                <td>Получить картинку с QR</td>
+                                <td>Нет</td>
+                                <td>– Значение логического типа<br> 1 — получить картинку,<br>0 — получить ссылку<br>По
+                                    умолчанию возвращается ответ со ссылкой– Ссылка приходит в сообщении формата json,
+                                    картинка — в формате 'image/png'</td>
+                            </tr>
+                            <tr>
+                                <td><code>qr_lifetime</code></td>
+                                <td>Укажите время в течение которого возможна оплата по СБП</td>
+                                <td>Нет</td>
+                                <td>— Минимальное допустимое значение - "5",<br>— Максимальное допустимое значение -
+                                    "129 600" (90 дней)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><b>Пример ошибки:</b></p>
+                <pre>
+                    	<code>
+{
+	"field_errors": {
+    	"amount": "Введите число.; Неверное значение суммы операции",
+    	"receipt_items": "Сумма позиций чека не равна amount"
+    },
+  	"form_errors": "",
+  	"message": "Сумма операции: Введите число., Неверное значение суммы операции; Содержимое заказа: Сумма позиций чека не равна amount",
+  	"status": "error"
+}
+                   		</code>
+                	</pre>
+                <p><b>Пример успешного запроса ссылки:</b></p>
+                <pre>
+                    	<code>
+{
+  	"sbp_link": "https://qr.nspk.ru/AD10000HD292LS5890SBS39REDPBFEO9?type=02&bank=100000000099&sum=100&cur=RUB&crc=79FE",
+  	"status": "ok"
+}
+                   		</code>
+                	</pre>
+            </article>
+            <p><b>Пример успешного запроса ссылки:</b></p>
+            <pre>
+                    	<code>
+Картинка
+                   		</code>
+                	</pre>
+            </article>
+            <!-- Уведомления о транзакциях -->
+            <article id="acquiring-notifications">
+                <h3>Уведомления о транзакциях</h3>
+                <article>
+                    <h5>Сервисные уведомления о транзакциях</h5>
+                    <p>После проведения оплаты сервер отправляет POST-запрос с уведомлением на url, указанный для
+                        оповещения. Вы можете указать его в запросе на оплату в поле callback_url либо в личном
+                        кабинете.</p>
+                    <img src="07_01_.png">
+                    <p>В случае, если url указан и в запросе на оплату, и в ЛК, приоритетным считается указанный в
+                        запросе.</p>
+                    <p>Ответ от сервера приходит в виде POST-запроса, содержащего данные о транзакции. Signature в
+                        данном случае считается из всех полей, содержащихся в ответе.</p>
+                    <p>Сервер ожидает, что callback будет обработан на стороне магазина с ответом со статусом 200 ОК.
+                        Иначе будут совершены попытки переотправки в количестве 14 штук, с интервалом времени,
+                        возрастающим по экспоненте.</p>
+                    <p><b>Вид ответа:</b></p>
+                    <pre>
+                    	<code>
+{
+	"testing": "0",
+	"pan_mask": "220011******4440",
+	"unix_timestamp": "1570161434",
+	"salt": "DB9481A6554924BFD2F2279B5AD05B9D",
+	"rrn": "927703219385",
+	"transaction_id": "0EyuFLLZ9DagCXy8O67Q6x",
+	"original_amount": "10.00",
+	"auth_number": "2164219385",
+	"amount": "10.00",
+	"created_datetime": "2019-10-04 03:56:09",
+	"auth_code": "201471",
+	"signature": "622e1486dba17d05d080c6734131205a75d59188",
+	"client_phone": "+79999999999",
+	"client_email": "example@example.ru",
+	"state": "COMPLETE",
+	"order_id": "697144",
+	"currency": "RUB",
+	"merchant": "51cb8a0f-6fb8-4a20-98b1-9fd85dc47500",
+	"payment_method": "card",
+	"meta":
+	{"bill_id": "vlICmFjY7nST9KARa5RsSJ"} // в случае если был выставлен счет
+}
+                    	</code>
+                    </pre>
+                    <p>В случае, если транзакция завершилась неуспешно, и в запросе был указан параметр
+                        callback_on_failure, ответ будет иметь следующий вид:</p>
+                    <pre>
+                    	<code>
+{
+	"testing": "0",
+	"pan_mask": "220011******4440",
+	"unix_timestamp": "1570161434",
+	"salt": "DB9481A6554924BFD2F2279B5AD05B9D",
+	"transaction_id": "0EyuFLLZ9DagCXy8O67Q6x",
+	"original_amount": "10.00",
+	"amount": "10.00",
+	"created_datetime": "2019-10-04 03:56:09",
+	"signature": "161787e7ddb31ffa6ac1988cef16ceffa69b3324",
+	"client_phone": "+79999999999",
+	"client_email": "example@example.ru",
+	"state": "FAILED",
+	"mps_error_code": "101",
+	"message": "Отказ при выполнении авторизации",
+	"order_id": "697144",
+	"currency": "RUB",
+	"merchant": "51cb8a0f-6fb8-4a20-98b1-9fd85dc47500",
+	"payment_method": "card",
+	"meta":
+	{"bill_id": "vlICmFjY7nST9KARa5RsSJ"} // в случае если был выставлен счет
+}
+                    	</code>
+                    </pre>
+                    <p>
+                        Для проверки корректности уведомления на стороне интернет-магазина нужно провести расчет
+                        сигнатуры по пришедшим в ответе полям и убедиться, что она сходится с той, что содержится в
+                        пришедшем json от эквайринга.
+
+                    </p>
+                    <p>
+                        Обратите внимание, что сигнатура для тестовых и реальных платежей считается по тестовому и
+                        реальному секретным ключам соответственно. Подробнее о расчете сигнатуры можно прочитать в
+                        разделе Алгоритм расчета поля signature.
+                    </p>
+                </article>
+            </article>
+            <!-- Получение списка транзакций -->
+            <article id="acquiring-transactions-list">
+                <h3>Получение списка транзакций</h3>
+                <article>
+                    <h5>Метод для получения списка транзакций по платежам</h5>
+                </article>
+                <article>
+                    <h4>Формат запроса</h4>
+                    <p>GET— <code>https://pay.modulbank.ru/api/v1/transactions/</code></p>
+                </article>
+                <p>Параметры запроса:</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Обязательность</th>
+                                <th>Формат</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>merchant</code></td>
+                                <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                <td>Да</td>
+                                <td>– Строка (максимум 128 символов)<br>
+                                    – Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>unix_timestamp</code></td>
+                                <td>Текущее время</td>
+                                <td>Да</td>
+                                <td> – Дата и время<br>– Формат: UNIX Time</td>
+                            </tr>
+                            <tr>
+                                <td><code>salt</code></td>
+                                <td>Случайная величина</td>
+                                <td>Нет</td>
+                                <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>signature</code></td>
+                                <td>Криптографическая подпись</td>
+                                <td>Да</td>
+                                <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления подписи
+                                    описан в разделе «Алгоритм вычисления поля signature»</td>
+                            </tr>
+                            <tr>
+                                <td><code>date_from</code></td>
+                                <td>Нижняя граница временного диапазона</td>
+                                <td>Да</td>
+                                <td> Значение в формате ISO8601:2004, с обязательным указанием часового пояса. В
+                                    качестве разделителя между датой и временем используется символ «T»<br>– Пример:
+                                    «2018-01-31T00:00:00.123+04:00»</td>
+                            </tr>
+                            <tr>
+                                <td><code>date_to</code></td>
+                                <td>Верхняя граница временного диапазона</td>
+                                <td>Да</td>
+                                <td>– Значение в формате ISO8601:2004, с обязательным указанием часового пояса. В
+                                    качестве разделителя между датой и временем используется символ «T»<br>– Пример:
+                                    «2018-01-31T00:00:00.123+04:00»</td>
+                            </tr>
+                            <tr>
+                                <td><code>state</code></td>
+                                <td>Фильтр по статусу транзакции. По умолчанию возвращаются все транзакции</td>
+                                <td>Нет</td>
+                                <td>– Возможные значения:<br>
+                                    PROCESSING — В процессе<br>
+                                    WAITING_FOR_3DS — Ожидает 3DS<br>
+                                    COMPLETE — Транзакция завершена успешно<br>
+                                    FAILED — Транзакция завершена с ошибкой</td>
+                            </tr>
+                            <tr>
+                                <td><code>testing</code></td>
+                                <td>Возвращать тестовые или боевые транзакции </td>
+                                <td>Нет</td>
+                                <td>1 — возвращать только тестовые транзакции<br>
+                                    0 — возвращать только реальные транзакции.<br>
+                                    Для возвращения тестовых транзакций в подсчете сигнатуры используйте тестовый
+                                    секретный ключ. Если значение параметра равняется 0 или отсутствует — используйте
+                                    боевой секретный ключ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>https://pay.modulbank.ru/api/v1/transactions/?unix_timestamp=1542795615&testing=1&date_to=2019-01-31T00:00:00.123+04:00&date_from=2018-01-31T00:00:00.123+04:00&salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf&signature=31ba86af6bce6423d28b79f0ac53ea1fd7acbeca&state=COMPLETE&merchant=25b649d7-03f2-4c14-a847-83205a4d913b
+                </p>
+                <p><b>Пример ответа:</b></p>
+                <pre>
+                    	<code>
+{
+	"transactions": [
+		{
+			"created_datetime": "2018-11-15 06:06:13",
+			"transaction_id": "sRkiFz9peAQ7lAFNj7DbYi",
+			"payment_method": "card",
+			"meta": "{\"example-property\": 1234}",
+			"testing": 1,
+			"message": "",
+			"order_id": "569770",
+			"currency": "RUB",
+			"response_action": null,
+			"mps_error_code": null,
+			"original_amount": "13.00",
+			"pan_mask": "404730******7550",
+			"state": "COMPLETE",
+			"amount": "13.00"
+		},
+		{
+			"created_datetime": "2018-11-15 07:20:03",
+			"transaction_id": "0kNPLALWDfSEAN4BoUZpfK",
+			"payment_method": "card",
+			"meta": "{\"example-property\": 1234}",
+			"testing": 1,
+			"message": "",
+			"order_id": "965949",
+			"currency": "RUB",
+			"response_action": null,
+			"mps_error_code": null,
+			"original_amount": "11.00",
+			"pan_mask": "404730******7550",
+			"state": "COMPLETE",
+			"amount": "11.00"
+		},
+		{
+			"created_datetime": "2018-11-15 07:24:46",
+			"transaction_id": "5dy2ecgVzsOriIuZL16m50",
+			"payment_method": "card",
+			"meta": "{\"example-property\": 1234}",
+			"testing": 1,
+			"message": "",
+			"order_id": "201338",
+			"currency": "RUB",
+			"response_action": null,
+			"mps_error_code": null,
+			"original_amount": "49.00",
+			"pan_mask": "404730******7550",
+			"state": "COMPLETE",
+			"amount": "49.00"
+		},
+		{
+			"created_datetime": "2018-11-19 08:34:41",
+			"transaction_id": "Dd1iZh1UbmKyFRLp5Yz9Nt",
+			"payment_method": "card",
+			"meta": "{\"example-property\": 1234}",
+			"testing": 1,
+			"message": "",
+			"order_id": "15529392",
+			"currency": "RUB",
+			"response_action": null,
+			"mps_error_code": null,
+			"original_amount": "969.00",
+			"pan_mask": "404730******7550",
+			"state": "COMPLETE",
+			"amount": "969.00"
+		},
+	],
+	"status": "ok"
+}
+                    	</code>
+                    </pre>
+
+            </article>
+            <!-- Получение информации о транзакции -->
+            <article id="acquiring-transaction-info">
+                <h3>Получение информации о транзакции</h3>
+                <article>
+                    <h5>Метод для получения информации о транзакции по платежку</h5>
+                    <p>Получите детальную информацию о конкретной транзакции.</p>
+                </article>
+                <article>
+                    <h4>Формат запроса</h4>
+                    <p>GET<code>https://pay.modulbank.ru/api/v1/transaction/</code></p>
+                    <p>Параметры запроса:</p>
+                </article>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Обязательность</th>
+                                <th>Формат</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>merchant</code></td>
+                                <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                <td>Да</td>
+                                <td>– Строка (максимум 128 символов)<br>
+                                    – Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>unix_timestamp</code></td>
+                                <td>Текущее время</td>
+                                <td>Да</td>
+                                <td> – Дата и время<br>– Формат: UNIX Time</td>
+                            </tr>
+                            <tr>
+                                <td><code>salt</code></td>
+                                <td>Случайная величина</td>
+                                <td>Нет</td>
+                                <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>signature</code></td>
+                                <td>Криптографическая подпись</td>
+                                <td>Да</td>
+                                <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления подписи
+                                    описан в разделе «Алгоритм вычисления поля signature»</td>
+                            </tr>
+                            <tr>
+                                <td><code>transaction_id</code></td>
+                                <td>Идентификатор транзакции</td>
+                                <td>Да</td>
+                                <td>– Строка (максимум 50 символов)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    <b>
+                        Пример запроса:
+                    </b>
+                </p>
+                <p>
+                    https://pay.modulbank.ru/api/v1/transactions/?unix_timestamp=1542795615&testing=1×
+                    tamp_to=2019-01-31T00:00:00.123+04:00×tamp_from=2018-01-
+                    31T00:00:00.123+04:00&salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf&signature=31ba8
+                    6af6bce6423d28b79f0ac53ea1fd7acbeca&state=COMPLETE&merchant=25b649d7-03f2- 4c14-a847-83205a4d913b
+                </p>
+                <p>
+                    <b>
+                        Пример ответа:
+                    </b>
+                </p>
+                <pre>
+                    	<code>
+{
+	"status": "ok",
+	"transaction": {
+		"amount": "1000.00",
+		"auth_code": "201471",
+		"auth_number": "2164586974",
+		"client_email": "user@example.ru",
+		"client_phone": "",
+		"completed_datetime": "2019-11-05 11:20:59",
+		"created_datetime": "2019-11-05 11:20:51",
+		"currency": "RUB",
+		"custom_order_id": "",
+		"description": "Оплата заказа №7",
+		"message": "",
+		"meta": "",
+		"mps_error_code": null,
+		"order_id": "83e78010-163d-49a0-87e0-276d2f9e23bb",
+		"original_amount": "1000.00",
+		"pan_mask": "558462******6488",
+		"payment_method": "card",
+		"refunds": [],
+		"rrn": "002164586974",
+		"state": "COMPLETE",
+		"testing": 0,
+		"transaction_id": "saJ0G2qS0A3tLI5d1CHWr4",
+		"updated_datetime": "2019-11-05 11:20:59"
+	}
+}	
+
+                   </pre>
+                </code>
+                <p><b>Возможные значения поля state:</b></p>
+                <p>
+                    PROCESSING — В процессе<br>
+                    WAITING_FOR_3DS — Ожидает 3DS<br>
+                    FAILED — Ошибка<br>
+                    COMPLETE — Готово
+                </p>
+            </article>
+            <!-- Формирование запроса на полную отмену платежа -->
+            <article id="acquiring-full-refund">
+                <h3>Формирование запроса на полную отмену платежа</h3>
+                <article>
+                    <h5>Метод для полной полной отмены платежа</h5>
+                    <p>Данный метод предназначен для отмены платежа и возврата средств плательщику. Отмену платежа можно
+                        выполнить через личный кабинет либо через вызов метода API.</p>
+                </article>
+                <article>
+                    <h4>Формат запроса</h4>
+                    <p>POST—<code>https://pay.modulbank.ru/api/v1/refund</code></p>
+                </article>
+                <P>Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</P>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Обязательность</th>
+                                <th>Формат</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>merchant</code></td>
+                                <td>Идентификатор магазина, полученный в ЛК банка</td>
+                                <td>Да</td>
+                                <td>– Строка (максимум 128 символов)<br>
+                                    – Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>unix_timestamp</code></td>
+                                <td>Текущее время</td>
+                                <td>Да</td>
+                                <td> – Дата и время<br>– Формат: UNIX Time</td>
+                            </tr>
+                            <tr>
+                                <td><code>salt</code></td>
+                                <td>Случайная величина</td>
+                                <td>Нет</td>
+                                <td> – Строка (максимум 32 символа)<br>– Только печатные ASCII символы</td>
+                            </tr>
+                            <tr>
+                                <td><code>signature</code></td>
+                                <td>Криптографическая подпись</td>
+                                <td>Да</td>
+                                <td>– Строка (40 символов в нижнем регистре)<br>– Алгоритм вычисления вычисления подписи
+                                    описан в разделе «Алгоритм вычисления поля signature»</td>
+                            </tr>
+                            <tr>
+                                <td><code>transaction</code></td>
+                                <td>Идентификатор транзакции, по которой необходимо осуществить возврат</td>
+                                <td>Да</td>
+                                <td>– Строка (максимум 50 символов)</td>
+                            </tr>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>Сумма платежа</td>
+                                <td>Да</td>
+                                <td>– Вещественное число, два знака после точки<br>– Формат: «100» или «200.45».</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    <b>
+                        Пример запроса:
+                    </b>
+                </p>
+                <pre>
+                    	<code>
+{
+	"merchant": "46197191-2311-40b5-a8d3-6659602fd332",
+	"amount": "100",
+	"transaction": "nRo9bxb7hLOqVwtWMbHp5Y",
+	"unix_timestamp": "1538039634",
+	"signature": "995da849833a82e5706660e17cfc48d109eb5aa7"
+}
+                    	</code>
+                    </pre>
+                <p>
+                    <b>
+                        Возможные статусы отмены платежа:
+                    </b>
+                </p>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Статус</th>
+                            <th>Описание</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><code>PENDING</code></td>
+                        <td>Запрос на отмену ожидает исполнения</td>
+                    </tr>
+                    <tr>
+                        <td><code>PROCESSING</code></td>
+                        <td>Запрос на отмену выполняется в данный момент</td>
+                    </tr>
+                    <tr>
+                        <td><code>WAITING_FOR_RESULT</code></td>
+                        <td>Запрос на отмену выполнен, ожидается результат.</td>
+                    </tr>
+                    <tr>
+                        <td><code>COMPLETE</code></td>
+                        <td>Отмена была выполнена успешно.</td>
+                    </tr>
+                    <tr>
+                        <td><code>FAILED</code></td>
+                        <td>Произошла ошибка.</td>
+                    </tr>
+                </table>
+
+            </article>
+            <!-- Формирование запроса на частичную отмену платежа -->
+            <article id="acquiring-partial-refund">
+                <h3>Формирование запроса на частичную отмену платежа</h3>
+                <article>
+                    <h5>Особенности осуществления отдельных видов возвратов и отмен</h5>
+                    <p><b>Важно!</b></p>
+                    <p>
+                        Проведение частичного возврата доступно только на следующий день после операции оплаты, иначе в
+                        ответе message будет содержать «Операция не найдена». При повторном проведении частичного
+                        возврата по такой операции на следующий день ошибка автоматически устранится.<br>
+
+                        Если у Вашего магазина нет интеграции с онлайн-кассой, то для частичной отмены/возврата
+                        достаточно в запросе указать в поле amount возвращаемую сумму.<br>
+
+                        Если касса подключена, то нужно указать, какие именно позиции и в каком количестве Вы
+                        возвращаете. Это нужно для того, чтобы Интернет-Эквайринг корректно сформировал чек возврата.
+                    </p>
+                    <p>
+                        <b>
+                            Внимание!<br>
+                            Для работы с чеками частичного возврата Вам нужно получать информацию о чеке в коллбеке об
+                            оплате. Для этого нужно отправить в запросе на оплату 1 в поле callback_with_receipt или
+                            обратиться в чат поддержки, чтобы получение информации о чеке в коллбеке включили для Вашего
+                            магазина на постоянной основе.
+                        </b>
+                        <br>
+                        <br>
+                        В таком случае в основной запрос добавляется поле refund_items, содержащее json с возвращаемыми
+                        позициями. Формат аналогичен полю receipt_items из запроса на формирование оплаты.
+                    </p>
+                </article>
+                <article>
+                    <h4>Его содержание:</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Описание</th>
+                                <th>Обязательность</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td><code>initial_item</code></td>
+                            <td>ID айтема, по которому будет возврат, возвращается в коллбеке об оплате</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td><code>amount</code></td>
+                            <td>сумма возврата</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><code>quantity</code></td>
+                            <td>количество возврата</td>
+                            <td>+</td>
+                        </tr>
+                    </table>
+                </article>
+                <p>
+                    <b>
+                        Пример:
+                    </b>
+                    Была продажа с чеком
+                </p>
+                <pre>
+                	<code>
+[
+	{
+		"name": "Консультация",
+		"sno": "osn",
+		"payment_object": "service",
+		"payment_method": "full_prepayment",
+		"price": "1000",
+		"vat": "none",
+		"quantity": 1
+	},
+	{
+	"name": "Консультация доп.",
+		"sno": "osn",
+		"payment_object": "service",
+		"payment_method": "full_prepayment",
+		"price": "200",
+		"vat": "none",
+		"quantity": 5
+	}
+]
+                	</code>
+                </pre>
+                <p>Если нужно вернуть только 1 консультацию по 1000р (или все пять по 200р) — отправляем refund_item
+                    вида</p>
+                <pre>
+                	<code>
+{
+	"quantity": 1,
+	"initial_item": "01934a95-4edf-47aa-b177-4e7858b6b983"
+}
+
+//или
+
+{
+	"quantity": 5,
+	"initial_item": "a07534aff-43da-445a-b177-b4c395acb111"
+}
+                	</code>
+                </pre>
+                <p>
+                    Если нужно вернуть произвольную сумму, например 600р из 1000р по позиции Консультация (или 300р из
+                    400р за две из пяти шт. по позиции Консультация доп.) — отправляем так:
+                </p>
+                <pre>
+                	<code>
+{
+	"quantity": 1,
+	"initial_item": "01934a95-4edf-47aa-b177-4e7858b6b983",
+	"amount": 600
+}
+                	</code>
+                </pre>
+                <p>
+                    В таком случае сначала сформируется чек полного возврата позиции Консультация (на 1000р), а затем
+                    чек продажи позиции Консультация по новой цене (400р.). Покупателю на карту вернется 600р.
+                </p>
+                <p>
+                    <b>
+                        Во втором примере:
+                    </b>
+                </p>
+                <p>
+                    {
+                    "quantity": 2,
+                    "initial_item": "a07534aff-43da-445a-b177-b4c395acb111",
+                    "amount": 300
+                    }
+                </p>
+                <p>
+                    В таком случае сначала сформируется чек полного возврата двух шт. по позиции Консультация доп.
+                    (400р), а затем чек продажи позиции Консультация доп. по новой цене (на 100р, количество — 2, цена —
+                    50р). Покупателю на карту вернется 300р.
+                </p>
+            </article>
+            <!-- 54-ФЗ: Отправка чеков -->
+            <article id="acquiring-fz54">
+                <h3>54-ФЗ: Отправка чеков</h3>
+                <article>
+                    <h5>Список и расшифровка значений, отправляемых в списке товаров для чека</h5>
+                </article>
+                <article>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Описание</th>
+                                <th>Обязательность</th>
+                                <th>Формат</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td><code>name</code></td>
+                            <td>Наименование товара</td>
+                            <td>Да</td>
+                            <td>Максимум 128 символов</td>
+                        </tr>
+                        <tr>
+                            <td><code>quantity</code></td>
+                            <td>Количество</td>
+                            <td>Да</td>
+                            <td>Максимум 5 символов до запятой и 3 символа после запятой</td>
+                        </tr>
+                        <tr>
+                            <td><code>price</code></td>
+                            <td>Цена за единицу товара (рубли, в формате 10.99)</td>
+                            <td>Да</td>
+                            <td>Максимум 8 символов до запятой и 2 символа после запятой</td>
+                        </tr>
+                        <tr>
+                            <td><code>discount_sum</code></td>
+                            <td>Скидка на позицию (рубли, в формате 5.99)</td>
+                            <td>Нет</td>
+                            <td> Максимум 8 символов до запятой и 2 символа после запятой Используется только в работе
+                                через Модулькассу!</td>
+                        </tr>
+                        <tr>
+                            <td><code>sno</code></td>
+                            <td>Система налогообложения</td>
+                            <td>Да</td>
+                            <td>Поле принимает следующие значения:<br>
+                                1. osn — Общая СН<br>
+                                2. usn_income — Упрощенная СН (доходы)<br>
+                                3. usn_income_outcome — Упрощенная СН (доходы минус расходы)<br>
+                                4. envd — Единый налог на вмененный доход<br>
+                                5. esn — Единый сельскохозяйственный налог<br>
+                                6. patent— Патентная СН</td>
+                        </tr>
+                        <tr>
+                            <td><code>payment_object</code></td>
+                            <td>Предмет расчета</td>
+                            <td>Да</td>
+                            <td>Поле принимает следующие значения:<br>
+                                1. commodity — Товар<br>
+                                2. excise — Подакцизный товар<br>
+                                3. job — Работа<br>
+                                4. service — Услуга<br>
+                                5. gambling_bet — Ставка азартной игры<br>
+                                6. gambling_prize — Выигрыш азартной игры<br>
+                                7. lottery — Лотерейный билет<br>
+                                8. lottery_prize - Выигрыш лотереи<br>
+                                9. intellectual_activity — Предоставление результатов интеллектуальной деятельности<br>
+                                10. payment—Платеж<br>
+                                11.agent_commission — Агентское вознаграждение<br>
+                                12.composite — Составной предмет расчета<br>
+                                13. another — Другое</td>
+                        </tr>
+                        <tr>
+                            <td><code>payment_method</code></td>
+                            <td>Метод платежа</td>
+                            <td>Да</td>
+                            <td>Поле принимает следующие значения<br>
+                                1. full_prepayment — Предоплата 100%<br>
+                                2. prepayment — Предоплата<br>
+                                3. advance — Аван<br>
+                                4. full_payment — Полный расчет<br>
+                                5partial_payment — Частичный расчет и кредит<br>
+                                6. credit — Передача в кредит<br>
+                                7. credit_payment —Оплата кредита</td>
+                        </tr>
+                        <tr>
+                            <td><code>vat</code></td>
+                            <td>Ставка НДС</td>
+                            <td>Да</td>
+                            <td>Поле принимает следующие значения:<br>
+                                1. none — Без НДС<br>
+                                2. vat0 —НДС по ставке 0%<br>
+                                3. vat10 — НДС чека по ставке 10%<br>
+                                4. vat20 — НДС чека по ставке 20%<br>
+                                5. vat110 — НДС чека по расчетной ставке 10%<br>
+                                6. vat120 — НДС чека по расчетной ставке 20%<br>
+                                7. vat5 — НДС чека по ставке 5%<br>
+                                8. vat105 — НДС чека по расчетной ставке 5%<br>
+                                9. vat7 — НДС чека по ставке 7%<br>
+                                10. vat107 — НДС чека по расчетной ставке 7%</td>
+                        </tr>
+                        <tr>
+                            <td><code>nomenclature_code</code></td>
+                            <td>Код товара (тэг 1162)</td>
+                            <td>Нет</td>
+                            <td>Строка в шестнадцатеричном представлении с пробелами
+                                Максимальная длина — 32 байта<br>
+                                Пример: 00 00 00 01 00 21 FA 41 00 23 05 41 00 0 </td>
+                        </tr>
+                    </table>
+                    <p>
+                        Общая сумма позиций чека с учетом всех скидок должна совпадать с суммой, передаваемой в поле
+                        amount.
+                    </p>
+                    <p>
+                        Алгоритм округления итоговой суммы для чека с несколькими позициями:
+                    <ul>
+                        <li class="hui">
+                            Для каждой позиции считается price * quantity - discount_sum (если он есть);
+                        </li>
+                        <li class="hui">
+                            Полученная сумма для каждой позиции округляется по ROUND_HALF_UP;
+                        </li>
+                        <li class="hui">
+                            Сумма полученных округленных сумм по всем позициям должна совпадать со значением,
+                            передаваемым в поле amount платежного запроса.
+                        </li>
+                    </ul>
+                    </p>
+                    <p>
+                        <b>
+                            Пример json-объекта:
+                        </b>
+                    </p>
+                    <pre>
+                   		<code>
+[
+	{
+		"discount_sum": 40,
+		"name": "Товар 1",
+		"payment_method": "full_prepayment",
+		"payment_object": "commodity",
+		"price": 48,
+		"quantity": 10,
+		"sno": "osn",
+		"vat": "vat10"
+	},
+	{
+		"name": "Товар 2",
+		"payment_method": "full_prepayment",
+		"payment_object": "commodity",
+		"price": 533,
+		"quantity": 1,
+		"sno": "osn",
+		"vat": "vat10"
+	}
+]
+                   		</code>
+                   	</pre>
+
+                </article>
+            </article>
+        </section>
+        <!-- API Массовые Выплаты -->
+        <section id="api-payouts">
+            <h2>API Массовые Выплаты</h2>
+            <!-- Общая информация -->
+            <article id="payouts-general-info">
+                <h3>Общая информация</h3>
+                <article>
+                    <h4>Базовый адрес</h4>
+                    <p>Базовый URL для всех запросов: <code>https://pay.modulbank.ru/sp2/</code>.</p>
+                </article>
+                <article>
+                    <h4>Получение токена для авторизации запросов</h4>
+                    <p>
+                        Перед генерацией токена, пожалуйста, обратитесь в техническую поддержку или к сопровождающему
+                        менеджеру для настройки вашей организации и предоставления возможности формировать токен для
+                        расчётного счёта.
+                    </p>
+                    <p>
+                        <b>Генерация токена проводится в веб-версии ЛК банка: <a href="https://my.modulbank.ru">
+                                https://my.modulbank.ru </a></b>
+                    </p>
+                    <p>
+                        Нажмите кнопку "+" в верхней части экрана
+                    </p>
+                    <img src="./img/1.png">
+                    <br>
+                    <p>
+                        <b>Далее выберите пункт "Полное меню"</b>
+                    </p>
+                    <img src="./img/2.png">
+                    <p>
+                        <b>
+                            Перейдите в раздел "Генерация токена"
+                        </b>
+                    </p>|
+                    <img src="./img/3.png">
+                    <p>
+                        <b>Нажмите "Сгенерировать токен" для нужного расчётного счёта</b>
+                    </p>
+                    <img src="./img/4.png">
+                    <ul>
+                        <li class="list-item">
+                            Для каждого расчётного счёта генерируется отдельный токен
+                        </li>
+                        <li class="list-item">
+                            После закрытия слоя токен скрывается маской и не подлежит восстановлению
+                        </li>
+                        <li class="list-item">
+                            Генерация нового токена прекращает работу ранее созданного
+                        </li>
+                        <li class="list-item">
+                            Также можно открыть дополнительный Р/С в банке для проведения выплат и сгенерировать для
+                            него токен
+                        </li>
+                    </ul>
+                    <p>
+                        <b>
+                            Авторизация запросов
+                        </b>
+                    </p>
+                    <ul>
+                        <li class="list-item">
+                            Все запросы должны использовать авторизацию с помощью HTTP-хэдера: Authorization:
+                            {api_token}
+                        </li>
+                        <li class="list-item">
+                            Дополнительную информацию можно уточнить по ссылке:
+                            (https://pay.modulbank.ru/sp2/swagger/index.html)
+                        </li>
+                    </ul>
+                </article>
+            </article>
+            <!-- Работа со счётом -->
+            <article id="payouts-account">
+                <h3>Работа со счётом</h3>
+                <!-- Получение данных о счёте по фильтру -->
+                <article id="payouts-account-filter">
+                    <h4>Получение данных о счёте по фильтру</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Данный метод используется для получения детальной информации о счёте, для которого был
+                            сгенерирован токен. В запросе можно передавать один из параметров ОГРН/ИНН/Наименованию
+                            компании/Номер счёта</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">GET</span>api/accounts</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Наименование параметра</th>
+                                        <th>Описание</th>
+                                        <th>Тип</th>
+                                        <th>Расположение</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>Ogrn</code></td>
+                                        <td>ОГРН Орг-ции</td>
+                                        <td>string</td>
+                                        <td>query</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>Inn</code></td>
+                                        <td>ИНН Орг-ции</td>
+                                        <td>string</td>
+                                        <td>query</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>Name</code></td>
+                                        <td>Наименование Орг-ции</td>
+                                        <td>string</td>
+                                        <td>query</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>Number</code></td>
+                                        <td>Номер расчётного счёта</td>
+                                        <td>string</td>
+                                        <td>query</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+  "status": "string", // Статус обработки запроса нашим сервисом, string, ok/fail
+  "data": [
+    {
+      "id": "e577840a-54a2-4d96-886f-2a1dd050e0eb", //Уникальный идентификатор счёта, string, guid
+      "ogrn": "1021929129694", //ОГРН Орг-ции, string, nullable: true
+      "inn": "1473593687", //ИНН Орг-ции, string, nullable: true
+      "kpp": "107643484", //КПП Орг-ции, string, nullable: true
+      "name": "ПАО Бесконечность и Ъ", //Наименование Орг-ции, string, nullable: true
+      "number": "40802840933229274281", //Номер расчётного счета, string, nullable: true
+      "status": enabled, //Статус расчётного счёта, string, none/submitted/processing/enabled/failed
+      "balance": 10 //Доступный баланс на счёта, decimal
+    }
+  ]
+}
+</code></pre>
+                    </article>
+                    <article>
+                        <h5>Расшифровка статусов счёта</h5>
+                        <ul class="no-bullets">
+                            <li><code>enable</code>: Открыт</li>
+                            <li><code>frozen</code>: Заблокированный счёт</li>
+                        </ul>
+                    </article>
+                </article>
+                <!-- Получение данных по ID расчётного счёта -->
+                <article id="payouts-account-id">
+                    <h4>Получение данных по ID расчётного счёта</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Получите детальную информацию о конкретном счёте.</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">GET</span>accounts/{id_счета}</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Уникальный идентификатор счёта</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+	"status": "string", //Статус обработки запроса нашим сервисом, Значение: ok, fail
+	"data": [
+	{
+		"id": "e577840a-54a2-4d96-886f-2a1dd050e0eb", //Уникальный идентификатор счёта, строка в формате guid
+		"ogrn": "1021929129694", //ОГРН Орг-ции, string nullable: true
+		"inn": "1473593687",//ИНН Орг-ции, string nullable: true
+		"kpp": "107643484",//КПП Орг-ции, string nullable: true
+		"name": "ПАО Бесконечность и Ъ",//Наименование Орг-ции, string nullable: true
+		"number": "string", //Номер расчётного счета
+		"status": "none", //Статус счёта, возможные значения: none, submitted, processing, enabled, failed
+		"balance": 0 //decimal
+	}
+	]
+}
+</code></pre>
+                    </article>
+                </article>
+            </article>
+            <!-- Работа с картой -->
+            <article id="payouts-card">
+                <h3>Работа с картой</h3>
+                <!-- Присвоение токена для карты -->
+                <article id="payouts-card-token">
+                    <h4>Присвоение токена для карты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>В запросе передаётся PAN-номер карты для сохранения в нашей системе/присваивается токен, по
+                            которому можно производить выплату</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">POST</span>api/cards</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Ограничение</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>pan</code></td>
+                                        <td><code>string</code></td>
+                                        <td>PAN-номер карты</td>
+                                        <td>от 12 до 20 цифр</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Запрос</h5>
+                        <pre><code><span class="method_request">POST</span>api/cards</code></pre>
+                        <pre><code>{
+	"pan": "string"
+}
+</code></pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+	"status": "string",//Статус обработки запроса нашим сервисом, ok or fail
+	"data": {
+		"id": "string",//Уникальный идентификатор
+		"token": "string"//Токен карты, который будет использоваться для запросов на выплату
+	}
+}
+</code></pre>
+                    </article>
+                </article>
+                <!-- Запрос формы для токенизации карты -->
+                <article id="payouts-card-form">
+                    <h4>Запрос формы для токенизации карты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Создает сессию для сохранения номера карты с заданным card_token, введённый держателем карты.
+                            Имеет ограниченное время</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">POST</span>api/cards/tokens</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Ограничение</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>lifetime_sec</code></td>
+                                        <td><code>int32</code></td>
+                                        <td>Время жизни сессии для ввода данных карты в секундах</td>
+                                        <td>от 30 секунд до 24 часов</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>redirect_url</code></td>
+                                        <td><code>string</code></td>
+                                        <td>URL для перенаправления держателя карты в случае успешной токензации карты
+                                        </td>
+                                        <td>nullable: true</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>callback_url</code></td>
+                                        <td><code>string</code></td>
+                                        <td>URL для серверного коллбэка после успешной токенизации карты</td>
+                                        <td>nullable: true</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <pre>
+                    		<code>
+{
+	"lifetime_sec": 0,
+	"redirect_url": "string",
+	"callback_url": "string"
+}
+                    		</code>
+                    	</pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+	"status": "string",//Статус обработки запроса нашим сервисом, ok or fail
+	"data": {
+		"id": "string",//Идентификатор запроса токена. По нему можно проверить статус сохранерия карты отдельным запросом, guid
+		"card_token": "string",//Токен карты для последующих запросов, guid
+		"status": "wait_pan",//Статус сохранения Pan карты. "wait_pan" - ожидает ввода данных карты
+		"form_url": "string",//Уникальный URL формы токенизации карт для перерадресации на него держателя карты, чтобы он ввёл номер карты для хранения в системе
+		"lifetime_sec": 0,//Возвращает значение переданное в запросе
+		"redirect_url": "string",//Возвращает значение переданное в запросе
+		"callback_url": "string",//Возвращает значение переданное в запросе
+	}
+}
+</code></pre>
+                    </article>
+                    <article>
+                        <h5>Cтраница с формой для ввода карты</h5>
+                        <p>
+                            <img src="./img/form_token.jpg">
+                        </p>
+                    </article>
+                    <article>
+                        <h5>Cтраница с истёкшим временем</h5>
+                        <p>
+                            <img src="./img/form_time_left.jpg">
+                        </p>
+                    </article>
+                    <article>
+                        <h5>Страница успешного сохранения</h5>
+                        <p>
+                            <img src="./img/form_success.jpg">
+                        </p>
+                    </article>
+                </article>
+                <!-- Проверка статуса сохранения номера карты -->
+                <article id="payouts-card-status">
+                    <h4>Проверка статуса сохранения номера карты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Используется для уточнения статуса сохранения карты по иденитификатору запроса токена.
+                            Используется значение, которое содержалось в ответе "Запрос формы для токенизации карты"</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">GET</span>cards/tokens/{id_токена}</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td><code>string(guid)</code></td>
+                                        <td>иденитификатор токена</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+	"status": "string",//Статус обработки запроса нашим сервисом, ok or fail
+	"data": {
+		"id": "string",//Идентификатор запроса токена. По нему можно проверить
+		статус сохранерия карты отдельным запросом.
+		"card_token": "string",//Токен карты для последующих запросов, guid
+		"status": "wait_pan",//Статус сохранения Pan карты
+		"form_url": "string",//Уникальный URL формы токенизации карт для
+		перерадресации на него держателя карты, чтобы он ввёл номер карты для
+		хранения в системе
+		"lifetime_sec": 0,//Возвращает значение переданное в запросе
+		"redirect_url": "string",//Возвращает значение переданное в запросе
+		"callback_url": "string",//Возвращает значение переданное в запросе
+		"pan_mask": "string",//Pan-маска карты
+		"pan_hash": "string"//Хэш PAN'а токенизированной карты. При сохранении
+		двух одинаковых картах будет одинаковое значение. По значению этого
+		параметра можно настроить отсеить хранение токенов для одинаковых карт.
+	}
+}</code></pre>
+                    </article>
+                </article>
+
+            </article>
+            <!-- Выплата на карту -->
+            <article id="payouts-card-payment">
+                <h3>Выплата на карту</h3>
+                <p>
+                    Платеж обрабатывается асинхронно, узнать статус можно в методе получения статуса выплаты
+                </p>
+                <!-- Запрос выплаты на карту -->
+                <article id="payouts-card-request">
+                    <h4>Запрос выплаты на карту</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Создайте выплату на карту.</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">POST</span>api/payouts</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Ограничение</th>
+                                        <th>Примечание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>pan</code></td>
+                                        <td><code>string</code></td>
+                                        <td>PAN-номер карты</td>
+                                        <td>от 12 до 20 символов</td>
+                                        <td rowspan="2">Обязательно <br>Передаётся только один из параметров</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>card_token</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Идентификатор токена карты</td>
+                                        <td>guid</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>account_id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Идентификатор счёта</td>
+                                        <td>guid</td>
+                                        <td rowspan="2">Обязательно <br>Передаётся только один из параметров</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>account_number</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Номер расчётного счета</td>
+                                        <td>maxLength: 20</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>amount</code></td>
+                                        <td><code>Number</code></td>
+                                        <td>Сумма выплаты (в рублях)</td>
+                                        <td>minimum: 1, maximum: 999999999</td>
+                                        <td>Обязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Описание платежа. Используется для назначения платежа в банковском ордере.
+                                        </td>
+                                        <td>minLength: 1, maxLength: 8192</td>
+                                        <td>Обязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>phone</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Телефон получателя</td>
+                                        <td>maxLength: 50</td>
+                                        <td>Необязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>oId</code></td>
+                                        <td><code>string</code></td>
+                                        <td>ID выплаты в вашей системе</td>
+                                        <td>maxLength: 50</td>
+                                        <td>Необязательно <br> Может использоваться для дедуплицирования запросов.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>sender_name</code></td>
+                                        <td><code>object</code></td>
+                                        <td>Данные отправителя выплаты</td>
+                                        <td> </td>
+                                        <td>Необязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ first_name</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Имя отправителя</td>
+                                        <td>minLength: 1, maxLength: 100</td>
+                                        <td rowspan="2">Обязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ last_name</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Фамилия отправителя</td>
+                                        <td>minLength: 1, maxLength: 100</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>sender_address</code></td>
+                                        <td><code>object</code></td>
+                                        <td>Юр.адрес отправителя выплаты</td>
+                                        <td> </td>
+                                        <td>Необязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ zip</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Индекс отправителя</td>
+                                        <td>minLength: 1, maxLength: 9</td>
+                                        <td rowspan="3">Обязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ city</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Город отправителя</td>
+                                        <td>minLength: 1, maxLength: 100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ street</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Адрес отправителя(улица, дом, офис и т.д.)</td>
+                                        <td>minLength: 1, maxLength: 100</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>sender_phone</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Телефон отправителя выплаты</td>
+                                        <td>maxLength: 15</td>
+                                        <td>Необязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>recipient_name</code></td>
+                                        <td><code>object</code></td>
+                                        <td>Данные получателя выплаты</td>
+                                        <td> </td>
+                                        <td>Необязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ first_name</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Имя получателя</td>
+                                        <td>minLength: 1, maxLength: 100</td>
+                                        <td rowspan="2">Обязательно</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <pre><code> ∟ last_name</code></pre>
+                                        </td>
+                                        <td><code>string</code></td>
+                                        <td>Фамилия получателя</td>
+                                        <td>minLength: 1, maxLength: 100</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <p>
+                        <pre><code>
+{
+	"account_id": "string",
+	"account_number": "string",
+	"pan": "stringstring",
+	"card_token": "string",
+	"amount": 999999999,
+	"description": "string",
+	"phone": "string",
+	"oid": "string",
+	"sender_address": {
+		"zip": "string",
+		"city": "string",
+		"street": "string"
+	},
+	"sender_name": {
+		"first_name": "string",
+		"last_name": "string"
+	},
+	"sender_phone": "string",
+	"recipient_name": {
+		"first_name": "string",
+		"last_name": "string"
+	}
+}
+
+                        	</code></pre>
+                        </p>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+	"status": "string", //Статус обработки запроса нашим сервисом,
+	"data": {
+		"id": "string" //Уникальный идентификатор выплаты для проверки статуса, guid
+	}
+}
+</code></pre>
+                    </article>
+                </article>
+
+                <!-- Получение статуса выплаты -->
+                <article id="payouts-card-status-check">
+                    <h4>Получение статуса выплаты</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Используется для проверки статуса выплаты</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">GET</span>api/payouts/{id_выплаты}</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Ограничение</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Идентификатор выплаты</td>
+                                        <td>guid</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+	"status": "string", //Значение: completed, failed."data": {
+		"id": "string",
+		"status": "string",
+		"transactions": [
+			{
+				"id": "string",
+				"account_number": "string", //Номер расчётного счета
+				"amount": 0,
+				"commission": 0,
+				"description": "string", //Содержит описание платежа, string, minLength: 1, maxLength: 8192
+				"status": "string", //string, nullable: true, Значение: completed, in_progress, failed
+				"reason": "string", //string, nullable: true
+				"reason_code": "string", //string, nullable: true, значения: ERR_PAYMENT_GATE_FAILUREorVALIDATION_FAILED
+				"gate": "string", //nullable: true,
+				"created": "2021-04-20T10:08:28.920Z"
+			}
+		]
+	}
+}
+</code></pre>
+                    </article>
+                </article>
+                <!-- Получение списка выплат -->
+                <article id="payouts-card-list">
+                    <h4>Получение списка выплат</h4>
+                    <article>
+                        <h5>Параметры</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>date_from</code></td>
+                                        <td><code>string</code></td>
+                                        <td>Дата начала периода</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>[
+    {
+        "payout_id": "payout123",
+        "amount": 1000.00,
+        "status": "completed"
+    }
+]</code></pre>
+                    </article>
+                </article>
+                <!-- Коды ошибок -->
+                <article id="payouts-card-errors">
+                    <h4>Коды ошибок</h4>
+                    <ul class="no-bullets">
+                        <li><code>401 Unauthorized</code>: Неверный токен</li>
+                        <li><code>404 Not Found</code>: Счёт не найден</li>
+                    </ul>
+                </article>
+            </article>
+            <!-- Выплаты по номеру телефона (СБП: B2C) -->
+            <article id="payouts-sbp">
+                <h3>Выплаты по номеру телефона (СБП: B2C)</h3>
+                <p>
+                    Платежи СБП B2C - это переводы средств со счета организации на карту физических лиц по номеру
+                    телефона через НСПК. Для использования выплат СБП B2C необходимо заново сгенерировать токен доступа
+                    в ЛК банка, в случае, если он бы создан до 6 дек. 2021 г. Это связано с тем, что для работы СБП
+                    нужны дополнительные данные о компании, которых старые токены не имеют.
+                </p>
+                <!-- Регистрация ЮЛ в СБП -->
+                <article id="payouts-sbp-register">
+                    <h4>Регистрация ЮЛ в СБП</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Создание запроса на регистрацию юридического лица в Системе Быстрых Платежей. Регистрация
+                            необходима для работы функции проверки возможности перевода по номеру телефона в
+                            определенный банк. При осуществлении первой выплаты в случае, если юр. лицо не
+                            зарегистрировано, регистрация будет проведена автоматически.</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">POST</span>api/sbp/legal-entity/register</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <p>Без параметров</p>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <pre><code><span class="method_request">POST</span>https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code></pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+"status": "success"
+}
+</code></pre>
+                    </article>
+                </article>
+                <article id="payouts-sbp-register">
+                    <h4>Получение статуса регистрации ЮЛ в СБП</h4>
+                    <article>
+                        <h5>Описание</h5>
+                        <p>Получение статуса регистрации юридического лица в Системе Быстрых Платежей</p>
+                    </article>
+                    <article>
+                        <h5>Адрес</h5>
+                        <p><code><span class="method_request">GET</span>api/sbp/legal-entity/status</code></p>
+                    </article>
+                    <article>
+                        <h5>Параметры</h5>
+                        <p>Без параметров</p>
+                    </article>
+                    <article>
+                        <h5>Структура ответа</h5>
+                        <p>
+
+                        </p>
+                    </article>
+                    <article>
+                        <h5>Пример запроса</h5>
+                        <pre><code><span class="method_request">POST</span>https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code></pre>
+                    </article>
+                    <article>
+                        <h5>Ответ</h5>
+                        <pre><code>{
+"status": "success"
+}
+</code></pre>
+                    </article>
+                </article>
+            </article>
+
+        </section>
+        <!-- Подключение Bootstrap JS и Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script_calc.js"></script>
+        <script src="script.js"></script>
+    </div>
+</body>
+
+</html>
