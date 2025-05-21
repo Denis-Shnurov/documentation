@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Документация API</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-white text-gray-800">
   <div class="min-h-screen flex flex-col">
     <!-- Top bar for mobile -->
     <header class="md:hidden flex items-center justify-between px-4 py-3 border-b">
       <button id="menu-btn" class="text-gray-500 focus:outline-none">
         <svg class="h-6 w-6" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-      <img src="https://imgproxy.prod.ya.magnit.ru/OjGa6OieyrRylYKFP5Rn51vFgMiC8ngVtgpuawk4IwY/fit/0/0/ce/0/MmVjN2QxYTctZTQ5/OS01NWJkLTk4MGEt/YTFkNjIzMDZiMDFk/LnBuZw" class="h-8 w-8 rounded" alt="Логотип компании">
+      <img
+        src="https://imgproxy.prod.ya.magnit.ru/OjGa6OieyrRylYKFP5Rn51vFgMiC8ngVtgpuawk4IwY/fit/0/0/ce/0/MmVjN2QxYTctZTQ5/OS01NWJkLTk4MGEt/YTFkNjIzMDZiMDFk/LnBuZw"
+        class="h-8 w-8 rounded" alt="Логотип компании">
     </header>
     <div class="flex flex-1">
       <!-- Sidebar -->
@@ -25,11 +28,12 @@
         <div class="flex flex-col h-full">
           <!-- Logo -->
           <div class="flex items-center h-16 px-6 border-b">
-            <img src="https://imgproxy.prod.ya.magnit.ru/OjGa6OieyrRylYKFP5Rn51vFgMiC8ngVtgpuawk4IwY/fit/0/0/ce/0/MmVjN2QxYTctZTQ5/OS01NWJkLTk4MGEt/YTFkNjIzMDZiMDFk/LnBuZw" alt="Логотип компании" class="h-10 w-auto rounded">
+            <img
+              src="https://imgproxy.prod.ya.magnit.ru/OjGa6OieyrRylYKFP5Rn51vFgMiC8ngVtgpuawk4IwY/fit/0/0/ce/0/MmVjN2QxYTctZTQ5/OS01NWJkLTk4MGEt/YTFkNjIzMDZiMDFk/LnBuZw"
+              alt="Логотип компании" class="h-10 w-auto rounded">
             <button id="close-sidebar" class="absolute right-4 md:hidden">
               <svg class="h-6 w-6 text-gray-500" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
@@ -39,59 +43,109 @@
             <div>
               <div class="text-sm font-bold text-gray-700 mb-2">API Интернет-эквайринг</div>
               <ul class="space-y-1">
-                <li><a href="#signature-algorithm" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Алгоритм вычисления поля signature</a></li>
-                <li><a href="#signature-examples" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Примеры расчёта signature на разных языках</a></li>
-                <li><a href="#signature-calculator" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Калькулятора signature</a></li>
-                <li><a href="#payment-request" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на оплату</a></li>
-                <li><a href="#hold-2step" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Холдирование (двухстадийный платёж)</a></li>
-                <li><a href="#recurring-payments" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Рекуррентные платежи</a></li>
-                <li><a href="#bill-link" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Создание счёт-ссылки</a></li>
-                <li><a href="#bill-info" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение информации о выставленном счёте</a></li>
-                <li><a href="#sbp-qr" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">СБП: Получение QR-кода или ссылки напрямую</a></li>
-                <li><a href="#transaction-notifications" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Уведомления о транзакциях</a></li>
-                <li><a href="#transactions-list" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение списка транзакций</a></li>
-                <li><a href="#transaction-info" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение информации о транзакции</a></li>
-                <li><a href="#full-refund" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на полную отмену платежа</a></li>
-                <li><a href="#partial-refund" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на частичную отмену платежа</a></li>
-                <li><a href="#54fz" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">54-ФЗ: Отправка чеков</a></li>
+                <li><a href="#common-description" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Общее
+                    описание</a></li>
+                <li><a href="#integration-methods"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Доступные методы для интеграции</a>
+                </li>
+                <li><a href="#interaction-process"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Общий порядок взаимодействия</a>
+                </li>
+                <li><a href="#signature-algorithm"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Алгоритм вычисления поля
+                    signature</a></li>
+                <li><a href="#signature-examples"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Примеры расчёта signature на разных
+                    языках</a></li>
+                <li><a href="#signature-calculator"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Калькулятора signature</a></li>
+                <li><a href="#payment-request"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на оплату</a>
+                </li>
+                <li><a href="#hold-2step" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Холдирование
+                    (двухстадийный платёж)</a></li>
+                <li><a href="#recurring-payments"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Рекуррентные платежи</a></li>
+                <li><a href="#bill-link" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Создание
+                    счёт-ссылки</a></li>
+                <li><a href="#bill-info" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение
+                    информации о выставленном счёте</a></li>
+                <li><a href="#sbp-qr" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">СБП: Получение
+                    QR-кода или ссылки напрямую</a></li>
+                <li><a href="#transaction-notifications"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Уведомления о транзакциях</a></li>
+                <li><a href="#transactions-list"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение списка транзакций</a>
+                </li>
+                <li><a href="#transaction-info"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение информации о
+                    транзакции</a></li>
+                <li><a href="#full-refund" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование
+                    запроса на полную отмену платежа</a></li>
+                <li><a href="#partial-refund"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на частичную
+                    отмену платежа</a></li>
+                <li><a href="#54fz" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">54-ФЗ: Отправка
+                    чеков</a></li>
               </ul>
             </div>
             <!-- API Массовые Выплаты -->
             <div>
               <div class="text-sm font-bold text-gray-700 mb-2">API Массовые Выплаты</div>
               <ul class="space-y-1">
-                <li><a href="#payouts-intro" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Введение</a></li>
-                <li><a href="#payouts-auth" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Авторизация запросов</a></li>
-                <li><a href="#payouts-account" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Работа со счётом</a>
+                <li><a href="#payouts-intro"
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Введение</a></li>
+                <li><a href="#payouts-auth" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Авторизация
+                    запросов</a></li>
+                <li><a href="#payouts-account" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Работа
+                    со счётом</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
-                    <li><a href="#account-filter" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение данных о счёте по фильтру</a></li>
-                    <li><a href="#account-id" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение данных по ID расчётного счёта</a></li>
+                    <li><a href="#account-filter" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение данных
+                        о счёте по фильтру</a></li>
+                    <li><a href="#account-id" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение данных по
+                        ID расчётного счёта</a></li>
                   </ul>
                 </li>
-                <li><a href="#payouts-card" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Работа с картой</a>
+                <li><a href="#payouts-card" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Работа с
+                    картой</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
-                    <li><a href="#card-token" class="block px-3 py-2 rounded-md hover:bg-gray-100">Присвоение токенa для карты</a></li>
-                    <li><a href="#card-tokenize-form" class="block px-3 py-2 rounded-md hover:bg-gray-100">Запрос формы для токенизации карты</a></li>
-                    <li><a href="#card-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Проверка статуса сохранения номера карты</a></li>
+                    <li><a href="#card-token" class="block px-3 py-2 rounded-md hover:bg-gray-100">Присвоение токенa для
+                        карты</a></li>
+                    <li><a href="#card-tokenize-form" class="block px-3 py-2 rounded-md hover:bg-gray-100">Запрос формы
+                        для токенизации карты</a></li>
+                    <li><a href="#card-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Проверка статуса
+                        сохранения номера карты</a></li>
                   </ul>
                 </li>
-                <li><a href="#payouts-to-card" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты по номеру карты</a>
+                <li><a href="#payouts-to-card" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты
+                    по номеру карты</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
-                    <li><a href="#card-payout" class="block px-3 py-2 rounded-md hover:bg-gray-100">Запрос выплаты на карту</a></li>
-                    <li><a href="#card-payout-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение статуса выплаты</a></li>
-                    <li><a href="#card-payout-list" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение списка выплат</a></li>
+                    <li><a href="#card-payout" class="block px-3 py-2 rounded-md hover:bg-gray-100">Запрос выплаты на
+                        карту</a></li>
+                    <li><a href="#card-payout-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение
+                        статуса выплаты</a></li>
+                    <li><a href="#card-payout-list" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение
+                        списка выплат</a></li>
                     <li><a href="#card-errors" class="block px-3 py-2 rounded-md hover:bg-gray-100">Коды ошибок</a></li>
                   </ul>
                 </li>
-                <li><a href="#payouts-sbp" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты по номеру телефона (СБП: B2C)</a>
+                <li><a href="#payouts-sbp" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты по
+                    номеру телефона (СБП: B2C)</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
-                    <li><a href="#sbp-register" class="block px-3 py-2 rounded-md hover:bg-gray-100">Регистрация ЮЛ в СБП</a></li>
-                    <li><a href="#sbp-register-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение статуса регистрации ЮЛ в СБП</a></li>
-                    <li><a href="#sbp-recipient-validate" class="block px-3 py-2 rounded-md hover:bg-gray-100">Валидация реквизитов получателя</a></li>
-                    <li><a href="#sbp-bank-list" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получения списка банковучастников</a></li>
-                    <li><a href="#sbp-payout-create" class="block px-3 py-2 rounded-md hover:bg-gray-100">Создание выплаты по номеру телефона</a></li>
-                    <li><a href="#sbp-payout-by-id" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение выплаты по ID</a></li>
-                    <li><a href="#sbp-payout-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Статусы выплат</a></li>
+                    <li><a href="#sbp-register" class="block px-3 py-2 rounded-md hover:bg-gray-100">Регистрация ЮЛ в
+                        СБП</a></li>
+                    <li><a href="#sbp-register-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение
+                        статуса регистрации ЮЛ в СБП</a></li>
+                    <li><a href="#sbp-recipient-validate" class="block px-3 py-2 rounded-md hover:bg-gray-100">Валидация
+                        реквизитов получателя</a></li>
+                    <li><a href="#sbp-bank-list" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получения списка
+                        банковучастников</a></li>
+                    <li><a href="#sbp-payout-create" class="block px-3 py-2 rounded-md hover:bg-gray-100">Создание
+                        выплаты по номеру телефона</a></li>
+                    <li><a href="#sbp-payout-by-id" class="block px-3 py-2 rounded-md hover:bg-gray-100">Получение
+                        выплаты по ID</a></li>
+                    <li><a href="#sbp-payout-status" class="block px-3 py-2 rounded-md hover:bg-gray-100">Статусы
+                        выплат</a></li>
                   </ul>
                 </li>
               </ul>
@@ -104,21 +158,739 @@
         <!-- Search Bar -->
         <div class="max-w-3xl mx-auto mb-8 relative">
           <label for="search" class="sr-only">Поиск по документации</label>
-          <input id="search" name="search" type="search" autocomplete="off"
-            placeholder="Поиск по документации..."
-            class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-            />
+          <input id="search" name="search" type="search" autocomplete="off" placeholder="Поиск по документации..."
+            class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
           <!-- Dropdown for search results -->
           <div id="search-dropdown"
             class="absolute z-50 left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto hidden">
             <!-- Results will be injected here -->
           </div>
         </div>
-        <!-- Content (оставьте как было ранее, либо добавьте свои разделы) -->
-        <!-- ... -->
+        <!-- Content: Статьи -->
+        <section id="common-description" class="max-w-3xl mx-auto mb-12" data-title="Общее описание"
+          data-keywords="описание интеграция онлайн оплата шлюз">
+          <h2 class="text-2xl font-semibold mb-4">Общее описание</h2>
+          <p class="text-gray-700 mb-4">
+            Эта документация предназначена для настройки онлайн оплаты в самостоятельно разработанной системе или
+            интеграции с платформой управления сайтом, для которой нет готового решения.
+          </p>
+        </section>
+        <section id="integration-methods" class="max-w-3xl mx-auto mb-12" data-title="Доступные методы для интеграции"
+          data-keywords="методы интеграция оплата холдирование рекуррентный платёж отмена транзакция">
+          <h2 class="text-xl font-semibold mb-4">Доступные методы для интеграции</h2>
+          <p class="text-gray-700 mb-4">Настройте необходимый функционал для решения бизнес потребностей:</p>
+          <ol class="list-decimal pl-6 space-y-2 mb-6 text-gray-700">
+            <li>
+              <span class="font-semibold">Одностадийный платёж:</span>
+              Классический онлайн-платёж, который позволяет принимать оплату сразу после формирования заказа.
+            </li>
+            <li>
+              <span class="font-semibold">Холдирование:</span>
+              С помощью этого способа вы сможете зарезервировать необходимую сумму на карте плательщика, а после
+              согласования заказа подтвердить списание полной или частичной суммы.
+            </li>
+            <li>
+              <span class="font-semibold">Рекуррентный платёж:</span>
+              Этот метод позволяет отправлять периодические запросы на списание с сохранённой карты клиента без
+              повторного подтверждения. Как правило используется для реализации подписной модели.
+            </li>
+            <li>
+              <span class="font-semibold">Формирование счёт-ссылки:</span>
+              Плательщику можно отправить письмо на электронную почту, в которой будет ссылка для удобной оплаты в любой
+              момент.
+            </li>
+            <li>
+              <span class="font-semibold">Формирование запроса на полную или частичную отмену платежа:</span>
+              В случае отказа от части или всего заказа вы можете отменить необходимую сумму.
+            </li>
+            <li>
+              <span class="font-semibold">Получение информации о транзакциях:</span>
+              Получение списка операций и их актуальных статусов. Можно использовать для сверки статуса во внешней
+              системе.
+            </li>
+          </ol>
+        </section>
+        <section id="interaction-process" class="max-w-3xl mx-auto mb-12" data-title="Общий порядок взаимодействия"
+          data-keywords="порядок взаимодействие запрос платеж страница callback">
+          <h2 class="text-xl font-semibold mb-4">Общий порядок взаимодействия</h2>
+          <ol class="list-decimal pl-6 space-y-2 mb-6 text-gray-700">
+            <li>
+              В зависимости от особенностей оформления заказа сервис партнера формирует запрос для направления
+              плательщика на платежную страницу с помощью <span class="font-semibold">POST-запроса</span>, в котором
+              передаются:
+              <ul class="list-disc pl-6 mt-2">
+                <li>Данные о платеже</li>
+                <li>ID партнёра</li>
+                <li>URL для возврата пользователя</li>
+                <li>Криптографическая подпись (signature):
+                  <br>
+                  <span class="text-gray-600">Важно: Для расчёта используется «Идентификатор магазина» + «Рабочий
+                    секретный ключ» ИЛИ «Тестовый секретный ключ». Для получения данных воспользуйтесь
+                    инструкцией.</span>
+                </li>
+              </ul>
+            </li>
+            <li>
+              Пользователь заполняет платёжные данные на странице, проходит 3-DS аутентификацию (при необходимости), и
+              завершает платеж.
+            </li>
+            <li>
+              Пользователь перенаправляется по адресу, указанному в п.1.
+            </li>
+            <li>
+              Интернет-эквайринг уведомляет партнёра о совершении транзакции (по электронной почте, с помощью
+              callback-запроса — в зависимости от настроек).
+            </li>
+          </ol>
+        </section>
+
+        <!-- Новая статья: Алгоритм вычисления поля signature -->
+        <section id="signature-algorithm" class="max-w-3xl mx-auto mb-12"
+          data-title="Алгоритм вычисления поля signature"
+          data-keywords="signature подпись алгоритм целостность аутентификация sha1 base64 секретный ключ">
+          <h2 class="text-2xl font-semibold mb-2">Алгоритм вычисления поля <code>signature</code></h2>
+          <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
+          <p class="text-gray-700 mb-4">
+            В каждом запросе со стороны вашего сервиса обязательно передаётся поле <b>signature</b> с уникальным
+            значением. Значение этого поля используется для проверки целостности сообщения и аутентификации запроса.
+          </p>
+          <p class="text-gray-700 mb-4">
+            Для формирования потребуется секретный ключ, который выдается в личном кабинете банка. В тестовом режиме
+            используйте тестовый секретный ключ. При выполнении любого запроса значение поля формируется на стороне
+            вашего ресурса на основе тех полей, которые будут отправлены в API.
+          </p>
+          <p class="text-gray-700 mb-4">
+            На стороне эквайринга сигнатура формируется аналогичным образом на основе полей, полученных от внешнего
+            источника, значения для параметра <code>testing</code> и вашего секретного ключа. Так, сигнатура, пришедшая
+            в форме от магазина, и сигнатура, высчитанная на стороне интернет-эквайринга, должны оказаться одинаковыми,
+            иначе сервис выдаст ошибку.
+          </p>
+          <p class="text-gray-700 mb-4">
+            <b>Удостоверьтесь, что все поля, передаваемые в html-форме, участвуют в расчете сигнатуры.</b> Первым шагом
+            при вычислении поля <code>signature</code> является формирование строки, которая содержит все значения не
+            пустых полей, передаваемые в запросе. Эта строка имеет вид <code>field1=value1&amp;field2=value2</code>, в
+            которой поля (строчными буквами) и их значения перечислены в алфавитном порядке, а значения закодированы с
+            помощью алгоритма base64.
+          </p>
+          <p class="text-gray-700 mb-4">
+            Затем от этой строки необходимо вычислить подпись с помощью хеш-функции <b>SHA1</b>, следующим образом:<br>
+            <code>SHA1(secret_key + SHA1(secret_key + values))</code>
+          </p>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример вычисления поля signature</h3>
+          <ol class="list-decimal pl-6 space-y-2 mb-6 text-gray-700">
+            <li>
+              <b>Первое действие</b>
+              <div class="text-sm text-gray-600 mb-2">Рассмотрим вычисление поля <b>signature</b> на примере следующего
+                запроса:</div>
+              <div class="overflow-x-auto mb-2">
+                <table class="w-full border text-sm bg-gray-50 rounded">
+                  <tbody>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">merchant</td>
+                      <td class="px-2 py-1">ad25ef06-1824-413f-8ef1-c08115b9b979</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">amount</td>
+                      <td class="px-2 py-1">973</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">order_id</td>
+                      <td class="px-2 py-1">14425840</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">description</td>
+                      <td class="px-2 py-1">Заказ №14425840</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">success_url</td>
+                      <td class="px-2 py-1">http://myawesomesite.com/payment_success</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">unix_timestamp</td>
+                      <td class="px-2 py-1">1573451160</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">salt</td>
+                      <td class="px-2 py-1">dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">testing</td>
+                      <td class="px-2 py-1">1</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">client_phone</td>
+                      <td class="px-2 py-1">+7 912 9876543</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">client_email</td>
+                      <td class="px-2 py-1">test@test.ru</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">receipt_contact</td>
+                      <td class="px-2 py-1">test@mail.com</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">receipt_items</td>
+                      <td class="px-2 py-1">[{"discount_sum":...}, ...]</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">callback_url</td>
+                      <td class="px-2 py-1">(пусто)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+            <li>
+              <b>Второе действие</b>
+              <div class="text-sm text-gray-600 mb-2">
+                Все значения кодируются в base64:
+              </div>
+              <div class="overflow-x-auto mb-2">
+                <table class="w-full border text-sm bg-gray-50 rounded">
+                  <tbody>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">merchant</td>
+                      <td class="px-2 py-1">YWQyNWVmMDYtMTgyNC00MTNmLThlZjEtYzA4MTE1YjliOTc5</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">amount</td>
+                      <td class="px-2 py-1">OTcz</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">order_id</td>
+                      <td class="px-2 py-1">MTQ0MjU4NDA=</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">description</td>
+                      <td class="px-2 py-1">0JfQsNC60LDQtyDihJYxNDQyNTg0MA==</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">success_url</td>
+                      <td class="px-2 py-1">aHR0cDovL215YXdlc29tZXNpdGUuY29tL3BheW1lbnRfc3VjY2Vzcw==</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">unix_timestamp</td>
+                      <td class="px-2 py-1">MTU3MzQ1MTE2MA==</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">salt</td>
+                      <td class="px-2 py-1">ZFBVVEx0Yk1mY1RHemthQm5HdHNlS2xjUXltQ0xyWUk=</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">testing</td>
+                      <td class="px-2 py-1">MQ==</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">client_phone</td>
+                      <td class="px-2 py-1">KzcgOTEyIDk4NzY1NDM=</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">client_email</td>
+                      <td class="px-2 py-1">dGVzdEB0ZXN0LnJ1</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">receipt_contact</td>
+                      <td class="px-2 py-1">dGVzdEBtYWlsLmNvbQ==</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">receipt_items</td>
+                      <td class="px-2 py-1">
+                        W3siZGlzY291bnRfc3VtIjogNDAsICJuYW1lIjogItCi0L7QstCw0YAgMSIsICJwYXltZW50X21ldGhvZCI6ICJmdWxsX3ByZXBheW1lbnQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5IiwgInByaWNlIjogNDgsICJxdWFudGl0eSI6IDEwLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifSwgeyJuYW1lIjogItCi0L7QstCw0YAgMiIsICJwYXltZW50X21ldGhvZCI6ICJmdWxsX3ByZXBheW1lblQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5IiwgInByaWNlIjogNTMzLCAicXVhbnRpdHkiOiAxLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifV0=
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 font-mono">callback_url</td>
+                      <td class="px-2 py-1">(пустое значение — поле не будет включено в подпись)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+            <li>
+              <b>Третье действие</b>
+              <div class="text-sm text-gray-600 mb-2">
+                Объединяем все полученные параметры в одну строку (через символ "&"):
+              </div>
+              <pre
+                class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">amount=OTcz&client_email=dGVzdEB0ZXN0LnJ1&client_phone=KzcgOTEyIDk4NzY1NDM=&description=0JfQsNC60LDQtyDihJYxNDQyNTg0MA==&merchant=YWQyNWVmMDYtMTgyNC00MTNmLThlZjEtYzA4MTE1YjliOTc5&order_id=MTQ0MjU4NDA=&receipt_contact=dGVzdEBtYWlsLmNvbQ==&receipt_items=W3siZGlzY291bnRfc3VtIjogNDAsICJuYW1lIjogItCi0L7QstCw0YAgMSIsICJwYXltZW50X21ldGhvZCI6ICJmdWxsX3ByZXBheW1lbnQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5IiwgInByaWNlIjogNDgsICJxdWFudGl0eSI6IDEwLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifSwgeyJuYW1lIjogItCi0L7QstCw0YAgMiIsICJwYXltZW50X21ldGhvZCI6ICJmdWxsX3ByZXBheW1lblQiLCAicGF5bWVudF9vYmplY3QiOiAiY29tbW9kaXR5IiwgInByaWNlIjogNTMzLCAicXVhbnRpdHkiOiAxLCAic25vIjogIm9zbiIsICJ2YXQiOiAidmF0MTAifV0=&salt=ZFBVVEx0Yk1mY1RHemthQm5HdHNlS2xjUXltQ0xyWUk=&success_url=aHR0cDovL215YXdlc29tZXNpdGUuY29tL3BheW1lbnRfc3VjY2Vzcw==&testing=MQ==&unix_timestamp=MTU3MzQ1MTE2MA==</pre>
+            </li>
+            <li>
+              <b>Последнее действие</b>
+              <div class="text-sm text-gray-600 mb-2">
+                Обратите внимание, что необязательное поле <code>callback_url</code>, которое не было заполнено, не
+                включено в эту строку.
+              </div>
+              <p class="mb-2">
+                Вычисляем полученные параметры с помощью хеш-функции SHA1. Для вышеприведённой строки с параметрами и
+                тестового ключа — <code>00112233445566778899aabbccddeeff</code>, финальное значение поля
+                <b>signature</b> будет таким:
+              </p>
+              <pre
+                class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs">9b28fa592922dc8a0c1ba2e40f2c0432aa617afd</pre>
+            </li>
+          </ol>
+        </section>
+        <!-- ... предыдущая часть шаблона ... -->
+        <section id="signature-examples" class="max-w-3xl mx-auto mb-12"
+          data-title="Примеры расчета сигнатуры на разных языках"
+          data-keywords="signature примеры сигнатура php python nodejs c# sha1 base64">
+          <h2 class="text-2xl font-semibold mb-4">Примеры расчёта сигнатуры на разных языках</h2>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">PHP</h3>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
+/* Определяем массив с параметрами для расчета.
+В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
+Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина. */
+$items = array(
+        'testing' => '1',
+        'salt' => 'dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI',
+        'order_id' => '14425840',
+        'amount' => '973',
+        'merchant' => 'ad25ef06-1824-413f-8ef1-c08115b9b979',
+        'description' => 'Заказ №14425840',
+        'client_phone' => '+7 912 9876543',
+        'client_email' => 'test@test.ru',
+        'success_url' => 'http://myawesomesite.com/payment_success',
+        'receipt_contact' => 'test@mail.com',
+        'receipt_items' => '[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat": "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]',
+        'unix_timestamp' => '1573451160'
+);
+ 
+ 
+echo 'Signature: '. get_signature($items);
+ 
+/* Двойное шифрование sha1 на основе секретного ключа
+подставьте ваш секретный ключ вместо 00112233445566778899aabbccddeeff */
+function double_sha1($data) {
+    for ($i = 0; $i < 2; $i++) {
+        $data = sha1('00112233445566778899aabbccddeeff' . $data);
+    }
+    return $data;
+}
+ 
+/* Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" */
+function get_signature(array $params, $key = 'signature') {
+    $keys = array_keys($params);
+    sort($keys);
+    $chunks = array();
+    foreach ($keys as $k) {
+        $v = (string) $params[$k];
+        if (($v !== '') && ($k != 'signature')) {
+            $chunks[] = $k . '=' . base64_encode($v);
+        }
+    }
+    $data = implode('&', $chunks);
+ 
+    echo 'data: '.$data."\n";
+    $sig = double_sha1($data);
+ 
+    return $sig;
+}
+  </code></pre>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">NodeJS</h3>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
+const Base64 = require('js-base64').Base64;
+const SHA1 = require('crypto-js/sha1');
+
+/* Определяем массив с параметрами для расчета.
+В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
+Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина. */
+const data = {
+        'testing': '1',
+        'salt': 'dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI',
+        'order_id': '14425840',
+        'amount': '973',
+        'merchant': 'ad25ef06-1824-413f-8ef1-c08115b9b979',
+        'description': 'Заказ №14425840',
+        'client_phone': '+7 912 9876543',
+        'client_email': 'test@test.ru',
+        'success_url': 'http://myawesomesite.com/payment_success',
+        'receipt_contact': 'test@mail.com',
+        'receipt_items': '[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat": "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]',
+        'unix_timestamp': '1573451160'
+};
+
+/* подставьте ваш секретный ключ вместо 00112233445566778899aabbccddeeff */
+const key = '00112233445566778899aabbccddeeff';
+
+console.log('Signature: ', GetSignature(key, data));
+
+/* Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" */
+function GetSignature(secretKey, formData) {
+  const values = Object.keys(formData)
+    .filter(key => key !== 'signature')
+    .filter(key => formData[key] != '')
+    .sort()
+    .map(key => `${key}=${Base64.encode(formData[key])}`)
+    .join('&')
+  ;
+
+  console.log('data: ', values)
+  
+/* Двойное шифрование sha1 на основе секретного ключа */
+  const signature = SHA1(secretKey + SHA1(secretKey + values));
+  
+  return signature.toString();
+}
+  </code></pre>
+
+          <div class="mb-4 text-xs text-gray-400">package.json и package-lock.json (для NodeJS): используйте
+            <b>crypto-js</b> и <b>js-base64</b>.<br>
+            <code>
+      npm install crypto-js js-base64
+    </code>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Python</h3>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
+import base64
+import hashlib
+
+def get_raw_signature(params):
+    chunks = []
+    for key in sorted(params.keys()):
+        if key == 'signature':
+            continue
+        value = params[key]
+        if isinstance(value, str):
+            value = value.encode('utf8')
+        else:
+            value = str(value).encode('utf-8')
+        if not value:
+            continue
+        value_encoded = base64.b64encode(value)
+        chunks.append('%s=%s' % (key, value_encoded.decode()))
+    raw_signature = '&'.join(chunks)
+    return raw_signature
+
+'''Двойное шифрование sha1 на основе секретного ключа'''
+def double_sha1(secret_key, data):
+    sha1_hex = lambda s: hashlib.sha1(s.encode('utf-8')).hexdigest()
+    digest = sha1_hex(secret_key + sha1_hex(secret_key + data))
+    return digest
+
+'''Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" '''
+def get_signature(secret_key: str, params: dict) -> str:
+    return double_sha1(secret_key, get_raw_signature(params))
+
+if __name__ == '__main__':
+    items = {       
+        "testing": '1',
+        "salt": 'dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI',
+        "order_id": '14425840',
+        "amount": '973',
+        "merchant": 'ad25ef06-1824-413f-8ef1-c08115b9b979',
+        "description": 'Заказ №14425840',
+        "client_phone": '+7 912 9876543',
+        "client_email": 'test@test.ru',
+        "success_url": 'http://myawesomesite.com/payment_success',
+        "receipt_contact": 'test@mail.com',
+        "receipt_items": '[{"discount_sum": 40, "name": "Товар 1", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 48, "quantity": 10, "sno": "osn", "vat": "vat10"}, {"name": "Товар 2", "payment_method": "full_prepayment", "payment_object": "commodity", "price": 533, "quantity": 1, "sno": "osn", "vat": "vat10"}]',
+        "unix_timestamp": '1573451160'
+        }
+    print(get_signature('00112233445566778899aabbccddeeff', items))
+  </code></pre>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">C#</h3>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+
+class MainClass {
+  public static void Main (string[] args) {
+      var data = new Dictionary&lt;string, string&gt;()
+        {
+        {"testing", "1"},
+        {"salt", "dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI"},
+        {"order_id", "14425840"},
+        {"amount", "973"},
+        {"merchant", "ad25ef06-1824-413f-8ef1-c08115b9b979"},
+        {"description", "Заказ №14425840"},
+        {"client_phone", "+7 912 9876543"},
+        {"client_email", "test@test.ru"},
+        {"success_url", "http://myawesomesite.com/payment_success"},
+        {"receipt_contact", "test@mail.com"},
+        {"receipt_items", "[{\"discount_sum\": 40, \"name\": \"Товар 1\", \"payment_method\": \"full_prepayment\", \"payment_object\": \"commodity\", \"price\": 48, \"quantity\": 10, \"sno\": \"osn\", \"vat\": \"vat10\"}, {\"name\": \"Товар 2\", \"payment_method\": \"full_prepayment\", \"payment_object\": \"commodity\", \"price\": 533, \"quantity\": 1, \"sno\": \"osn\", \"vat\": \"vat10\"}]"},
+        {"unix_timestamp", "1573451160"}
+        };
+
+        Console.WriteLine(SignatureCalculator.GetSignature("00112233445566778899aabbccddeeff", data));
+  }
+}
+
+public static class SignatureCalculator
+    {
+
+        public static string GetSignature(string secretKey, IDictionary&lt;string, string&gt; formData)
+        {
+
+            var keys = formData
+            .Where(x=>x.Value != "")
+            .Where(x=> x.Key != "signature")
+            .Select(x => new { x.Key, Value = $"{x.Key}={GetBase64Val(x.Value)}" })
+            .OrderBy(x => x.Key)
+            .ToArray();
+
+            var values = string.Join("&", keys.Select(x => x.Value));
+            
+           Console.WriteLine(values);
+            var signature = SHA1(secretKey + SHA1(secretKey + values));
+
+            return signature;
+        }
+
+        private static string GetBase64Val(object plainText)
+        {
+            var value = plainText == null ? string.Empty : plainText.ToString();
+
+            var plainTextBytes = Encoding.UTF8.GetBytes(value);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
+        // ReSharper disable once InconsistentNaming
+        private static string SHA1(string input)
+        {
+            using (var sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (var b in hash)
+                {
+                    // can be "x2" if you want lowercase
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString();
+            }
+        }
+    }
+  </code></pre>
+        </section>
+        <!-- ... предыдущая часть шаблона ... -->
+        <section id="payment-request" class="max-w-3xl mx-auto mb-12" data-title="Формирование запроса на оплату"
+          data-keywords="запрос оплата платёж форма POST поля merchant signature">
+          <h2 class="text-2xl font-semibold mb-4">Формирование запроса на оплату</h2>
+          <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
+          <p class="text-gray-700 mb-4">
+            Данный метод предназначен для создания запроса на оплату. В случае корректного составления запроса,
+            откроется платёжная форма для плательщика.
+          </p>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Формат запроса</h3>
+          <p class="mb-2"><b>POST</b> — <a href="https://pay.modulbank.ru/pay" class="text-blue-600 underline"
+              target="_blank">https://pay.modulbank.ru/pay</a></p>
+          <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full border text-xs bg-gray-50 rounded">
+              <thead>
+                <tr class="bg-gray-200">
+                  <th class="text-left px-2 py-1">Название</th>
+                  <th class="text-left px-2 py-1">Описание</th>
+                  <th class="text-left px-2 py-1">Обязательность</th>
+                  <th class="text-left px-2 py-1">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, полученный в ЛК банка</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (макс. 128 символов), только печатные ASCII</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки: «100» или «200.45»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">order_id</td>
+                  <td class="px-2 py-1">Уникальный идентификатор заказа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (макс. 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">custom_order_id</td>
+                  <td class="px-2 py-1">Идентификатор заказа для покупателя</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">description</td>
+                  <td class="px-2 py-1">Описание платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (макс. 250 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">success_url</td>
+                  <td class="px-2 py-1">Адрес для переадресации при успешной оплате</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (макс. 128 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">testing</td>
+                  <td class="px-2 py-1">Оплата в тестовом режиме</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — тест, 0 — реальный</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_url</td>
+                  <td class="px-2 py-1">Адрес уведомлений об успешной оплате</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 128 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_on_failure</td>
+                  <td class="px-2 py-1">Уведомление при неуспешной оплате</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — отправлять, 0 — не отправлять</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_phone</td>
+                  <td class="px-2 py-1">Телефон клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 15 символов), формат: «+75559091555»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_name</td>
+                  <td class="px-2 py-1">Имя и фамилия клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 100 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_email</td>
+                  <td class="px-2 py-1">E-mail клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_id</td>
+                  <td class="px-2 py-1">Идентификатор клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 128 символов), только печатные ASCII</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">meta</td>
+                  <td class="px-2 py-1">Дополнительные параметры (JSON)</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">JSON-строка</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_contact</td>
+                  <td class="px-2 py-1">Email получателя чека</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_items</td>
+                  <td class="px-2 py-1">Позиции чека (JSON)</td>
+                  <td class="px-2 py-1">Да (если включена удалённая регистрация чеков)</td>
+                  <td class="px-2 py-1">JSON-объект</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">lifetime</td>
+                  <td class="px-2 py-1">Время жизни страницы (сек.)</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Целое число</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">timeout_url</td>
+                  <td class="px-2 py-1">Адрес для переадресации по истечении времени</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 128 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (макс. 32 символа), только печатные ASCII</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (40 символов, нижний регистр), алгоритм см. выше</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">start_recurrent</td>
+                  <td class="px-2 py-1">Рекуррентный платёж</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — рекуррентная, 0/отсутствует — нет</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">preauth</td>
+                  <td class="px-2 py-1">Двухстадийная оплата</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — холдирование, 0/отсутствует — нет</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">show_payment_methods</td>
+                  <td class="px-2 py-1">Какие способы оплаты показывать</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка: card, sbp, yandexpay, массив</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_with_receipt</td>
+                  <td class="px-2 py-1">Добавлять чеки в коллбек</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — отправлять, 0/отсутствует — нет</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-gray-700 mb-4">
+            <b>Обратите внимание:</b> все текстовые поля должны быть в кодировке UTF8.
+          </p>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример отправляемой формы</h3>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>&lt;form method="post" action="https://pay.modulbank.ru/pay"&gt;
+  &lt;input type="hidden" name="testing" value="1"&gt;
+  &lt;input type="hidden" name="salt" value="dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI"&gt;
+  &lt;input type="hidden" name="order_id" value="14425840"&gt;
+  &lt;input type="hidden" name="amount" value="973"&gt;
+  &lt;input type="hidden" name="merchant" value="ad25ef06-1824-413f-8ef1-c08115b9b979"&gt;
+  &lt;input type="hidden" name="signature" value="9b28fa592922dc8a0c1ba2e40f2c0432aa617afd"&gt;
+  &lt;input type="hidden" name="description" value="Заказ №14425840"&gt;
+  &lt;input type="hidden" name="client_phone" value="+7 912 9876543"&gt;
+  &lt;input type="hidden" name="client_email" value="test@test.ru"&gt;
+  &lt;input type="hidden" name="success_url" value="http://myawesomesite.com/payment_success"&gt;
+  &lt;input type="hidden" name="receipt_contact" value="test@mail.com"&gt;
+  &lt;input type="hidden" name="unix_timestamp" value="1573451160"&gt;
+  &lt;input type="hidden" name="receipt_items"
+    value="[{&quot;discount_sum&quot;: 40, &quot;name&quot;: &quot;Товар 1&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
+    &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 48, &quot;quantity&quot;: 10, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;},
+    {&quot;name&quot;: &quot;Товар 2&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
+    &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 533, &quot;quantity&quot;: 1, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;}]"&gt;
+  &lt;input type="submit" value="Отправить платеж"&gt;
+&lt;/form&gt;
+</code></pre>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
+          <p class="mb-2">
+            В ответ пользователь перенаправляется на страницу платежа.
+          </p>
+          <p class="mb-2">
+            После проведения оплаты произойдет перенаправление на страницу, которая была указана в поле
+            <b>success_url</b>. В параметры GET будет добавлен id транзакции. Пример:
+          </p>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
+https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY
+  </code></pre>
+        </section>
+        <!-- ... остальная часть шаблона ... -->
       </main>
     </div>
   </div>
   <script src="search.js"></script>
 </body>
+
 </html>
