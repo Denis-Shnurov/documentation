@@ -186,7 +186,7 @@
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Примеры расчёта signature на разных
                     языках</a></li>
                 <li><a href="#signature-calculator"
-                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Калькулятора signature</a></li>
+                    class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Калькулятор signature</a></li>
                 <li><a href="#payment-request"
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на оплату</a>
                 </li>
@@ -246,7 +246,7 @@
                   </ul>
                 </li>
                 <li><a href="#payouts-to-card" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты
-                    по номеру карты</a>
+                    по номеру карты A2C</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
                     <li><a href="#card-payout" class="block px-3 py-2 rounded-md hover:bg-gray-100">Запрос выплаты на
                         карту</a></li>
@@ -258,7 +258,7 @@
                   </ul>
                 </li>
                 <li><a href="#payouts-sbp" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты по
-                    номеру телефона (СБП: B2C)</a>
+                    номеру телефона B2C (СБП)</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
                     <li><a href="#sbp-register" class="block px-3 py-2 rounded-md hover:bg-gray-100">Регистрация ЮЛ в
                         СБП</a></li>
@@ -578,6 +578,141 @@
               href="#signature-examples" class="text-blue-600 underline">здесь</a>.
           </div>
         </section>
+
+        <section id="signature-calculator" class="max-w-3xl mx-auto mb-12 flex justify-center"
+          data-title="Калькулятор signature" data-keywords="signature калькулятор подпись hmac test">
+          <div class="w-full border border-gray-200 rounded-xl p-8 bg-white flex flex-col items-center">
+            <h2 class="text-2xl font-semibold mb-4 text-center w-full">Калькулятор signature</h2>
+            <p class="mb-6 text-center w-full">Для расчёта подписи <b>signature</b> заполните обязательные поля и, при
+              необходимости, добавьте дополнительные параметры платежа.</p>
+            <div class="w-full">
+              <div class="form-group mb-4 w-full">
+                <label for="secret_key" class="block font-semibold mb-1">Secret Key:</label>
+                <input type="text" id="secret_key"
+                  class="form-input border border-gray-300 rounded-md w-full h-10 px-3 char-limited" maxlength="128"
+                  pattern="[\x20-\x7E]{1,128}"
+                  title="Введите секретный ключ. Только печатные ASCII-символы, максимум 128 символов." required>
+                <div class="flex justify-between">
+                  <small class="text-gray-500">Только печатные ASCII-символы, максимум 128 символов.</small>
+                  <span class="text-gray-400 text-xs" data-counter-for="secret_key">0/128</span>
+                </div>
+              </div>
+              <form id="payment-form" action="https://pay.modulbank.ru/pay" method="POST"
+                onsubmit="return validateForm()" target="_blank" class="w-full">
+                <div class="form-group mb-4 w-full">
+                  <label for="merchant" class="block font-semibold mb-1">Merchant ID:</label>
+                  <input type="text" id="merchant" name="merchant"
+                    class="form-input border border-gray-300 rounded-md w-full h-10 px-3 char-limited" maxlength="128"
+                    pattern="[\x20-\x7E]{1,128}" title="Только печатные ASCII-символы, максимум 128 символов." required>
+                  <div class="flex justify-between">
+                    <small class="text-gray-500">Только печатные ASCII-символы, максимум 128 символов.</small>
+                    <span class="text-gray-400 text-xs" data-counter-for="merchant">0/128</span>
+                  </div>
+                </div>
+                <div class="form-group mb-4 w-full">
+                  <label for="amount" class="block font-semibold mb-1">Amount:</label>
+                  <input type="text" id="amount" name="amount" inputmode="decimal" pattern="^\d+([.,]\d{1,2})?$"
+                    maxlength="15" class="form-input border border-gray-300 rounded-md w-full h-10 px-3" required
+                    oninput="this.value=this.value.replace(/[^0-9.,]/g,'').replace(/([.,].*)[.,]+/g,'$1').replace(/^([0-9]*[.,]?[0-9]{0,2}).*$/,'$1');"
+                    title="Введите сумму. Целое число или с копейками (через точку/запятую), например: 100 или 200.45"
+                    placeholder="Пример: 100 или 200.45">
+                  <div class="flex justify-between">
+                    <small class="text-gray-500">Вещественное число, два знака после точки или запятой. Пример: 100 или
+                      200.45</small>
+                    <span class="text-gray-400 text-xs" data-counter-for="amount">0/15</span>
+                  </div>
+                </div>
+                <div class="form-group mb-4 w-full">
+                  <label for="order_id" class="block font-semibold mb-1">Order ID:</label>
+                  <input type="text" id="order_id" name="order_id"
+                    class="form-input border border-gray-300 rounded-md w-full h-10 px-3 char-limited" maxlength="50"
+                    title="Максимум 50 символов." required>
+                  <div class="flex justify-between">
+                    <small class="text-gray-500">Строка, максимум 50 символов.</small>
+                    <span class="text-gray-400 text-xs" data-counter-for="order_id">0/50</span>
+                  </div>
+                </div>
+                <div class="form-group mb-4 w-full">
+                  <label for="description" class="block font-semibold mb-1">Description:</label>
+                  <input type="text" id="description" name="description"
+                    class="form-input border border-gray-300 rounded-md w-full h-10 px-3 char-limited" maxlength="250"
+                    title="Описание платежа, максимум 250 символов." required>
+                  <div class="flex justify-between">
+                    <small class="text-gray-500">Описание платежа, максимум 250 символов.</small>
+                    <span class="text-gray-400 text-xs" data-counter-for="description">0/250</span>
+                  </div>
+                </div>
+                <div class="form-group mb-4 w-full">
+                  <label for="success_url" class="block font-semibold mb-1">Success URL:</label>
+                  <input type="text" id="success_url" name="success_url"
+                    class="form-input border border-gray-300 rounded-md w-full h-10 px-3 char-limited" maxlength="128"
+                    title="Максимум 128 символов. Если хотите использовать страницу успешной оплаты Модульбанка, то укажите: https://pay.modulbank.ru/success"
+                    required value="https://pay.modulbank.ru/success">
+                  <div class="flex justify-between">
+                    <small class="text-gray-500">Строка, максимум 128 символов. Для страницы Модульбанка:
+                      https://pay.modulbank.ru/success</small>
+                    <span class="text-gray-400 text-xs" data-counter-for="success_url">0/128</span>
+                  </div>
+                </div>
+                <div class="form-group mb-4 w-full">
+                  <label for="unix_timestamp" class="block font-semibold mb-1">Unix Timestamp:</label>
+                  <div class="flex gap-2">
+                    <input type="text" id="unix_timestamp" name="unix_timestamp"
+                      class="form-input border border-gray-300 rounded-md w-full h-10 px-3" pattern="\d{10,}"
+                      title="Текущее время в формате UNIX Time, только цифры" placeholder="Например: 1716361030"
+                      required>
+                    <button type="button" id="set-current-timestamp"
+                      class="px-3 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 whitespace-nowrap h-10 flex items-center justify-center w-auto min-w-fit">
+                      Текущее
+                    </button>
+                  </div>
+                  <small class="text-gray-500">Текущее время в формате UNIX Time (только цифры). Например:
+                    1716361030</small>
+                </div>
+                <!-- Dynamic additional fields -->
+                <div class="flex items-center mb-4 w-full gap-2">
+                  <label for="field-selector" class="font-semibold">Дополнительные поля:</label>
+                  <select id="field-selector"
+                    class="form-select border border-gray-300 rounded-md h-10 px-2 flex-1 min-w-0">
+                    <option value="">--Выберите дополнительное поле--</option>
+                    <option value="custom_order_id">Custom Order ID</option>
+                    <option value="testing">Testing</option>
+                    <option value="callback_url">Callback URL</option>
+                    <option value="callback_on_failure">Callback on Failure</option>
+                    <option value="client_phone">Client Phone</option>
+                    <option value="client_name">Client Name</option>
+                    <option value="client_email">Client Email</option>
+                    <option value="client_id">Client ID</option>
+                    <option value="meta">Meta (JSON)</option>
+                    <option value="receipt_contact">Receipt Contact</option>
+                    <option value="receipt_items">Receipt Items</option>
+                    <option value="lifetime">Lifetime</option>
+                    <option value="timeout_url">Timeout URL</option>
+                    <option value="salt">Salt</option>
+                    <option value="start_recurrent">Start Recurrent</option>
+                    <option value="preauth">Preauth</option>
+                    <option value="show_payment_methods">Show Payment Methods</option>
+                    <option value="callback_with_receipt">Callback With Receipt</option>
+                  </select>
+                  <button type="button" id="add-field-btn"
+                    class="flex-shrink-0 px-3 py-2 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 whitespace-nowrap h-10 flex items-center justify-center w-auto min-w-fit">Добавить
+                    поле</button>
+                </div>
+                <div id="optional-fields-container" class="mb-4 w-full"></div>
+                <div class="flex flex-wrap gap-2 mb-2">
+                  <button type="button" id="calculate-signature-btn"
+                    class="px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">Рассчитать
+                    подпись</button>
+                  <button type="submit"
+                    class="px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700">Отправить платеж
+                  </button>
+                </div>
+                <p id="result" class="mt-4 text-lg"></p>
+              </form>
+            </div>
+          </div>
+        </section>
+
         <section id="signature-examples" class="max-w-3xl mx-auto mb-12"
           data-title="Примеры расчета сигнатуры на разных языках"
           data-keywords="signature примеры сигнатура php python nodejs c# sha1 base64">
@@ -3225,7 +3360,8 @@ public static class SignatureCalculator
           <div class="mb-2"><b>Описание:</b></div>
           <ol class="list-decimal ml-8 mb-2">
             <li>В теле запроса в качестве параметра выбора счёта можно использовать <code>account_id</code> или
-              <code>account_number</code>.</li>
+              <code>account_number</code>.
+            </li>
             <li>Для зачисления на карту передавайте <code>pan</code> карты или <code>card_token</code>.</li>
           </ol>
 
@@ -3597,51 +3733,58 @@ public static class SignatureCalculator
             </table>
           </div>
         </section>
-        <section id="payouts-sbp" class="max-w-3xl mx-auto mb-12" data-title="Платежи СБП B2C (в тестовом режиме)" data-keywords="СБП, B2C, выплаты, массовые выплаты, SBP, NSPK, регистрация ЮЛ, телефон, банк-участник, статус, тестовый режим">
-  <h2 class="text-2xl font-semibold mb-4">Платежи СБП B2C (в тестовом режиме)</h2>
-  <div class="mb-4 text-gray-700">
-    <b>Это переводы средств со счёта организации на карту физических лиц по номеру телефона через НСПК.<br>
-    Для использования функционала необходимо заново сгенерировать токен доступа в ЛК банка, если он был создан до 6 декабря 2021 года.</b>
-  </div>
+        <section id="payouts-sbp" class="max-w-3xl mx-auto mb-12" data-title="Платежи СБП B2C (в тестовом режиме)"
+          data-keywords="СБП, B2C, выплаты, массовые выплаты, SBP, NSPK, регистрация ЮЛ, телефон, банк-участник, статус, тестовый режим">
+          <h2 class="text-2xl font-semibold mb-4">Платежи СБП B2C (в тестовом режиме)</h2>
+          <div class="mb-4 text-gray-700">
+            <b>Это переводы средств со счёта организации на карту физических лиц по номеру телефона через НСПК.<br>
+              Для использования функционала необходимо заново сгенерировать токен доступа в ЛК банка, если он был создан
+              до 6 декабря 2021 года.</b>
+          </div>
 
-  <!-- Регистрация ЮЛ в СБП -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Регистрация ЮЛ в СБП</h3>
-  <div class="mb-2"><b>Запрос:</b></div>
-  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/legal-entity/register</pre>
-  <div class="text-xs text-gray-600 mb-2">Пример: <code>POST https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code></div>
-  <div class="mb-2"><b>Ответ:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+          <!-- Регистрация ЮЛ в СБП -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Регистрация ЮЛ в СБП</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre
+            class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/legal-entity/register</pre>
+          <div class="text-xs text-gray-600 mb-2">Пример:
+            <code>POST https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code>
+          </div>
+          <div class="mb-2"><b>Ответ:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
   "status": "success"
 }</code></pre>
 
-  <!-- Получение статуса регистрации ЮЛ в СБП -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Получение статуса регистрации ЮЛ в СБП</h3>
-  <div class="mb-2"><b>Запрос:</b></div>
-  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/legal-entity/status</pre>
-  <div class="mb-2"><b>Ответ:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+          <!-- Получение статуса регистрации ЮЛ в СБП -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение статуса регистрации ЮЛ в СБП</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre
+            class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/legal-entity/status</pre>
+          <div class="mb-2"><b>Ответ:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
   "data": {
     "status": "not_found",
     "reason": "Юридическое лицо не зарегистрировано"
   },
   "status": "success"
 }</code></pre>
-  <div class="mb-2">
-    <b>Возможные значения <code>status</code>:</b>
-    <ul class="list-disc ml-6">
-      <li><code>not_found</code> — ЮЛ не зарегистрировано</li>
-      <li><code>not_registered</code> — ЮЛ не зарегистрировано</li>
-      <li><code>registered</code> — ЮЛ зарегистрировано</li>
-      <li><code>locked</code> — ЮЛ заблокировано</li>
-    </ul>
-  </div>
+          <div class="mb-2">
+            <b>Возможные значения <code>status</code>:</b>
+            <ul class="list-disc ml-6">
+              <li><code>not_found</code> — ЮЛ не зарегистрировано</li>
+              <li><code>not_registered</code> — ЮЛ не зарегистрировано</li>
+              <li><code>registered</code> — ЮЛ зарегистрировано</li>
+              <li><code>locked</code> — ЮЛ заблокировано</li>
+            </ul>
+          </div>
 
-  <!-- Валидация реквизитов получателя -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Валидация реквизитов получателя</h3>
-  <div class="mb-2"><b>Запрос:</b></div>
-  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</pre>
-  <div class="mb-2"><b>Ответ:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+          <!-- Валидация реквизитов получателя -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Валидация реквизитов получателя</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre
+            class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</pre>
+          <div class="mb-2"><b>Ответ:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
   "data": {
     "code": "legal_entity_is_not_registered",
     "reason": "Для валидации платежных реквизитов необходимо зарегистрировать ЮЛ"
@@ -3649,12 +3792,12 @@ public static class SignatureCalculator
   "status": "success"
 }</code></pre>
 
-  <!-- Получение списка банков-участников -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Получение списка банков-участников</h3>
-  <div class="mb-2"><b>Запрос:</b></div>
-  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/participants</pre>
-  <div class="mb-2"><b>Ответ:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+          <!-- Получение списка банков-участников -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение списка банков-участников</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/participants</pre>
+          <div class="mb-2"><b>Ответ:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
   "data": {
     "rcv_time": "2021-12-08T21:15:00+00:00",
     "participants": [
@@ -3670,32 +3813,33 @@ public static class SignatureCalculator
   "status": "success"
 }</code></pre>
 
-  <!-- Создание выплаты по номеру телефона -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Создание выплаты по номеру телефона</h3>
-  <div class="mb-2"><b>Запрос:</b></div>
-  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/payouts</pre>
-  <div class="mb-2"><b>Пример тела:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-2"><code>{
+          <!-- Создание выплаты по номеру телефона -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Создание выплаты по номеру телефона</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/payouts</pre>
+          <div class="mb-2"><b>Пример тела:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-2"><code>{
   "account_number": "40802810470010123456",
   "phone": "9059991234",
   "bank_id": "100000000004",
   "amount": "10",
   "description": "spb_test"
 }</code></pre>
-  <div class="mb-2"><b>Ответ:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+          <div class="mb-2"><b>Ответ:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
   "data": {
     "id": "eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc"
   },
   "status": "success"
 }</code></pre>
 
-  <!-- Получение выплаты по ID -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Получение выплаты по ID</h3>
-  <div class="mb-2"><b>Запрос:</b></div>
-  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc</pre>
-  <div class="mb-2"><b>Ответ:</b></div>
-  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+          <!-- Получение выплаты по ID -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение выплаты по ID</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre
+            class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc</pre>
+          <div class="mb-2"><b>Ответ:</b></div>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
   "data": {
     "id": "eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc",
     "status": "completed"
@@ -3703,24 +3847,33 @@ public static class SignatureCalculator
   "status": "success"
 }</code></pre>
 
-  <!-- Статусы выплат СБП -->
-  <h3 class="font-semibold text-lg mt-8 mb-2">Статусы выплат СБП</h3>
-  <div class="overflow-x-auto mb-10">
-    <table class="w-full text-sm border rounded bg-gray-50">
-      <thead>
-        <tr>
-          <th class="px-2 py-1 text-left font-semibold">Статус</th>
-          <th class="px-2 py-1 text-left font-semibold">Описание</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="px-2 py-1">completed</td><td class="px-2 py-1">Выплата успешно завершена</td></tr>
-        <tr><td class="px-2 py-1">in_progress</td><td class="px-2 py-1">Выплата в процессе</td></tr>
-        <tr><td class="px-2 py-1">failed</td><td class="px-2 py-1">Выплата завершилась ошибкой</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+          <!-- Статусы выплат СБП -->
+          <h3 class="font-semibold text-lg mt-8 mb-2">Статусы выплат СБП</h3>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Статус</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">completed</td>
+                  <td class="px-2 py-1">Выплата успешно завершена</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">in_progress</td>
+                  <td class="px-2 py-1">Выплата в процессе</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">failed</td>
+                  <td class="px-2 py-1">Выплата завершилась ошибкой</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </main>
     </div>
   </div>
@@ -3732,6 +3885,8 @@ public static class SignatureCalculator
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
   <script src="search.js"></script>
   <script src="code.js"></script>
+  <script src="script_calculator.js"></script>
+  <script src="char_counter.js"></script>
 </body>
 
 </html>
