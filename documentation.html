@@ -14,7 +14,7 @@
 <body class="bg-white text-gray-800">
   <div class="min-h-screen flex flex-col">
     <!-- Top bar for mobile -->
-    <header class="md:hidden flex items-center justify-between px-4 py-3 border-b">
+    <header id="main-menu" class="md:hidden flex items-center justify-between px-4 py-3 border-b">
       <button id="menu-btn" class="text-gray-500 focus:outline-none" aria-label="Открыть меню">
         <svg class="h-6 w-6" fill="none" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -38,7 +38,7 @@
             </button>
           </div>
           <!-- Navigation -->
-          <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+          <nav id="menu-btn" class="flex-1 overflow-y-auto px-4 py-6 space-y-6">
             <!-- API Интернет-эквайринг -->
             <div>
               <div class="text-sm font-bold text-gray-700 mb-2">API Интернет-эквайринг</div>
@@ -68,16 +68,16 @@
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Рекуррентные платежи</a></li>
                 <li><a href="#bill-link" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Создание
                     счёт-ссылки</a></li>
-                <li><a href="#bill-info" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение
+                <li><a href="#get-bill-info" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение
                     информации о выставленном счёте</a></li>
-                <li><a href="#sbp-qr" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">СБП: Получение
+                <li><a href="#sbp-payment" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">СБП: Получение
                     QR-кода или ссылки напрямую</a></li>
-                <li><a href="#transaction-notifications"
+                <li><a href="#transaction-callbacks"
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Уведомления о транзакциях</a></li>
-                <li><a href="#transactions-list"
+                <li><a href="#get-transactions"
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение списка транзакций</a>
                 </li>
-                <li><a href="#transaction-info"
+                <li><a href="#get-transaction-info"
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Получение информации о
                     транзакции</a></li>
                 <li><a href="#full-refund" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование
@@ -85,7 +85,7 @@
                 <li><a href="#partial-refund"
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Формирование запроса на частичную
                     отмену платежа</a></li>
-                <li><a href="#54fz" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">54-ФЗ: Отправка
+                <li><a href="#receipt-items" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">54-ФЗ: Отправка
                     чеков</a></li>
               </ul>
             </div>
@@ -93,10 +93,8 @@
             <div>
               <div class="text-sm font-bold text-gray-700 mb-2">API Массовые Выплаты</div>
               <ul class="space-y-1">
-                <li><a href="#payouts-intro"
+                <li><a href="#base-url-auth-token"
                     class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Введение</a></li>
-                <li><a href="#payouts-auth" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Авторизация
-                    запросов</a></li>
                 <li><a href="#payouts-account" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Работа
                     со счётом</a>
                   <ul class="ml-4 mt-1 space-y-1 text-sm">
@@ -157,7 +155,7 @@
       <main class="flex-1 bg-white px-0 py-8 transition-all">
         <!-- Search Bar -->
 
-        <div class="searchbar-sticky max-w-3xl mx-auto mb-8" style="top: 0;">
+        <div id="search-bar" class="searchbar-sticky max-w-3xl mx-auto mb-8" style="top: 0;">
           <label for="search" class="sr-only">Поиск по документации</label>
           <input id="search" name="search" type="search" autocomplete="off" placeholder="Поиск по документации..."
             class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
@@ -248,7 +246,6 @@
           data-title="Алгоритм вычисления поля signature"
           data-keywords="signature подпись алгоритм целостность аутентификация sha1 base64 секретный ключ">
           <h2 class="text-2xl font-semibold mb-2">Алгоритм вычисления поля <code>signature</code></h2>
-          <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
           <p class="text-gray-700 mb-4">
             Значение поля <b>signature</b> используется для проверки целостности сообщения и аутентификации запроса.
           </p>
@@ -589,8 +586,6 @@
           data-title="Примеры расчета сигнатуры на разных языках"
           data-keywords="signature примеры сигнатура php python nodejs c# sha1 base64">
           <h2 class="text-2xl font-semibold mb-4">Примеры расчёта сигнатуры на разных языках</h2>
-          <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
-
           <h3 class="font-semibold text-lg mt-8 mb-2">PHP</h3>
           <div class="code-block-container">
             <pre class="language-php"><button class="copy-btn" data-copy-target="php-example">Копировать</button><code id="php-example" class="language-php"><?php
@@ -878,8 +873,6 @@ public static class SignatureCalculator
         <section id="payment-request" class="max-w-3xl mx-auto mb-12" data-title="Формирование запроса на оплату"
           data-keywords="оплата создание запроса платёжная форма POST merchant signature">
           <h2 class="text-2xl font-semibold mb-4">Формирование запроса на оплату</h2>
-          <div class="text-gray-400 text-sm mb-4">Метод для создания запроса на оплату<br>Дата публикации: 17 мая 2022
-          </div>
           <p class="mb-4 text-gray-700">
             Данный метод предназначен для создания запроса на оплату. В случае корректного составления запроса откроется
             платёжная форма для плательщика.
@@ -1095,12 +1088,11 @@ public static class SignatureCalculator
               class="language-text"><button class="copy-btn" data-copy-target="payment-redirect">Копировать</button><code id="payment-redirect" class="language-text">https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY</code></pre>
           </div>
         </section>
-        <section id="hold" class="max-w-3xl mx-auto mb-12" data-title="Холдирование"
+        <section id="hold-2step" class="max-w-3xl mx-auto mb-12" data-title="Холдирование"
           data-keywords="холдирование, preauth, предавторизация, холд, capture, подтверждение, отмена, modulbank">
           <h2 class="text-2xl font-semibold mb-4">Холдирование</h2>
           <div class="text-gray-400 text-sm mb-4">
             Создание запроса на платеж с предавторизацией<br>
-            Дата публикации: 17 мая 2022
           </div>
           <p class="mb-4 text-gray-700">
             Данный метод может использоваться для одного из способов приёма оплаты:
@@ -1219,12 +1211,11 @@ public static class SignatureCalculator
             30 дней.
           </p>
         </section>
-        <section id="recurrent-payments" class="max-w-3xl mx-auto mb-12" data-title="Рекуррентные платежи"
+        <section id="recurring-payments" class="max-w-3xl mx-auto mb-12" data-title="Рекуррентные платежи"
           data-keywords="рекуррентные платежи, recurring, start_recurrent, next_recurrent, подписка, регулярные списания, modulbank">
           <h2 class="text-2xl font-semibold mb-4">Рекуррентные платежи</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Шаги для привязки карты и совершения по ней рекуррентных платежей<br>
-            Дата публикации: 17 мая 2022
+            Шаги для привязки карты и совершения по ней рекуррентных платежей
           </div>
           <div class="mb-4">
             <b>Рекуррентные платежи по умолчанию запрещены.</b> Для включения обратитесь к поддержке в чат банка.
@@ -1384,12 +1375,11 @@ public static class SignatureCalculator
             </table>
           </div>
         </section>
-        <section id="create-bill" class="max-w-3xl mx-auto mb-12" data-title="Создание счета на оплату"
+        <section id="bill-link" class="max-w-3xl mx-auto mb-12" data-title="Создание счета на оплату"
           data-keywords="создание счета, счет на оплату, bill, modulbank, api, invoice, ссылка на оплату">
-          <h2 class="text-2xl font-semibold mb-4">Создание счета на оплату</h2>
+          <h2 class="text-2xl font-semibold mb-4">Создание счёт-ссылки</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Метод для создания счета на оплату покупателю<br>
-            Дата публикации: 17 мая 2022
+            Метод для создания счета на оплату покупателю
           </div>
           <p class="mb-4 text-gray-700">
             Данный метод предназначен для создания счета на оплату покупателю. В случае корректного составления запроса
@@ -1629,8 +1619,7 @@ public static class SignatureCalculator
           data-keywords="получение информации о счёте, bill info, modulbank, api, invoice status">
           <h2 class="text-2xl font-semibold mb-4">Получение информации о выставленном счёте на оплату</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Метод для получения информации о выставленном счёте на оплату<br>
-            Дата публикации: 17 мая 2022
+            Метод для получения информации о выставленном счёте на оплату
           </div>
           <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
           <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/bill/</code></div>
@@ -1714,8 +1703,7 @@ public static class SignatureCalculator
           data-keywords="СБП, QR, qr_image, СБП-оплата, модульбанк, sbp_payment, qr_lifetime">
           <h2 class="text-2xl font-semibold mb-4">Получение QR или ссылки на СБП-оплату напрямую</h2>
           <div class="text-gray-400 text-sm mb-4">
-            По запросу можно получить либо json с ссылкой на СБП-оплату, либо картинку с QR-кодом (image/png)<br>
-            Дата публикации: 17 мая 2022
+            По запросу можно получить либо json с ссылкой на СБП-оплату, либо картинку с QR-кодом (image/png)
           </div>
           <p class="mb-4 text-gray-700">
             Если ваш покупатель заходит с десктопного устройства, ему нужно отобразить картинку, чтобы он мог
@@ -1899,8 +1887,7 @@ public static class SignatureCalculator
           data-keywords="уведомления, callback, транзакции, webhook, POST, signature, modulbank">
           <h2 class="text-2xl font-semibold mb-4">Уведомления о транзакциях</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Сервисные уведомления о транзакциях<br>
-            Дата публикации: 17 мая 2022
+            Сервисные уведомления о транзакциях
           </div>
           <p class="mb-4 text-gray-700">
             После проведения оплаты сервер отправляет POST-запрос с уведомлением на <b>url</b>, указанный для
@@ -1984,8 +1971,7 @@ public static class SignatureCalculator
           data-keywords="список транзакций, transactions, modulbank, api, платежи, фильтр, статус">
           <h2 class="text-2xl font-semibold mb-4">Получение списка транзакций</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Метод для получения списка транзакций по платежам<br>
-            Дата публикации: 17 мая 2022
+            Метод для получения списка транзакций по платежам
           </div>
           <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
           <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/transactions/</code></div>
@@ -2239,8 +2225,7 @@ public static class SignatureCalculator
           data-keywords="отмена платежа, refund, возврат, modulbank, api, полная отмена, возврат средств">
           <h2 class="text-2xl font-semibold mb-4">Формирование запроса на полную отмену платежа</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Метод для полной полной отмены платежа<br>
-            Дата публикации: 17 мая 2022
+            Метод для полной полной отмены платежа
           </div>
           <p class="mb-4 text-gray-700">
             Данный метод предназначен для отмены платежа и возврата средств плательщику. Отмену платежа можно выполнить
@@ -2367,8 +2352,7 @@ public static class SignatureCalculator
           data-keywords="частичный возврат, частичная отмена, refund, modulbank, возврат позиций, refund_items, чек возврата">
           <h2 class="text-2xl font-semibold mb-4">Формирование запроса на частичную отмену платежа</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Особенности осуществления отдельных видов возвратов и отмен<br>
-            Дата публикации: 17 мая 2022
+            Особенности осуществления отдельных видов возвратов и отмен
           </div>
           <div class="mb-4 text-red-700">
             <b>Важно!</b> Проведение частичного возврата доступно только на следующий день после операции оплаты, иначе
@@ -2494,8 +2478,7 @@ public static class SignatureCalculator
           data-keywords="чеки, 54-ФЗ, receipt_items, позиции чека, modulbank, фискализация">
           <h2 class="text-2xl font-semibold mb-4">Отправка чеков (для соответствия 54-ФЗ)</h2>
           <div class="text-gray-400 text-sm mb-4">
-            Список и расшифровка значений, отправляемых в списке товаров для чека<br>
-            Дата публикации: 17 мая 2022
+            Список и расшифровка значений, отправляемых в списке товаров для чека
           </div>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50 mb-6">
@@ -2643,7 +2626,7 @@ public static class SignatureCalculator
         <section id="base-url-auth-token" class="max-w-3xl mx-auto mb-12"
           data-title="Базовый адрес и получение токена для авторизации"
           data-keywords="базовый адрес, эндпоинт, modulbank, API, токен, авторизация, sp2">
-          <h2 class="text-2xl font-semibold mb-4">Базовый адрес и получение токена для авторизации запроса</h2>
+          <h2 class="text-2xl font-semibold mb-4">Введение</h2>
           <div class="mb-4">
             <b>Базовый адрес:</b><br>
             <code>https://pay.modulbank.ru/sp2/</code>

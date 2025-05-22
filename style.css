@@ -98,7 +98,7 @@
       height: 100vh;
       max-height: 100vh;
       overflow-y: auto;
-      z-index: 20;
+      z-index: 9999;
       background: #fff;
     }
 
@@ -248,3 +248,22 @@
         display: block;
       }
     }
+
+    #main-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  background: #fff; /* или другой фон, чтобы меню не было прозрачным */
+}
+
+#search-bar {
+  margin: 0 0 0 35px;
+  position: fixed;
+  right: 0;
+  width: 80%;
+  z-index: 10;
+  background: #fff;
+  padding: 10px;
+}
