@@ -8,24 +8,46 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-// Signature calculator logic for Tailwind-based API docs
-// Supports dynamic field addition, signature calculation (HMAC-SHA256), and result display
 
-if (!window.crypto?.subtle) {
-  alert('Ваш браузер не поддерживает Web Crypto API для расчёта подписи. Пожалуйста, используйте современный браузер.');
+// ====== Base64 and SHA1 helpers ======
+// Base64 encode (UTF-8)
+function b64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
 }
 
-// Helper: ArrayBuffer to hex string
-function ab2hex(buffer) {
-  return Array.from(new Uint8Array(buffer)).map(x => x.toString(16).padStart(2, "0")).join("");
+// SHA1 hex digest
+async function sha1Hex(str) {
+  const buf = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
 }
 
-// Helper: Calculate HMAC-SHA256 (returns hex)
-async function calcSignature(secret, stringToSign) {
-  const enc = new TextEncoder();
-  const key = await crypto.subtle.importKey('raw', enc.encode(secret), {name: "HMAC", hash: "SHA-256"}, false, ["sign"]);
-  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(stringToSign));
-  return ab2hex(sig);
+// Новый алгоритм signature — как в Node.js примере из документации
+async function calcSignature(secretKey, allFields) {
+  // 1. Исключаем signature и пустые значения
+  const filtered = Object.entries(allFields)
+    .filter(([k, v]) => k !== "signature" && v !== "");
+  // 2. Сортируем по ключу
+  filtered.sort(([a], [b]) => a.localeCompare(b));
+  // 3. Формируем строку key=base64(value)&...
+  const joined = filtered.map(([k, v]) => `${k}=${b64(v)}`).join("&");
+  // 4. Двойное sha1
+  const inner = await sha1Hex(secretKey + joined);
+  const outer = await sha1Hex(secretKey + inner);
+  return outer;
+}
+
+// Получение всех полей формы
+function getAllFormFields(form) {
+  const data = {};
+  // input, select, textarea
+  form.querySelectorAll("input[name],select[name],textarea[name]").forEach(el => {
+    if (el.type === "checkbox" || el.type === "radio") {
+      if (el.checked) data[el.name] = el.value;
+    } else {
+      data[el.name] = el.value;
+    }
+  });
+  return data;
 }
 
 // Lookup table for dynamic fields: { param: {label, maxlength, pattern, tip} }
@@ -162,17 +184,17 @@ const FIELD_META = {
 
 document.addEventListener('DOMContentLoaded', function() {
   // --- Dynamic fields ---
-  const calculatorSection = document.getElementById('signature-calculator');
+  const paymentForm = document.getElementById('payment-form');
   const addFieldBtn = document.getElementById('add-field-btn');
   const fieldSelector = document.getElementById('field-selector');
   const optionalFieldsContainer = document.getElementById('optional-fields-container');
-  if (addFieldBtn && fieldSelector && optionalFieldsContainer && calculatorSection) {
-    const addFieldRow = document.getElementById('add-field-row');
+  // Основные поля должны быть до #optional-fields-container внутри формы!
+  if (addFieldBtn && fieldSelector && optionalFieldsContainer && paymentForm) {
     addFieldBtn.addEventListener('click', () => {
       const val = fieldSelector.value;
       if (!val) return;
       // Prevent duplicates
-      if (calculatorSection.querySelector(`[name="${val}"]`)) return;
+      if (paymentForm.querySelector(`[name="${val}"]`)) return;
 
       // Meta for field
       const meta = FIELD_META[val] || {};
@@ -189,12 +211,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // Counter (if maxlength present)
       let counterHtml = "";
       if (maxlength) {
-        // Счётчик расположен под инпутом справа
         counterHtml = `<span class="text-gray-400 text-xs ml-auto" data-counter-for="${fieldId}">0/${maxlength}</span>`;
       }
 
       let fieldHtml = "";
-      // --- Используем flex для подсказки, счётчика и крестика строго под инпутом ---
       if (type === "select" && Array.isArray(meta.options)) {
         fieldHtml = `
           <div class="form-group mb-4 w-full relative">
@@ -252,8 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const div = document.createElement('div');
       div.innerHTML = fieldHtml;
 
-      // Вставляем над строкой выбора дополнительного поля
-      calculatorSection.insertBefore(div, addFieldRow);
+      // Вставляем в контейнер для дополнительных полей (внутри формы)
+      optionalFieldsContainer.insertBefore(div, optionalFieldsContainer.firstChild);
 
       // Remove from dropdown
       fieldSelector.querySelector(`option[value="${val}"]`).disabled = true;
@@ -281,88 +301,56 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // --- Signature calculation ---
-  const calcBtn = document.getElementById('calculate-signature-btn');
+  // --- Signature calculation for form submit ---
   const secretKeyInput = document.getElementById('secret_key');
   const resultEl = document.getElementById('result');
-  if (calcBtn && secretKeyInput && resultEl) {
-    calcBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const { signature, error } = await getSignatureValue();
-      if (error) {
-        resultEl.textContent = error;
-        resultEl.className = "text-red-600";
-        return;
-      }
-      resultEl.textContent = `Signature: ${signature}`;
-      resultEl.className = "text-brand-700 font-mono my-2";
-    });
-  }
-
-  // --- Signature calculation for form submit ---
-  const paymentForm = document.getElementById('payment-form');
   if (paymentForm) {
     paymentForm.addEventListener('submit', async function(e) {
-      e.preventDefault(); // Главное: остановить стандартную отправку
+      e.preventDefault();
 
       // Удаляем старое поле подписи, если есть
       const oldSig = paymentForm.querySelector('input[name=signature][type=hidden]');
       if (oldSig) oldSig.remove();
 
-      // Вычисляем подпись
-      const { signature, error } = await getSignatureValue();
-      if (error) {
-        // Показываем ошибку, форму не отправляем
-        const resultEl = document.getElementById('result');
+      // Собираем все поля и считаем signature
+      const fields = getAllFormFields(paymentForm);
+      const secretKey = secretKeyInput.value;
+      if (!secretKey) {
         if (resultEl) {
-          resultEl.textContent = error;
+          resultEl.textContent = "Введите secret_key";
           resultEl.className = "text-red-600";
         }
         return false;
       }
+      const signature = await calcSignature(secretKey, fields);
 
-      // Добавляем скрытое поле в форму
+      // Добавляем скрытое поле signature
       const sigInput = document.createElement('input');
       sigInput.type = "hidden";
       sigInput.name = "signature";
       sigInput.value = signature;
       paymentForm.appendChild(sigInput);
 
-      // ПРОВЕРКА: Поле действительно добавлено
-      // console.log(paymentForm.querySelector('input[name=signature]').value);
-
-      // Теперь отправляем форму программно (разрешено только один раз!)
       paymentForm.submit();
     });
   }
 
-  // --- Helper to get signature value based on current fields ---
-  async function getSignatureValue() {
-    // Gather all fields in order: merchant, amount, order_id, description, success_url, unix_timestamp + optional
-    const fields = ['merchant', 'amount', 'order_id', 'description', 'success_url', 'unix_timestamp'];
-    let stringToSign = '';
-    for (let name of fields) {
-      const el = document.getElementById(name);
-      if (!el || !el.value) return { signature: null, error: `Поле ${name} обязательно` };
-      stringToSign += el.value;
-    }
-    // Add optionals (в DOM-порядке сверху вниз)
-    const optInputs = calculatorSection.querySelectorAll("input[name],textarea[name],select[name]");
-    for (let input of optInputs) {
-      // Не включать обязательные поля (merchant, amount и т.п.)
-      if (fields.includes(input.name)) continue;
-      stringToSign += input.value;
-    }
-    const secret = secretKeyInput.value;
-    if (!secret || !stringToSign) {
-      return { signature: null, error: "Введите secret_key и все обязательные поля" };
-    }
-    try {
-      const signature = await calcSignature(secret, stringToSign);
-      return { signature, error: null };
-    } catch (err) {
-      return { signature: null, error: "Ошибка вычисления подписи: " + err };
-    }
+  // Кнопка "Рассчитать подпись"
+  const calcBtn = document.getElementById('calculate-signature-btn');
+  if (calcBtn && secretKeyInput && resultEl && paymentForm) {
+    calcBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const fields = getAllFormFields(paymentForm);
+      const secretKey = secretKeyInput.value;
+      if (!secretKey) {
+        resultEl.textContent = "Введите secret_key";
+        resultEl.className = "text-red-600";
+        return;
+      }
+      const signature = await calcSignature(secretKey, fields);
+      resultEl.textContent = `Signature: ${signature}`;
+      resultEl.className = "text-brand-700 font-mono my-2";
+    });
   }
 
   // --- Char counters for static fields ---
@@ -377,25 +365,8 @@ document.addEventListener('DOMContentLoaded', function() {
       updateCount();
     }
   });
-});
-
-// Инициализация счетчиков для всех полей с ограничением длины символов
-document.addEventListener('DOMContentLoaded', function () {
-  // Статические поля
-  document.querySelectorAll('.char-limited').forEach(function (input) {
-    let id = input.id;
-    let counter = document.querySelector(`[data-counter-for="${id}"]`);
-    if (counter) {
-      const updateCount = () => {
-        counter.textContent = `${input.value.length}/${input.maxLength}`;
-      };
-      input.addEventListener('input', updateCount);
-      updateCount();
-    }
-  });
 
   // Для динамических полей, добавляемых JS (например, custom_order_id и пр.)
-  const optionalFieldsContainer = document.getElementById('optional-fields-container');
   if (optionalFieldsContainer) {
     const observer = new MutationObserver(function () {
       optionalFieldsContainer.querySelectorAll('.char-limited').forEach(function (input) {
