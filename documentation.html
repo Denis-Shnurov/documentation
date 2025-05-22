@@ -8,258 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Prism.js CSS for syntax highlighting -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
-  <!-- ... предыдущий код ... -->
-  <style>
-    .copy-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 0.25rem;
-      padding: 0.25rem 0.85rem;
-      font-size: 0.95em;
-      color: #374151;
-      border: 1px solid #e5e7eb;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.15s;
-      z-index: 10;
-    }
-
-    .copy-btn:hover {
-      opacity: 1;
-      background: #f3f4f6;
-    }
-
-    .code-block-container {
-      position: relative;
-      margin-bottom: 1.5rem;
-      width: 100%;
-      max-width: 48rem;
-    }
-
-    .code-block-container pre.language-php {
-      background-color: #f6f8fa !important;
-    }
-
-    .code-block-container pre.language-javascript {
-      background-color: #fffceb !important;
-    }
-
-    .code-block-container pre.language-python {
-      background-color: #eaf9f4 !important;
-    }
-
-    .code-block-container pre.language-csharp {
-      background-color: #f6eafa !important;
-    }
-
-    .code-block-container pre.language-json {
-      background-color: #f0f7ff !important;
-    }
-
-    .code-block-container pre {
-      width: 100%;
-      min-width: 0;
-      max-width: 100%;
-      white-space: pre-wrap !important;
-      word-break: break-word !important;
-      overflow-x: auto !important;
-      border-radius: 0.5rem;
-      border: 1px solid #e5e7eb;
-      font-size: 0.95em;
-      margin-bottom: 0;
-      margin-top: 0;
-      box-sizing: border-box;
-      padding-top: 2.5rem !important;
-      padding-bottom: 1rem !important;
-      padding-left: 1.25rem !important;
-      padding-right: 1.25rem !important;
-      position: relative;
-    }
-
-    .code-block-container pre,
-    .code-block-container code {
-      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    }
-
-    .code-block-container pre>.copy-btn {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.7rem;
-      z-index: 20;
-    }
-
-    @media (max-width: 640px) {
-
-      .code-block-container,
-      .code-block-container pre {
-        max-width: 100vw;
-        width: 100vw;
-        font-size: 0.9em;
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
-      }
-    }
-
-    .sidebar-sticky {
-      position: sticky;
-      top: 0;
-      align-self: flex-start;
-      height: 100vh;
-      max-height: 100vh;
-      overflow-y: auto;
-      z-index: 20;
-      background: #fff;
-    }
-
-    /* --- MOBILE MENU OVERRIDE --- */
-    @media (max-width: 768px) {
-      #sidebar {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        width: 80vw;
-        max-width: 320px;
-        height: 100%;
-        z-index: 50;
-        background: #fff;
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
-        transform: translateX(-100%);
-        transition: transform 0.2s;
-        padding-right: 0;
-        overflow-y: auto;
-      }
-      #sidebar.open {
-        transform: translateX(0);
-      }
-      #sidebar .sidebar-sticky {
-        position: static;
-        height: auto;
-        max-height: none;
-        overflow-y: visible;
-        background: none;
-      }
-      #sidebar-overlay {
-        display: block;
-      }
-      main, body, .min-h-screen, .flex, .flex-1 {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        box-sizing: border-box;
-        overflow-x: hidden;
-      }
-      .main-content-blur {
-        filter: blur(2px) grayscale(0.2);
-        pointer-events: none;
-        user-select: none;
-      }
-    }
-    /* Overlay for menu on mobile */
-    #sidebar-overlay {
-      display: none;
-      position: fixed;
-      z-index: 40;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.2);
-      transition: opacity 0.2s;
-    }
-    @media (max-width: 768px) {
-      #sidebar-overlay {
-        display: none;
-      }
-      #sidebar.open ~ #sidebar-overlay {
-        display: block;
-      }
-    }
-    /* ------------------------- */
-
-    /* Фиксация поисковой строки */
-    .searchbar-sticky {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: #fff;
-      box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.06);
-    }
-
-    @media (max-width: 768px) {
-      #sidebar {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        width: 80vw;
-        max-width: 320px;
-        height: 100%;
-        z-index: 50;
-        background: #fff;
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
-        transform: translateX(-100%);
-        transition: transform 0.2s;
-        padding-right: 0;
-        overflow-y: auto;
-      }
-      #sidebar.open {
-        transform: translateX(0);
-      }
-      #sidebar .sidebar-sticky {
-        position: static;
-        height: auto;
-        max-height: none;
-        overflow-y: visible;
-        background: none;
-      }
-      #sidebar-overlay {
-        display: block;
-      }
-      main, body, .min-h-screen, .flex, .flex-1 {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        box-sizing: border-box;
-        overflow-x: hidden;
-      }
-      .main-content-blur {
-        filter: blur(2px) grayscale(0.2);
-        pointer-events: none;
-        user-select: none;
-      }
-      /* Минимальные отступы для мобильных */
-      main, #main-content, .searchbar-sticky, section {
-        padding-left: 4px !important;
-        padding-right: 4px !important;
-      }
-      header {
-        padding-left: 4px !important;
-        padding-right: 4px !important;
-      }
-      /* Скрыть логотип в правом углу мобильного хедера */
-      .mobile-logo-hide {
-        display: none !important;
-      }
-    }
-    #sidebar-overlay {
-      display: none;
-      position: fixed;
-      z-index: 40;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.2);
-      transition: opacity 0.2s;
-    }
-    @media (max-width: 768px) {
-      #sidebar-overlay {
-        display: none;
-      }
-      #sidebar.open ~ #sidebar-overlay {
-        display: block;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bg-white text-gray-800">
@@ -4000,6 +3749,38 @@ public static class SignatureCalculator
       </main>
     </div>
   </div>
+  <footer class="bg-gray-50 border-t border-gray-200 py-4 text-gray-600 text-sm w-full">
+    <div class="max-w-7xl mx-auto px-4 w-full">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center md:text-left">
+        <!-- Column 1 -->
+        <div class="flex flex-col items-center md:items-start min-h-[32px]">
+          <a href="https://modulbank.ru/" target="_blank" rel="noopener"
+            class="text-blue-600 underline hover:text-blue-800 transition">
+            АО КБ «Модульбанк»
+          </a>
+          <span class="mt-1 text-xs text-gray-500">
+            Юридический адрес: Кострома, Пл. Октябрьская, д. 1, 156005 Россия
+          </span>
+        </div>
+        <!-- Column 2 -->
+        <div class="flex items-center justify-center min-h-[32px]">
+          <a href="https://cbr.ru/banking_sector/credit/coinfo/?id=10000005" target="_blank" rel="noopener"
+            class="text-blue-600 underline hover:text-blue-800 transition">
+            Лицензия ЦБ РФ № 1927 от 16.03.2016 г.
+          </a>
+        </div>
+        <!-- Column 3 -->
+        <div class="flex flex-col items-center md:items-end justify-center min-h-[32px] gap-1">
+          <span>
+            Тел: <a href="tel:88006003377" class="text-blue-600 underline">8 800 600 33 77</a>
+          </span>
+          <span>
+            <a href="mailto:int.acquiring@modulbank.ru" class="text-blue-600 underline">int.acquiring@modulbank.ru</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
   <!-- Prism.js подсветка кода -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
@@ -4010,67 +3791,6 @@ public static class SignatureCalculator
   <script src="code.js"></script>
   <script src="script_calculator.js"></script>
   <script src="char_counter.js"></script>
-  <footer class="bg-gray-50 border-t border-gray-200 py-4 text-gray-600 text-sm w-full">
-  <div class="max-w-7xl mx-auto px-4 w-full">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center md:text-left">
-      <!-- Column 1 -->
-      <div class="flex flex-col items-center md:items-start min-h-[32px]">
-        <a href="https://modulbank.ru/" target="_blank" rel="noopener" class="text-blue-600 underline hover:text-blue-800 transition">
-          АО КБ «Модульбанк»
-        </a>
-        <span class="mt-1 text-xs text-gray-500">
-          Юридический адрес: Кострома, Пл. Октябрьская, д. 1, 156005 Россия
-        </span>
-      </div>
-      <!-- Column 2 -->
-      <div class="flex items-center justify-center min-h-[32px]">
-        <a href="https://cbr.ru/banking_sector/credit/coinfo/?id=10000005" target="_blank" rel="noopener" class="text-blue-600 underline hover:text-blue-800 transition">
-          Лицензия ЦБ РФ № 1927 от 16.03.2016 г.
-        </a>
-      </div>
-      <!-- Column 3 -->
-      <div class="flex flex-col items-center md:items-end justify-center min-h-[32px] gap-1">
-        <span>
-          Тел: <a href="tel:88006003377" class="text-blue-600 underline">8 800 600 33 77</a>
-        </span>
-        <span>
-          <a href="mailto:int.acquiring@modulbank.ru" class="text-blue-600 underline">int.acquiring@modulbank.ru</a>
-        </span>
-      </div>
-    </div>
-  </div>
-</footer>
-<script>
-    // Mobile sidebar open/close logic
-    const menuBtn = document.getElementById('menu-btn');
-    const sidebar = document.getElementById('sidebar');
-    const closeSidebar = document.getElementById('close-sidebar');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    const mainContent = document.getElementById('main-content');
-
-    function openSidebar() {
-      sidebar.classList.add('open');
-      if (sidebarOverlay) sidebarOverlay.style.display = 'block';
-      if (mainContent) mainContent.classList.add('main-content-blur');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeSidebarFn() {
-      sidebar.classList.remove('open');
-      if (sidebarOverlay) sidebarOverlay.style.display = 'none';
-      if (mainContent) mainContent.classList.remove('main-content-blur');
-      document.body.style.overflow = '';
-    }
-    if (menuBtn) menuBtn.addEventListener('click', openSidebar);
-    if (closeSidebar) closeSidebar.addEventListener('click', closeSidebarFn);
-    if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebarFn);
-
-    // Close menu on resize up to desktop
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) {
-        closeSidebarFn();
-      }
-    });
-  </script>
+  <script src="sidebar-menu.js"></script>
 </body>
-
 </html>
