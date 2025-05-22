@@ -22,4 +22,4 @@ function initCopyButtons() {
 // Если блоки кода добавляются динамически, вызывайте initCopyButtons() после вставки.
 document.addEventListener('DOMContentLoaded', function() {
   initCopyButtons();
-});
+}); 

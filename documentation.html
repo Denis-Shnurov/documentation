@@ -6,6 +6,134 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Документация API</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Prism.js CSS for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+  <!-- ... предыдущий код ... -->
+  <style>
+    .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 0.25rem;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.95em;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.15s;
+      z-index: 10;
+    }
+
+    .copy-btn:hover {
+      opacity: 1;
+      background: #f3f4f6;
+    }
+
+    .code-block-container {
+      position: relative;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 48rem;
+      /* = max-w-3xl */
+    }
+
+    .code-block-container pre.language-php {
+      background-color: #f6f8fa !important;
+    }
+
+    .code-block-container pre.language-javascript {
+      background-color: #fffceb !important;
+    }
+
+    .code-block-container pre.language-python {
+      background-color: #eaf9f4 !important;
+    }
+
+    .code-block-container pre.language-csharp {
+      background-color: #f6eafa !important;
+    }
+
+    .code-block-container pre.language-json {
+      background-color: #f0f7ff !important;
+    }
+
+    .code-block-container pre {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+      overflow-x: auto !important;
+      /* Разрешить горизонтальный скролл */
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+      font-size: 0.95em;
+      margin-bottom: 0;
+      margin-top: 0;
+      box-sizing: border-box;
+      padding-top: 2.5rem !important;
+      padding-bottom: 1rem !important;
+      padding-left: 1.25rem !important;
+      padding-right: 1.25rem !important;
+      position: relative;
+    }
+
+    .code-block-container pre,
+    .code-block-container code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+
+    .code-block-container pre>.copy-btn {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.7rem;
+      z-index: 20;
+    }
+
+    @media (max-width: 640px) {
+
+      .code-block-container,
+      .code-block-container pre {
+        max-width: 100vw;
+        width: 100vw;
+        font-size: 0.9em;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      height: 100vh;
+      max-height: 100vh;
+      overflow-y: auto;
+      z-index: 20;
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar-sticky {
+        position: static;
+        height: auto;
+        max-height: none;
+        overflow-y: visible;
+      }
+    }
+
+    /* Фиксация поисковой строки */
+    .searchbar-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: #fff;
+      /* тень для отделения от контента */
+      box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.06);
+    }
+  </style>
 </head>
 
 <body class="bg-white text-gray-800">
@@ -23,7 +151,7 @@
     </header>
     <div class="flex flex-1">
       <!-- Sidebar -->
-      <aside id="sidebar"
+      <aside class="w-72 pr-2 sidebar-sticky" id="sidebar"
         class="fixed z-30 inset-y-0 left-0 w-72 bg-white border-r transform -translate-x-full md:translate-x-0 md:static md:block transition-transform duration-200 ease-in-out">
         <div class="flex flex-col h-full">
           <!-- Logo -->
@@ -154,9 +282,10 @@
         </div>
       </aside>
       <!-- Main Content -->
-      <main class="flex-1 ml-0 md:ml-72 bg-white px-6 py-8 transition-all">
+      <main class="flex-1 bg-white px-0 py-8 transition-all">
         <!-- Search Bar -->
-        <div class="max-w-3xl mx-auto mb-8 relative">
+
+        <div class="searchbar-sticky max-w-3xl mx-auto mb-8" style="top: 0;">
           <label for="search" class="sr-only">Поиск по документации</label>
           <input id="search" name="search" type="search" autocomplete="off" placeholder="Поиск по документации..."
             class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
@@ -166,7 +295,6 @@
             <!-- Results will be injected here -->
           </div>
         </div>
-        <!-- Content: Статьи -->
         <section id="common-description" class="max-w-3xl mx-auto mb-12" data-title="Общее описание"
           data-keywords="описание интеграция онлайн оплата шлюз">
           <h2 class="text-2xl font-semibold mb-4">Общее описание</h2>
@@ -175,6 +303,7 @@
             интеграции с платформой управления сайтом, для которой нет готового решения.
           </p>
         </section>
+
         <section id="integration-methods" class="max-w-3xl mx-auto mb-12" data-title="Доступные методы для интеграции"
           data-keywords="методы интеграция оплата холдирование рекуррентный платёж отмена транзакция">
           <h2 class="text-xl font-semibold mb-4">Доступные методы для интеграции</h2>
@@ -210,6 +339,7 @@
             </li>
           </ol>
         </section>
+
         <section id="interaction-process" class="max-w-3xl mx-auto mb-12" data-title="Общий порядок взаимодействия"
           data-keywords="порядок взаимодействие запрос платеж страница callback">
           <h2 class="text-xl font-semibold mb-4">Общий порядок взаимодействия</h2>
@@ -222,8 +352,7 @@
                 <li>Данные о платеже</li>
                 <li>ID партнёра</li>
                 <li>URL для возврата пользователя</li>
-                <li>Криптографическая подпись (signature):
-                  <br>
+                <li>Криптографическая подпись (signature):<br>
                   <span class="text-gray-600">Важно: Для расчёта используется «Идентификатор магазина» + «Рабочий
                     секретный ключ» ИЛИ «Тестовый секретный ключ». Для получения данных воспользуйтесь
                     инструкцией.</span>
@@ -243,13 +372,14 @@
             </li>
           </ol>
         </section>
-
-        <!-- Новая статья: Алгоритм вычисления поля signature -->
         <section id="signature-algorithm" class="max-w-3xl mx-auto mb-12"
           data-title="Алгоритм вычисления поля signature"
           data-keywords="signature подпись алгоритм целостность аутентификация sha1 base64 секретный ключ">
           <h2 class="text-2xl font-semibold mb-2">Алгоритм вычисления поля <code>signature</code></h2>
           <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
+          <p class="text-gray-700 mb-4">
+            Значение поля <b>signature</b> используется для проверки целостности сообщения и аутентификации запроса.
+          </p>
           <p class="text-gray-700 mb-4">
             В каждом запросе со стороны вашего сервиса обязательно передаётся поле <b>signature</b> с уникальным
             значением. Значение этого поля используется для проверки целостности сообщения и аутентификации запроса.
@@ -276,6 +406,7 @@
             Затем от этой строки необходимо вычислить подпись с помощью хеш-функции <b>SHA1</b>, следующим образом:<br>
             <code>SHA1(secret_key + SHA1(secret_key + values))</code>
           </p>
+
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример вычисления поля signature</h3>
           <ol class="list-decimal pl-6 space-y-2 mb-6 text-gray-700">
             <li>
@@ -284,6 +415,12 @@
                 запроса:</div>
               <div class="overflow-x-auto mb-2">
                 <table class="w-full border text-sm bg-gray-50 rounded">
+                  <thead>
+                    <tr>
+                      <th class="px-2 py-1 text-left font-semibold">Название</th>
+                      <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr>
                       <td class="px-2 py-1 font-mono">merchant</td>
@@ -331,7 +468,7 @@
                     </tr>
                     <tr>
                       <td class="px-2 py-1 font-mono">receipt_items</td>
-                      <td class="px-2 py-1">[{"discount_sum":...}, ...]</td>
+                      <td class="px-2 py-1">[{"discount_sum": 40, ...}, ...]</td>
                     </tr>
                     <tr>
                       <td class="px-2 py-1 font-mono">callback_url</td>
@@ -348,6 +485,12 @@
               </div>
               <div class="overflow-x-auto mb-2">
                 <table class="w-full border text-sm bg-gray-50 rounded">
+                  <thead>
+                    <tr>
+                      <th class="px-2 py-1 text-left font-semibold">Название</th>
+                      <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr>
                       <td class="px-2 py-1 font-mono">merchant</td>
@@ -430,15 +573,20 @@
                 class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs">9b28fa592922dc8a0c1ba2e40f2c0432aa617afd</pre>
             </li>
           </ol>
+          <div class="text-sm mt-4">
+            Примеры реализации вычисления поля <b>signature</b> на разных языках можно найти <a
+              href="#signature-examples" class="text-blue-600 underline">здесь</a>.
+          </div>
         </section>
-        <!-- ... предыдущая часть шаблона ... -->
         <section id="signature-examples" class="max-w-3xl mx-auto mb-12"
           data-title="Примеры расчета сигнатуры на разных языках"
           data-keywords="signature примеры сигнатура php python nodejs c# sha1 base64">
           <h2 class="text-2xl font-semibold mb-4">Примеры расчёта сигнатуры на разных языках</h2>
+          <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">PHP</h3>
-          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
+          <div class="code-block-container">
+            <pre class="language-php"><button class="copy-btn" data-copy-target="php-example">Копировать</button><code id="php-example" class="language-php"><?php
 /* Определяем массив с параметрами для расчета.
 В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
 Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина. */
@@ -487,11 +635,12 @@ function get_signature(array $params, $key = 'signature') {
  
     return $sig;
 }
-  </code></pre>
+?></code></pre>
+          </div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">NodeJS</h3>
-          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
-const Base64 = require('js-base64').Base64;
+          <div class="code-block-container">
+            <pre class="language-javascript"><button class="copy-btn" data-copy-target="nodejs-example">Копировать</button><code id="nodejs-example" class="language-javascript">const Base64 = require('js-base64').Base64;
 const SHA1 = require('crypto-js/sha1');
 
 /* Определяем массив с параметрами для расчета.
@@ -533,21 +682,58 @@ function GetSignature(secretKey, formData) {
   const signature = SHA1(secretKey + SHA1(secretKey + values));
   
   return signature.toString();
-}
-  </code></pre>
+}</code></pre>
+          </div>
 
           <div class="mb-4 text-xs text-gray-400">package.json и package-lock.json (для NodeJS): используйте
-            <b>crypto-js</b> и <b>js-base64</b>.<br>
-            <code>
-      npm install crypto-js js-base64
-    </code>
+            <b>crypto-js</b> и <b>js-base64</b>.
+          </div>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="nodejs-package-json">Копировать</button><code id="nodejs-package-json" class="language-json">{
+  "name": "runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "js-base64": "^2.5.1"
+  }
+}
+</code></pre>
+          </div>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="nodejs-package-lock-json">Копировать</button><code id="nodejs-package-lock-json" class="language-json">{
+  "name": "runner",
+  "version": "1.0.0",
+  "lockfileVersion": 1,
+  "requires": true,
+  "dependencies": {
+    "crypto-js": {
+      "version": "3.1.9-1",
+      "resolved": "https://registry.npmjs.org/crypto-js/-/crypto-js-3.1.9-1.tgz",
+      "integrity": "sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg="
+    },
+    "js-base64": {
+      "version": "2.5.1",
+      "resolved": "https://registry.npmjs.org/js-base64/-/js-base64-2.5.1.tgz",
+      "integrity": "sha512-M7kLczedRMYX4L8Mdh4MzyAMM9O5osx+4FcOQuTvr3A9F2D9S5JXheN0ewNbrvK2UatkTRhL5ejGmGSjNMiZuw=="
+    }
+  }
+}
+</code></pre>
           </div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Python</h3>
-          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
-import base64
+          <div class="code-block-container">
+            <pre class="language-python"><button class="copy-btn" data-copy-target="python-example">Копировать</button><code id="python-example" class="language-python">import base64
 import hashlib
-
+ 
 def get_raw_signature(params):
     chunks = []
     for key in sorted(params.keys()):
@@ -564,17 +750,23 @@ def get_raw_signature(params):
         chunks.append('%s=%s' % (key, value_encoded.decode()))
     raw_signature = '&'.join(chunks)
     return raw_signature
-
+ 
 '''Двойное шифрование sha1 на основе секретного ключа'''
 def double_sha1(secret_key, data):
     sha1_hex = lambda s: hashlib.sha1(s.encode('utf-8')).hexdigest()
     digest = sha1_hex(secret_key + sha1_hex(secret_key + data))
     return digest
-
+ 
 '''Вычисляем подпись (signature). Подпись считается на основе склеенной строки из отсортированного массива параметров, исключая из расчета пустые поля и элемент "signature" '''
 def get_signature(secret_key: str, params: dict) -> str:
     return double_sha1(secret_key, get_raw_signature(params))
-
+ 
+ 
+'''Определяем словарь с параметрами для расчета.
+В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
+Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина.
+подставьте ваш секретный ключ вместо 00112233445566778899aabbccddeeff
+'''
 if __name__ == '__main__':
     items = {       
         "testing": '1',
@@ -591,16 +783,18 @@ if __name__ == '__main__':
         "unix_timestamp": '1573451160'
         }
     print(get_signature('00112233445566778899aabbccddeeff', items))
-  </code></pre>
+</code></pre>
+          </div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">C#</h3>
-          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
-using System;
+          <div class="code-block-container">
+            <pre class="language-csharp"><button class="copy-btn" data-copy-target="csharp-example">Копировать</button><code id="csharp-example" class="language-csharp">using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-
+ 
+ 
 class MainClass {
   public static void Main (string[] args) {
       var data = new Dictionary&lt;string, string&gt;()
@@ -618,40 +812,41 @@ class MainClass {
         {"receipt_items", "[{\"discount_sum\": 40, \"name\": \"Товар 1\", \"payment_method\": \"full_prepayment\", \"payment_object\": \"commodity\", \"price\": 48, \"quantity\": 10, \"sno\": \"osn\", \"vat\": \"vat10\"}, {\"name\": \"Товар 2\", \"payment_method\": \"full_prepayment\", \"payment_object\": \"commodity\", \"price\": 533, \"quantity\": 1, \"sno\": \"osn\", \"vat\": \"vat10\"}]"},
         {"unix_timestamp", "1573451160"}
         };
-
+ 
         Console.WriteLine(SignatureCalculator.GetSignature("00112233445566778899aabbccddeeff", data));
   }
 }
-
+ 
 public static class SignatureCalculator
     {
-
+ 
         public static string GetSignature(string secretKey, IDictionary&lt;string, string&gt; formData)
         {
-
+ 
             var keys = formData
             .Where(x=>x.Value != "")
             .Where(x=> x.Key != "signature")
             .Select(x => new { x.Key, Value = $"{x.Key}={GetBase64Val(x.Value)}" })
             .OrderBy(x => x.Key)
             .ToArray();
-
+ 
             var values = string.Join("&", keys.Select(x => x.Value));
             
            Console.WriteLine(values);
             var signature = SHA1(secretKey + SHA1(secretKey + values));
-
+ 
             return signature;
         }
-
+ 
         private static string GetBase64Val(object plainText)
         {
             var value = plainText == null ? string.Empty : plainText.ToString();
-
+ 
             var plainTextBytes = Encoding.UTF8.GetBytes(value);
             return Convert.ToBase64String(plainTextBytes);
         }
-
+ 
+ 
         // ReSharper disable once InconsistentNaming
         private static string SHA1(string input)
         {
@@ -659,40 +854,42 @@ public static class SignatureCalculator
             {
                 var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
                 var sb = new StringBuilder(hash.Length * 2);
-
+ 
                 foreach (var b in hash)
                 {
                     // can be "x2" if you want lowercase
                     sb.Append(b.ToString("x2"));
                 }
-
+ 
                 return sb.ToString();
             }
         }
     }
-  </code></pre>
+</code></pre>
+          </div>
         </section>
-        <!-- ... предыдущая часть шаблона ... -->
         <section id="payment-request" class="max-w-3xl mx-auto mb-12" data-title="Формирование запроса на оплату"
-          data-keywords="запрос оплата платёж форма POST поля merchant signature">
+          data-keywords="оплата создание запроса платёжная форма POST merchant signature">
           <h2 class="text-2xl font-semibold mb-4">Формирование запроса на оплату</h2>
-          <div class="text-gray-400 text-sm mb-4">Дата публикации: 17 мая 2022</div>
-          <p class="text-gray-700 mb-4">
-            Данный метод предназначен для создания запроса на оплату. В случае корректного составления запроса,
-            откроется платёжная форма для плательщика.
+          <div class="text-gray-400 text-sm mb-4">Метод для создания запроса на оплату<br>Дата публикации: 17 мая 2022
+          </div>
+          <p class="mb-4 text-gray-700">
+            Данный метод предназначен для создания запроса на оплату. В случае корректного составления запроса откроется
+            платёжная форма для плательщика.
           </p>
-          <h3 class="font-semibold text-lg mt-8 mb-2">Формат запроса</h3>
-          <p class="mb-2"><b>POST</b> — <a href="https://pay.modulbank.ru/pay" class="text-blue-600 underline"
-              target="_blank">https://pay.modulbank.ru/pay</a></p>
+
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
+          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/pay</code></div>
           <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
-          <div class="overflow-x-auto mb-6">
-            <table class="w-full border text-xs bg-gray-50 rounded">
+
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
               <thead>
-                <tr class="bg-gray-200">
-                  <th class="text-left px-2 py-1">Название</th>
-                  <th class="text-left px-2 py-1">Описание</th>
-                  <th class="text-left px-2 py-1">Обязательность</th>
-                  <th class="text-left px-2 py-1">Формат</th>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
                 </tr>
               </thead>
               <tbody>
@@ -700,97 +897,98 @@ public static class SignatureCalculator
                   <td class="px-2 py-1">merchant</td>
                   <td class="px-2 py-1">Идентификатор магазина, полученный в ЛК банка</td>
                   <td class="px-2 py-1">Да</td>
-                  <td class="px-2 py-1">Строка (макс. 128 символов), только печатные ASCII</td>
+                  <td class="px-2 py-1">Строка (max 128 символов), только печатные ASCII символы</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">amount</td>
                   <td class="px-2 py-1">Сумма платежа</td>
                   <td class="px-2 py-1">Да</td>
-                  <td class="px-2 py-1">Вещественное число, два знака после точки: «100» или «200.45»</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки; <br>«100» или «200.45»</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">order_id</td>
                   <td class="px-2 py-1">Уникальный идентификатор заказа</td>
                   <td class="px-2 py-1">Да</td>
-                  <td class="px-2 py-1">Строка (макс. 50 символов)</td>
+                  <td class="px-2 py-1">Строка (max 50 символов)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">custom_order_id</td>
                   <td class="px-2 py-1">Идентификатор заказа для покупателя</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 50 символов)</td>
+                  <td class="px-2 py-1">Строка (max 50 символов)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">description</td>
                   <td class="px-2 py-1">Описание платежа</td>
                   <td class="px-2 py-1">Да</td>
-                  <td class="px-2 py-1">Строка (макс. 250 символов)</td>
+                  <td class="px-2 py-1">Строка (max 250 символов)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">success_url</td>
-                  <td class="px-2 py-1">Адрес для переадресации при успешной оплате</td>
+                  <td class="px-2 py-1">URL для переадресации после успешной оплаты</td>
                   <td class="px-2 py-1">Да</td>
-                  <td class="px-2 py-1">Строка (макс. 128 символов)</td>
+                  <td class="px-2 py-1">Строка (max 128 символов)<br><em>Для страницы Модульбанка:
+                      https://pay.modulbank.ru/success</em></td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">testing</td>
                   <td class="px-2 py-1">Оплата в тестовом режиме</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Логический: 1 — тест, 0 — реальный</td>
+                  <td class="px-2 py-1">Логический: 1 — тест, 0 — реальный, по умолчанию реальные</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">callback_url</td>
-                  <td class="px-2 py-1">Адрес уведомлений об успешной оплате</td>
+                  <td class="px-2 py-1">URL для уведомлений о платеже</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 128 символов)</td>
+                  <td class="px-2 py-1">Строка (max 128 символов)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">callback_on_failure</td>
-                  <td class="px-2 py-1">Уведомление при неуспешной оплате</td>
+                  <td class="px-2 py-1">Уведомление при неуспехе</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Логический: 1 — отправлять, 0 — не отправлять</td>
+                  <td class="px-2 py-1">Логический: 1 — отправлять, 0 — не отправлять, по умолчанию не отправляется</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">client_phone</td>
                   <td class="px-2 py-1">Телефон клиента</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 15 символов), формат: «+75559091555»</td>
+                  <td class="px-2 py-1">Строка (max 15 символов), формат: «+75559091555»</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">client_name</td>
                   <td class="px-2 py-1">Имя и фамилия клиента</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 100 символов)</td>
+                  <td class="px-2 py-1">Строка (max 100 символов)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">client_email</td>
                   <td class="px-2 py-1">E-mail клиента</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 64 символа)</td>
+                  <td class="px-2 py-1">Строка (max 64 символа)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">client_id</td>
                   <td class="px-2 py-1">Идентификатор клиента</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 128 символов), только печатные ASCII</td>
+                  <td class="px-2 py-1">Строка (max 128 символов), только печатные ASCII символы</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">meta</td>
-                  <td class="px-2 py-1">Дополнительные параметры (JSON)</td>
+                  <td class="px-2 py-1">Дополнительные параметры в JSON</td>
                   <td class="px-2 py-1">Нет</td>
                   <td class="px-2 py-1">JSON-строка</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">receipt_contact</td>
-                  <td class="px-2 py-1">Email получателя чека</td>
+                  <td class="px-2 py-1">E-mail для чека</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 64 символа)</td>
+                  <td class="px-2 py-1">Строка (max 64 символа)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">receipt_items</td>
-                  <td class="px-2 py-1">Позиции чека (JSON)</td>
-                  <td class="px-2 py-1">Да (если включена удалённая регистрация чеков)</td>
-                  <td class="px-2 py-1">JSON-объект</td>
+                  <td class="px-2 py-1">Позиции чека</td>
+                  <td class="px-2 py-1">Да (если включена удаленная регистрация чеков)</td>
+                  <td class="px-2 py-1">JSON-объект, см. раздел "Отправка чеков"</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">unix_timestamp</td>
@@ -800,60 +998,64 @@ public static class SignatureCalculator
                 </tr>
                 <tr>
                   <td class="px-2 py-1">lifetime</td>
-                  <td class="px-2 py-1">Время жизни страницы (сек.)</td>
+                  <td class="px-2 py-1">Время жизни страницы</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Целое число</td>
+                  <td class="px-2 py-1">Целое число (секунды)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">timeout_url</td>
-                  <td class="px-2 py-1">Адрес для переадресации по истечении времени</td>
+                  <td class="px-2 py-1">URL для переадресации по истечении lifetime</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 128 символов)</td>
+                  <td class="px-2 py-1">Строка (max 128 символов)</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">salt</td>
                   <td class="px-2 py-1">Случайная величина</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка (макс. 32 символа), только печатные ASCII</td>
+                  <td class="px-2 py-1">Строка (max 32 символа), только печатные ASCII символы</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">signature</td>
                   <td class="px-2 py-1">Криптографическая подпись</td>
                   <td class="px-2 py-1">Да</td>
-                  <td class="px-2 py-1">Строка (40 символов, нижний регистр), алгоритм см. выше</td>
+                  <td class="px-2 py-1">Строка (40 символов, нижний регистр).<br>Алгоритм описан в разделе «Алгоритм
+                    вычисления поля signature»</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">start_recurrent</td>
                   <td class="px-2 py-1">Рекуррентный платёж</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Логический: 1 — рекуррентная, 0/отсутствует — нет</td>
+                  <td class="px-2 py-1">Логический: 1 — рекуррентный, 0/отсутствует — нет</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">preauth</td>
                   <td class="px-2 py-1">Двухстадийная оплата</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Логический: 1 — холдирование, 0/отсутствует — нет</td>
+                  <td class="px-2 py-1">Логический: 1 — холдирование, 0/отсутствует — одностадийный</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">show_payment_methods</td>
-                  <td class="px-2 py-1">Какие способы оплаты показывать</td>
+                  <td class="px-2 py-1">Ограничение способов оплаты</td>
                   <td class="px-2 py-1">Нет</td>
-                  <td class="px-2 py-1">Строка: card, sbp, yandexpay, массив</td>
+                  <td class="px-2 py-1">Строка. card, sbp, yandexpay или массив, напр. ["sbp","card"]</td>
                 </tr>
                 <tr>
                   <td class="px-2 py-1">callback_with_receipt</td>
-                  <td class="px-2 py-1">Добавлять чеки в коллбек</td>
+                  <td class="px-2 py-1">Информация о чеках в коллбеке</td>
                   <td class="px-2 py-1">Нет</td>
                   <td class="px-2 py-1">Логический: 1 — отправлять, 0/отсутствует — нет</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="text-gray-700 mb-4">
+
+          <div class="mb-6 text-sm text-gray-500">
             <b>Обратите внимание:</b> все текстовые поля должны быть в кодировке UTF8.
-          </p>
+          </div>
+
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример отправляемой формы</h3>
-          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>&lt;form method="post" action="https://pay.modulbank.ru/pay"&gt;
+          <div class="code-block-container">
+            <pre class="language-html"><button class="copy-btn" data-copy-target="payment-form">Копировать</button><code id="payment-form" class="language-html">&lt;form method="post" action="https://pay.modulbank.ru/pay"&gt;
   &lt;input type="hidden" name="testing" value="1"&gt;
   &lt;input type="hidden" name="salt" value="dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI"&gt;
   &lt;input type="hidden" name="order_id" value="14425840"&gt;
@@ -872,25 +1074,2664 @@ public static class SignatureCalculator
     {&quot;name&quot;: &quot;Товар 2&quot;, &quot;payment_method&quot;: &quot;full_prepayment&quot;,
     &quot;payment_object&quot;: &quot;commodity&quot;, &quot;price&quot;: 533, &quot;quantity&quot;: 1, &quot;sno&quot;: &quot;osn&quot;, &quot;vat&quot;: &quot;vat10&quot;}]"&gt;
   &lt;input type="submit" value="Отправить платеж"&gt;
-&lt;/form&gt;
-</code></pre>
+&lt;/form&gt;</code></pre>
+          </div>
+
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
-          <p class="mb-2">
-            В ответ пользователь перенаправляется на страницу платежа.
-          </p>
+          <p class="mb-2">В ответ пользователь перенаправляется на страницу платежа.</p>
           <p class="mb-2">
             После проведения оплаты произойдет перенаправление на страницу, которая была указана в поле
-            <b>success_url</b>. В параметры GET будет добавлен id транзакции. Пример:
+            <b>success_url</b>. В параметры GET будет добавлен id транзакции.
           </p>
-          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-4"><code>
-https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY
-  </code></pre>
+          <div class="code-block-container">
+            <pre
+              class="language-text"><button class="copy-btn" data-copy-target="payment-redirect">Копировать</button><code id="payment-redirect" class="language-text">https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY</code></pre>
+          </div>
         </section>
-        <!-- ... остальная часть шаблона ... -->
+        <section id="hold" class="max-w-3xl mx-auto mb-12" data-title="Холдирование"
+          data-keywords="холдирование, preauth, предавторизация, холд, capture, подтверждение, отмена, modulbank">
+          <h2 class="text-2xl font-semibold mb-4">Холдирование</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Создание запроса на платеж с предавторизацией<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <p class="mb-4 text-gray-700">
+            Данный метод может использоваться для одного из способов приёма оплаты:
+          <ul class="list-disc ml-6">
+            <li>Формирование запроса на оплату</li>
+            <li>Создание счета на оплату</li>
+          </ul>
+          </p>
+          <p class="mb-4">
+            В первичный запрос на генерацию платёжной страницы или счёт ссылки добавляется необязательный параметр
+            <b>preauth</b>, принимающий <b>0</b> или <b>1</b> (<b>0</b> или отсутствие — обычный платеж, <b>1</b> —
+            платеж с предавторизацией).
+          </p>
+          <p class="mb-4">
+            При включенной онлайн-кассе в случае платежа с предавторизацией чек уходит в момент подтверждения (и на
+            сумму подтверждения), поэтому на данном этапе поля <b>receipt_contact</b> и <b>receipt_items</b> могут быть
+            пропущены.
+          </p>
+          <p class="mb-4">
+            Если холдирование применяется при выставлении счёта на оплату, тогда логика использования следующая:
+          <ol class="list-decimal ml-6">
+            <li>Формируем запрос, в котором передаём параметр <b>preauth</b></li>
+            <li>После успешной оплаты приходит callback, в котором содержится <b>transaction_id</b>.</li>
+            <li>Далее используя <b>transaction_id</b> можно:
+              <ul class="list-disc ml-6">
+                <li>Подтвердить полную сумму холдирования</li>
+                <li>Подтвердить частичную сумму холдирования</li>
+                <li>Отменить полную сумму холдирования</li>
+              </ul>
+            </li>
+          </ol>
+          </p>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Подтверждение предавторизации</h3>
+          <div class="mb-2"><b>Формат запроса</b></div>
+          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/capture/</code></div>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">transaction</td>
+                  <td class="px-2 py-1">Идентификатор транзакции с предавторизацией</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма списания. Должна быть меньше или равна сумме предавторизации</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки<br>Формат: «100» или «200.45»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор мерчанта</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов)<br>Только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа)<br>Только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее дата и время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_contact</td>
+                  <td class="px-2 py-1">Email получателя чека</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_items</td>
+                  <td class="px-2 py-1">Позиции чека (json-объект с позициями чека)</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">Обязательные поля и пример json-объекта описаны в разделе «Отправка чеков»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (32 символа, нижний регистр)<br>Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»<br>Пример:
+                    <code>78d9e7d4ec844885790f185ce0e7a60374d01cbc</code>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mb-4 text-sm text-gray-500">
+            В случае, если сумма списания будет меньше суммы предавторизации, плательщику будет оформлен возврат разницы
+            в виде отмены платежа.
+          </div>
+          <div class="mb-4 text-sm text-gray-500">
+            Callback о подтверждении будет отправлен на тот же адрес, что указан в запросе на предавторизацию или в
+            личном кабинете.
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Отмена предавторизации</h3>
+          <p class="mb-4">
+            В случае, если по предавторизации не будет подтверждения, необходимо осуществить её отмену.<br>
+            Для отмены предавторизации необходимо отправить запрос на возврат средств согласно "Формирование запроса на
+            полную отмену платежа". В случае, если транзакция была предавторизована, но не подтверждена, средства
+            вернутся плательщику в виде отмены, иначе — в виде возврата.<br>
+            Если по предавторизации не будет получено ни отмены, ни подтверждения, отмена произойдет автоматически через
+            30 дней.
+          </p>
+        </section>
+        <section id="recurrent-payments" class="max-w-3xl mx-auto mb-12" data-title="Рекуррентные платежи"
+          data-keywords="рекуррентные платежи, recurring, start_recurrent, next_recurrent, подписка, регулярные списания, modulbank">
+          <h2 class="text-2xl font-semibold mb-4">Рекуррентные платежи</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Шаги для привязки карты и совершения по ней рекуррентных платежей<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <div class="mb-4">
+            <b>Рекуррентные платежи по умолчанию запрещены.</b> Для включения обратитесь к поддержке в чат банка.
+          </div>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Шаги для привязки карты и совершения по ней рекуррентных платежей:
+          </h3>
+          <ol class="list-decimal ml-6 mb-4">
+            <li>
+              Провести первый рекуррентный платеж, указав в запросе на оплату параметр <b>start_recurrent: 1</b>.
+              Платеж проводится как обычный, с вводом карты покупателя и проведением 3DS аутентификации.
+              Покупатель должен быть уведомлен о том, что при проведении этого платежа его карта сохраняется, и по ней
+              будут впоследствии происходить списания.
+            </li>
+            <li>
+              При успешном завершении первого рекуррентного платежа карта покупателя сохраняется в карточном хранилище
+              Модульбанка.
+            </li>
+            <li>
+              Для проведения последующих транзакций по этой карте без участия кардхолдера нужно формировать запрос на
+              платеж с указанием <b>transaction_id</b> первой транзакции.
+              По этой транзакции будет получена карта из хранилища, проведен платеж и вернется ответ со статусом
+              транзакции.
+              Если в личном кабинете или запросе на платеж будет указан адрес для колбека, он также будет прислан.
+            </li>
+          </ol>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Формат запроса для последующих рекуррентных платежей</h3>
+          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/next_recurrent/</code></div>
+          <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                  </td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">first_recurrent_transaction</td>
+                  <td class="px-2 py-1">Идентификатор первой рекуррентной транзакции по этой карте</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки<br />Формат: «100» или «200.45»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">order_id</td>
+                  <td class="px-2 py-1">Уникальный идентификатор заказа в интернет-магазине</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">custom_order_id</td>
+                  <td class="px-2 py-1">Идентификатор заказа, который будет отображаться покупателю</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">description</td>
+                  <td class="px-2 py-1">Описание платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 250 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">testing</td>
+                  <td class="px-2 py-1">Флаг тестового режима, в котором можно совершать произвольное количество
+                    транзакций с использованием тестовых карт</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — тестовый платеж, 0 — реальный платеж<br />По умолчанию реальные
+                    платежи</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_url</td>
+                  <td class="px-2 py-1">Адрес, на который будет отправлено уведомление POST-запросом в случае успешной
+                    оплаты</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов)<br />Формат: url encode</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_phone</td>
+                  <td class="px-2 py-1">Номер телефона клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)<br />Формат: «+75559091555»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_name</td>
+                  <td class="px-2 py-1">Имя и фамилия клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_email</td>
+                  <td class="px-2 py-1">E-mail клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_id</td>
+                  <td class="px-2 py-1">Идентификатор клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">meta</td>
+                  <td class="px-2 py-1">Поле для дополнительных параметров в формате JSON</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">JSON-строка</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_contact</td>
+                  <td class="px-2 py-1">E-mail получателя чека (если в ЛК включена удаленная регистрация чеков через
+                    онлайн-кассу)</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_items</td>
+                  <td class="px-2 py-1">Позиции чека (json-объект с позициями чека)</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Обязательные поля и пример json-объекта описаны в разделе «Отправка чеков»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее дата и время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (40 символов в нижнем регистре). Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="create-bill" class="max-w-3xl mx-auto mb-12" data-title="Создание счета на оплату"
+          data-keywords="создание счета, счет на оплату, bill, modulbank, api, invoice, ссылка на оплату">
+          <h2 class="text-2xl font-semibold mb-4">Создание счета на оплату</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Метод для создания счета на оплату покупателю<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <p class="mb-4 text-gray-700">
+            Данный метод предназначен для создания счета на оплату покупателю. В случае корректного составления запроса
+            создается ссылка на оплату, которую необходимо отправить покупателю.
+          </p>
+
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
+          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/bill/</code></div>
+          <p class="mb-4">Параметры запроса:</p>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                  </td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки, формат: «100» или «200.45»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">description</td>
+                  <td class="px-2 py-1">Описание платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 250 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">testing</td>
+                  <td class="px-2 py-1">Флаг тестового режима. При включенной интеграции с кассой по тестовым оплатам
+                    чеки не формируются</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — тестовый платеж, 0 — реальный платеж. По умолчанию реальные
+                    платежи</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_email</td>
+                  <td class="px-2 py-1">E-mail клиента. Флаг отправки письма с уведомлением о выставленном счете</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа). Если указано это поле и передано send_letter=1, то
+                    клиенту будет отправлено письмо с уведомлением о выставлении счета</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_name</td>
+                  <td class="px-2 py-1">Имя и фамилия клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 100 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">custom_order_id</td>
+                  <td class="px-2 py-1">Идентификатор заказа, который будет отображаться покупателю</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">lifetime</td>
+                  <td class="px-2 py-1">Срок актуальности счета в секундах. По истечению счет будет недоступен к оплате
+                  </td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Целое число. По умолчанию срок актуальности равен одной неделе</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">send_letter</td>
+                  <td class="px-2 py-1">Флаг отправки письма с уведомлением о выставленном счете</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — отправить письмо со ссылкой на оплату, 0 — не отправлять письмо.
+                    Если указать этот флаг и client_email, то клиенту будет отправлено письмо со ссылкой на оплату</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_contact</td>
+                  <td class="px-2 py-1">Еmail получателя чека</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_items</td>
+                  <td class="px-2 py-1">Позиции чека</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">json-объект с позициями чека. Обязательные поля и пример json-объекта описаны в
+                    разделе «Отправка чеков»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее дата и время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (40 символов в нижнем регистре). Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature». Пример: 78d9e7d4ec844885790f185ce0e7a60374d01cbc</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">reusable</td>
+                  <td class="px-2 py-1">Одноразовый/многоразовый счет. Многоразовый счет предоставляет ссылку, по
+                    которой оплата может быть проведена неограниченное количество раз любыми покупателями. Для
+                    многоразового счета не указываются send_letter, receipt_contact, client_email и lifetime</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — многоразовый, 0 — одноразовый. По умолчанию не отправляется</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_url</td>
+                  <td class="px-2 py-1">Адрес, на который будет отправлено уведомление в случае успешной оплаты</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), формат: url encode</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_on_failure</td>
+                  <td class="px-2 py-1">Включение/отключение отправки уведомления, когда операция завершилась неуспешно
+                  </td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — отправлять, 0 — не отправлять. По умолчанию не отправляется</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">start_recurrent</td>
+                  <td class="px-2 py-1">Указывает, что карту, с которой проводится транзакция, нужно сохранить для
+                    рекуррентных платежей. Доступно только после одобрения заявки</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — рекуррентная транзакция, 0 или отсутствует — не рекуррентная
+                    транзакция. По умолчанию не отправляет</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">show_payment_methods</td>
+                  <td class="px-2 py-1">Какие из доступных платежных методов показывать покупателю</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка: ["sbp"] — только СБП, ["card"] — только карты, ["sbp", "card"] — оба
+                    метода. По умолчанию выводятся все доступные методы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">success_url</td>
+                  <td class="px-2 py-1">Адрес для переадресации плательщика в случае успешной оплаты</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов). Если хотите использовать страницу успешной
+                    оплаты Модульбанка, укажите: https://pay.modulbank.ru/success</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">preauth</td>
+                  <td class="px-2 py-1">Указывает, что оплата будет двухстадийной. Подробнее в разделе "Холдирование"
+                  </td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — запрос с холдированием, 0 или отсутствует — одностадийный
+                    платёж. По умолчанию не отправляется</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="bill-request">Копировать</button><code id="bill-request" class="language-json">{
+  "signature": "2aad6f9bb04458b39b77811a7efcfbc10f0b09d8",
+  "amount": 83,
+  "send_letter": "1",
+  "unix_timestamp": 1542081557,
+  "testing": "1",
+  "description": "Оплата товара в магазине myawesomesite.com",
+  "salt": "GfudKOAsXobWVpNovJHCreKmJXNkLqtf",
+  "client_email": "test@test.ru",
+  "merchant": "ad25ef06-1824-413f-8ef1-c08115b9b979"
+}</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="bill-response">Копировать</button><code id="bill-response" class="language-json">{
+  "bill": {
+    "amount": "83",
+    "client_email": "test@test.ru",
+    "created_datetime": "2018-11-13 05:19:49",
+    "currency": "RUB",
+    "description": "Оплата товара в магазине myawesomesite.com.",
+    "expired": 0,
+    "id": "GGgEgDY3fvrDpVb25HMg2o",
+    "merchant": "ad25ef06-1824-413f-8ef1-c08115b9b979",
+    "number": 138,
+    "paid": 0,
+    "send_letter": 1,
+    "testing": 1,
+    "transaction": {},
+    "url": "https://pay.modulbank.ru/bill-GGgEgDY3fvrDpVb25HMg2o"
+  },
+  "status": "ok"
+}</code></pre>
+          </div>
+          <div class="mb-6 text-sm text-gray-500">
+            <i>Перейдя по ссылке, пришедшей в поле <b>url</b>, плательщик попадает на страницу оплаты.</i>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Возможные статусы платежа на оплату</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Значения</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">expired</td>
+                  <td class="px-2 py-1">Платеж просрочен</td>
+                  <td class="px-2 py-1">0 — действующий<br>1 — просрочен</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">paid</td>
+                  <td class="px-2 py-1">Платеж оплачен</td>
+                  <td class="px-2 py-1">0 — не оплачен<br>1 — оплачен</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="get-bill-info" class="max-w-3xl mx-auto mb-12"
+          data-title="Получение информации о выставленном счёте на оплату"
+          data-keywords="получение информации о счёте, bill info, modulbank, api, invoice status">
+          <h2 class="text-2xl font-semibold mb-4">Получение информации о выставленном счёте на оплату</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Метод для получения информации о выставленном счёте на оплату<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
+          <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/bill/</code></div>
+          <p class="mb-4">Параметры запроса:</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">Идентификатор счета</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                  </td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Дата и время, формат: UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (32 символа в нижнем регистре). Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
+          <div class="code-block-container">
+            <pre
+              class="language-text"><button class="copy-btn" data-copy-target="bill-info-request">Копировать</button><code id="bill-info-request" class="language-text">https://pay.modulbank.ru/api/v1/bill/?id=GGgEgDY3fvrDpVb25HMg2o&amp;merchant=ad25ef06-1824-413f-8ef1-c08115b9b979&amp;unix_timestamp=1542080393&amp;signature=7e0829ce9a2aee5a27f9837580f211419c97f2b9&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf</code></pre>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="bill-info-response">Копировать</button><code id="bill-info-response" class="language-json">{
+  "bill": {
+    "amount": "83",
+    "client_email": "test@test.ru",
+    "created_datetime": "2018-11-13 05:19:49",
+    "currency": "RUB",
+    "description": "Оплата товара в магазине myawesomesite.com.",
+    "expired": 0,
+    "id": "GGgEgDY3fvrDpVb25HMg2o",
+    "merchant": "ad25ef06-1824-413f-8ef1-c08115b9b979",
+    "number": 138,
+    "paid": 0,
+    "send_letter": 1,
+    "testing": 1,
+    "transaction": {},
+    "url": "https://pay.modulbank.ru/bill-GGgEgDY3fvrDpVb25HMg2o"
+  },
+  "status": "ok"
+}</code></pre>
+          </div>
+        </section>
+        <section id="sbp-payment" class="max-w-3xl mx-auto mb-12"
+          data-title="Получение QR или ссылки на СБП-оплату напрямую"
+          data-keywords="СБП, QR, qr_image, СБП-оплата, модульбанк, sbp_payment, qr_lifetime">
+          <h2 class="text-2xl font-semibold mb-4">Получение QR или ссылки на СБП-оплату напрямую</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            По запросу можно получить либо json с ссылкой на СБП-оплату, либо картинку с QR-кодом (image/png)<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <p class="mb-4 text-gray-700">
+            Если ваш покупатель заходит с десктопного устройства, ему нужно отобразить картинку, чтобы он мог
+            сосканировать ее с помощью банковского приложения на смартфоне.<br>
+            Если же покупатель хочет оплатить с мобильного устройства, стоит запросить ссылку на СБП-оплату и провести
+            редирект пользователя на эту ссылку — мобильное устройство предложит открыть эту ссылку в банковском
+            приложении.
+          </p>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формирование запроса на оплату по СБП</h3>
+          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/sbp_payment</code></div>
+          <div class="mb-4 text-red-700">
+            <b>ВНИМАНИЕ!</b> Через 10 минут после получения QR (ссылки) операция переходит в таймаут, и оплата по ней
+            зарегистрирована в ИЭ не будет.
+          </div>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                  </td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки; Формат: «100» или «200.45»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">order_id</td>
+                  <td class="px-2 py-1">Уникальный идентификатор заказа в интернет-магазине</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">custom_order_id</td>
+                  <td class="px-2 py-1">Идентификатор заказа, который будет отображаться покупателю</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">description</td>
+                  <td class="px-2 py-1">Описание платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 250 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_url</td>
+                  <td class="px-2 py-1">Адрес, на который будет отправлено уведомление в случае успешной оплаты</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов); формат: url encode</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_on_failure</td>
+                  <td class="px-2 py-1">Включение/отключение отправки уведомления, когда операция завершилась неуспешно
+                  </td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — отправлять, 0 — не отправлять. По умолчанию не отправляется</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_phone</td>
+                  <td class="px-2 py-1">Номер телефона клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 12 символов); Формат: «+75559091555»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_name</td>
+                  <td class="px-2 py-1">Имя и фамилия клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_email</td>
+                  <td class="px-2 py-1">E-mail клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">client_id</td>
+                  <td class="px-2 py-1">Идентификатор клиента</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">meta</td>
+                  <td class="px-2 py-1">Поле для дополнительных параметров в формате JSON</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">JSON-строка</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_contact</td>
+                  <td class="px-2 py-1">Еmail получателя чека</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">Строка (максимум 64 символа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">receipt_items</td>
+                  <td class="px-2 py-1">Позиции чека (json-объект с позициями чека)</td>
+                  <td class="px-2 py-1">Да (если в ЛК включена удаленная регистрация чеков через онлайн-кассу)</td>
+                  <td class="px-2 py-1">Обязательные поля и пример описаны в разделе «Отправка чеков»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее дата и время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (40 символов в нижнем регистре). Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">qr_image</td>
+                  <td class="px-2 py-1">Получить картинку с QR</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Логический: 1 — получить картинку, 0 — получить ссылку. По умолчанию
+                    возвращается ответ со ссылкой. Ссылка приходит в сообщении формата json, картинка — в формате
+                    'image/png'</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">qr_lifetime</td>
+                  <td class="px-2 py-1">Время, в течение которого возможна оплата по СБП</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Мин. значение — "5", макс. — "129600" (90 дней)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ошибки</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-error">Копировать</button><code id="sbp-error" class="language-json">{
+  "field_errors": {
+    "amount": "Введите число.; Неверное значение суммы операции",
+    "receipt_items": "Сумма позиций чека не равна amount"
+  },
+  "form_errors": "",
+  "message": "Сумма операции: Введите число., Неверное значение суммы операции; Содержимое заказа: Сумма позиций чека не равна amount",
+  "status": "error"
+}</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример успешного запроса ссылки</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-success-link">Копировать</button><code id="sbp-success-link" class="language-json">{
+  "sbp_link": "https://qr.nspk.ru/AD10000HD292LS5890SBS39REDPBFEO9?type=02&bank=100000000099&sum=100&cur=RUB&crc=79FE",
+  "status": "ok"
+}</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример успешного запроса картинки</h3>
+          <div class="code-block-container">
+
+            <pre class="language-text"><div class="flex flex-col items-start mb-8">
+    <span class="text-gray-500 mb-2">Пример отображения QR-кода по ссылке:</span>
+    <img src="https://qr.nspk.ru/AD10000HD292LS5890SBS39REDPBFEO9?type=02&bank=100000000099&sum=100&cur=RUB&crc=79FE" alt="QR-код для оплаты по СБП" class="border rounded shadow max-w-xs">
+  </div><button class="copy-btn" data-copy-target="sbp-success-img">Копировать</button><code id="sbp-success-img" class="language-text">Ответ приходит с Content-Type: image/png
+(тело ответа — картинка QR-кода)</code></pre>
+          </div>
+        </section>
+        <section id="transaction-callbacks" class="max-w-3xl mx-auto mb-12" data-title="Уведомления о транзакциях"
+          data-keywords="уведомления, callback, транзакции, webhook, POST, signature, modulbank">
+          <h2 class="text-2xl font-semibold mb-4">Уведомления о транзакциях</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Сервисные уведомления о транзакциях<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <p class="mb-4 text-gray-700">
+            После проведения оплаты сервер отправляет POST-запрос с уведомлением на <b>url</b>, указанный для
+            оповещения. Вы можете указать его в запросе на оплату в поле <b>callback_url</b> либо в личном кабинете.<br>
+            В случае, если url указан и в запросе на оплату, и в ЛК, приоритетным считается указанный в запросе.
+          </p>
+          <p class="mb-4">
+            Ответ от сервера приходит в виде POST-запроса, содержащего данные о транзакции. <b>Signature</b> в данном
+            случае считается из всех полей, содержащихся в ответе.
+          </p>
+          <p class="mb-4">
+            Сервер ожидает, что callback будет обработан на стороне магазина с ответом со статусом <b>200 ОК</b>. Иначе
+            будут совершены попытки переотправки в количестве 14 штук, с интервалом времени, возрастающим по экспоненте.
+          </p>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Вид ответа (успешная транзакция):</h3>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="callback-success">Копировать</button><code id="callback-success" class="language-json">{
+  "testing": "0",
+  "pan_mask": "220011******4440",
+  "unix_timestamp": "1570161434",
+  "salt": "DB9481A6554924BFD2F2279B5AD05B9D",
+  "rrn": "927703219385",
+  "transaction_id": "0EyuFLLZ9DagCXy8O67Q6x",
+  "original_amount": "10.00",
+  "auth_number": "2164219385",
+  "amount": "10.00",
+  "created_datetime": "2019-10-04 03:56:09",
+  "auth_code": "201471",
+  "signature": "622e1486dba17d05d080c6734131205a75d59188",
+  "client_phone": "+79999999999",
+  "client_email": "example@example.ru",
+  "state": "COMPLETE",
+  "order_id": "697144",
+  "currency": "RUB",
+  "merchant": "51cb8a0f-6fb8-4a20-98b1-9fd85dc47500",
+  "payment_method": "card",
+  "meta": {
+    "bill_id": "vlICmFjY7nST9KARa5RsSJ"
+  }
+}</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Вид ответа (неуспешная транзакция):</h3>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="callback-failed">Копировать</button><code id="callback-failed" class="language-json">{
+  "testing": "0",
+  "pan_mask": "220011******4440",
+  "unix_timestamp": "1570161434",
+  "salt": "DB9481A6554924BFD2F2279B5AD05B9D",
+  "transaction_id": "0EyuFLLZ9DagCXy8O67Q6x",
+  "original_amount": "10.00",
+  "amount": "10.00",
+  "created_datetime": "2019-10-04 03:56:09",
+  "signature": "161787e7ddb31ffa6ac1988cef16ceffa69b3324",
+  "client_phone": "+79999999999",
+  "client_email": "example@example.ru",
+  "state": "FAILED",
+  "mps_error_code": "101",
+  "message": "Отказ при выполнении авторизации",
+  "order_id": "697144",
+  "currency": "RUB",
+  "merchant": "51cb8a0f-6fb8-4a20-98b1-9fd85dc47500",
+  "payment_method": "card",
+  "meta": {
+    "bill_id": "vlICmFjY7nST9KARa5RsSJ"
+  }
+}</code></pre>
+          </div>
+
+          <p class="mb-4 text-gray-700">
+            Для проверки корректности уведомления на стороне интернет-магазина нужно провести расчет сигнатуры по
+            пришедшим в ответе полям и убедиться, что она сходится с той, что содержится в пришедшем json от эквайринга.
+          </p>
+          <div class="mb-4 text-sm text-gray-500">
+            Обратите внимание, что сигнатура для тестовых и реальных платежей считается по тестовому и реальному
+            секретным ключам соответственно. Подробнее о расчете сигнатуры можно прочитать в разделе <b>Алгоритм расчета
+              поля signature</b>.
+          </div>
+        </section>
+        <section id="get-transactions" class="max-w-3xl mx-auto mb-12" data-title="Получение списка транзакций"
+          data-keywords="список транзакций, transactions, modulbank, api, платежи, фильтр, статус">
+          <h2 class="text-2xl font-semibold mb-4">Получение списка транзакций</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Метод для получения списка транзакций по платежам<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
+          <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/transactions/</code></div>
+          <p class="mb-4">Параметры запроса:</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                  </td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Дата и время, формат: UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">date_from</td>
+                  <td class="px-2 py-1">Нижняя граница временного диапазона</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">ISO8601:2004, обязательно с часовым поясом, разделитель «T»<br>Пример:
+                    «2018-01-31T00:00:00.123+04:00»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">date_to</td>
+                  <td class="px-2 py-1">Верхняя граница временного диапазона</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">ISO8601:2004, обязательно с часовым поясом, разделитель «T»<br>Пример:
+                    «2018-01-31T00:00:00.123+04:00»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">state</td>
+                  <td class="px-2 py-1">Фильтр по статусу транзакции. По умолчанию возвращаются все транзакции</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">PROCESSING — В процессе<br>WAITING_FOR_3DS — Ожидает 3DS<br>COMPLETE — Завершена
+                    успешно<br>FAILED — Завершена с ошибкой</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">testing</td>
+                  <td class="px-2 py-1">Возвращать тестовые или боевые транзакции</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">1 — только тестовые<br>0 — только реальные. Для тестовых используйте тестовый
+                    секретный ключ. По умолчанию — боевые</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (40 символов в нижнем регистре). Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»<br>Пример: 78d9e7d4ec844885790f185ce0e7a60374d01cbc
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
+          <div class="code-block-container">
+            <pre
+              class="language-text"><button class="copy-btn" data-copy-target="transactions-request">Копировать</button><code id="transactions-request" class="language-text">https://pay.modulbank.ru/api/v1/transactions/?unix_timestamp=1542795615&amp;testing=1&amp;date_to=2019-01-31T00:00:00.123+04:00&amp;date_from=2018-01-31T00:00:00.123+04:00&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf&amp;signature=31ba86af6bce6423d28b79f0ac53ea1fd7acbeca&amp;state=COMPLETE&amp;merchant=25b649d7-03f2-4c14-a847-83205a4d913b</code></pre>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="transactions-response">Копировать</button><code id="transactions-response" class="language-json">{
+  "transactions": [
+    {
+      "created_datetime": "2018-11-15 06:06:13",
+      "transaction_id": "sRkiFz9peAQ7lAFNj7DbYi",
+      "payment_method": "card",
+      "meta": "{\"example-property\": 1234}",
+      "testing": 1,
+      "message": "",
+      "order_id": "569770",
+      "currency": "RUB",
+      "response_action": null,
+      "mps_error_code": null,
+      "original_amount": "13.00",
+      "pan_mask": "404730******7550",
+      "state": "COMPLETE",
+      "amount": "13.00"
+    },
+    {
+      "created_datetime": "2018-11-15 07:20:03",
+      "transaction_id": "0kNPLALWDfSEAN4BoUZpfK",
+      "payment_method": "card",
+      "meta": "{\"example-property\": 1234}",
+      "testing": 1,
+      "message": "",
+      "order_id": "965949",
+      "currency": "RUB",
+      "response_action": null,
+      "mps_error_code": null,
+      "original_amount": "11.00",
+      "pan_mask": "404730******7550",
+      "state": "COMPLETE",
+      "amount": "11.00"
+    },
+    {
+      "created_datetime": "2018-11-15 07:24:46",
+      "transaction_id": "5dy2ecgVzsOriIuZL16m50",
+      "payment_method": "card",
+      "meta": "{\"example-property\": 1234}",
+      "testing": 1,
+      "message": "",
+      "order_id": "201338",
+      "currency": "RUB",
+      "response_action": null,
+      "mps_error_code": null,
+      "original_amount": "49.00",
+      "pan_mask": "404730******7550",
+      "state": "COMPLETE",
+      "amount": "49.00"
+    },
+    {
+      "created_datetime": "2018-11-19 08:34:41",
+      "transaction_id": "Dd1iZh1UbmKyFRLp5Yz9Nt",
+      "payment_method": "card",
+      "meta": "{\"example-property\": 1234}",
+      "testing": 1,
+      "message": "",
+      "order_id": "15529392",
+      "currency": "RUB",
+      "response_action": null,
+      "mps_error_code": null,
+      "original_amount": "969.00",
+      "pan_mask": "404730******7550",
+      "state": "COMPLETE",
+      "amount": "969.00"
+    }
+  ],
+  "status": "ok"
+}</code></pre>
+          </div>
+        </section>
+        <section id="get-transaction-info" class="max-w-3xl mx-auto mb-12"
+          data-title="Получение информации о транзакции"
+          data-keywords="получение информации о транзакции, transaction, modulbank, api, статус платежа">
+          <h2 class="text-2xl font-semibold mb-4">Получение информации о транзакции</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Данный метод предназначен для получения информации о транзакции по платежу.
+          </div>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
+          <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/transaction/</code></div>
+          <p class="mb-4">Параметры запроса:</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название поля</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">transaction_id</td>
+                  <td class="px-2 py-1">Идентификатор транзакции.<br>Обязательный параметр.</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе
+                    интеграции.<br>Обязательный параметр.</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов). Только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее время.<br>Обязательный параметр.</td>
+                  <td class="px-2 py-1">Дата и время. Формат: UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина.<br>Необязательный параметр.</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа). Только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись.<br>Обязательный параметр.</td>
+                  <td class="px-2 py-1">Строка (40 символов в нижнем регистре)<br>Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
+          <div class="code-block-container">
+            <pre
+              class="language-text"><button class="copy-btn" data-copy-target="transaction-info-request">Копировать</button><code id="transaction-info-request" class="language-text">https://pay.modulbank.ru/api/v1/transaction/?transaction_id=qo9Kjd1vW68Pn1h9g2173e&amp;merchant=ad25ef06-1824-413f-8ef1-c08115b9b979&amp;unix_timestamp=1542080393&amp;signature=b47025989516768fc1fc60a5b38ab1d5cc3a8fbf&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="transaction-info-response">Копировать</button><code id="transaction-info-response" class="language-json">{
+  "status": "ok",
+  "transaction": {
+    "amount": "1000.00",
+    "auth_code": "201471",
+    "auth_number": "2164586974",
+    "client_email": "user@example.ru",
+    "client_phone": "",
+    "completed_datetime": "2019-11-05 11:20:59",
+    "created_datetime": "2019-11-05 11:20:51",
+    "currency": "RUB",
+    "custom_order_id": "",
+    "description": "Оплата заказа №7",
+    "message": "",
+    "meta": "",
+    "mps_error_code": null,
+    "order_id": "83e78010-163d-49a0-87e0-276d2f9e23bb",
+    "original_amount": "1000.00",
+    "pan_mask": "558462******6488",
+    "payment_method": "card",
+    "refunds": [],
+    "rrn": "002164586974",
+    "state": "COMPLETE",
+    "testing": 0,
+    "transaction_id": "saJ0G2qS0A3tLI5d1CHWr4",
+    "updated_datetime": "2019-11-05 11:20:59"
+  }
+}</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Возможные значения поля <code>state</code>:</h3>
+          <ul class="list-disc ml-6 mb-8">
+            <li><b>PROCESSING</b> — В процессе</li>
+            <li><b>WAITING_FOR_3DS</b> — Ожидает 3DS</li>
+            <li><b>FAILED</b> — Ошибка</li>
+            <li><b>COMPLETE</b> — Готово</li>
+          </ul>
+        </section>
+        <section id="full-refund" class="max-w-3xl mx-auto mb-12"
+          data-title="Формирование запроса на полную отмену платежа"
+          data-keywords="отмена платежа, refund, возврат, modulbank, api, полная отмена, возврат средств">
+          <h2 class="text-2xl font-semibold mb-4">Формирование запроса на полную отмену платежа</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Метод для полной полной отмены платежа<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <p class="mb-4 text-gray-700">
+            Данный метод предназначен для отмены платежа и возврата средств плательщику. Отмену платежа можно выполнить
+            через личный кабинет либо через вызов метода API.
+          </p>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
+          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/refund</code></div>
+          <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">merchant</td>
+                  <td class="px-2 py-1">Идентификатор магазина, который выдается в личном кабинете на этапе интеграции
+                  </td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 128 символов), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Вещественное число, два знака после точки, формат: «100» или «200.45»</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">transaction</td>
+                  <td class="px-2 py-1">Идентификатор транзакции, по которой необходимо осуществить возврат</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (максимум 50 символов)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">unix_timestamp</td>
+                  <td class="px-2 py-1">Текущее дата и время</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">UNIX Time</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">salt</td>
+                  <td class="px-2 py-1">Случайная величина</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка (максимум 32 символа), только печатные ASCII символы</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">signature</td>
+                  <td class="px-2 py-1">Криптографическая подпись</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Строка (40 символов в нижнем регистре). Алгоритм вычисления подписи описан в
+                    разделе «Алгоритм вычисления поля signature»</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-request">Копировать</button><code id="refund-request" class="language-json">{
+  "merchant": "46197191-2311-40b5-a8d3-6659602fd332",
+  "amount": "100",
+  "transaction": "nRo9bxb7hLOqVwtWMbHp5Y",
+  "unix_timestamp": "1538039634",
+  "signature": "995da849833a82e5706660e17cfc48d109eb5aa7"
+}</code></pre>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
+          <div class="code-block-container">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-response">Копировать</button><code id="refund-response" class="language-json">{
+  "message": "Успешно",
+  "refund": {
+    "amount": "100.00",
+    "created_datetime": "2017-01-01 00:01:39.488918+00:00",
+    "id": "nRo9bxb7hLOqVwtWMbHp5Y",
+    "message": "Дополнительная информация, если имеется",
+    "state": "COMPLETE"
+  },
+  "status": "ok",
+  "transaction": {
+    // информация о транзакции
+  }
+}</code></pre>
+          </div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Возможные статусы отмены платежа</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Статус</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">PENDING</td>
+                  <td class="px-2 py-1">Запрос на отмену ожидает исполнения</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">PROCESSING</td>
+                  <td class="px-2 py-1">Запрос на отмену выполняется в данный момент</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">WAITING_FOR_RESULT</td>
+                  <td class="px-2 py-1">Запрос на отмену выполнен, ожидается результат</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">COMPLETE</td>
+                  <td class="px-2 py-1">Отмена была выполнена успешно</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">FAILED</td>
+                  <td class="px-2 py-1">Произошла ошибка</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="partial-refund" class="max-w-3xl mx-auto mb-12"
+          data-title="Формирование запроса на частичную отмену платежа"
+          data-keywords="частичный возврат, частичная отмена, refund, modulbank, возврат позиций, refund_items, чек возврата">
+          <h2 class="text-2xl font-semibold mb-4">Формирование запроса на частичную отмену платежа</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Особенности осуществления отдельных видов возвратов и отмен<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <div class="mb-4 text-red-700">
+            <b>Важно!</b> Проведение частичного возврата доступно только на следующий день после операции оплаты, иначе
+            в ответе <b>message</b> будет содержать «Операция не найдена». При повторном проведении частичного возврата
+            по такой операции на следующий день ошибка автоматически устранится.
+          </div>
+
+          <p class="mb-4">
+            Если у вашего магазина <b>нет интеграции с онлайн-кассой</b>, то для частичной отмены/возврата достаточно в
+            запросе указать в поле <b>amount</b> возвращаемую сумму.
+          </p>
+          <p class="mb-4">
+            Если <b>касса подключена</b>, то нужно указать, какие именно позиции и в каком количестве вы возвращаете.
+            Это нужно для того, чтобы Интернет-Эквайринг корректно сформировал чек возврата.
+          </p>
+          <div class="mb-4 text-red-700">
+            <b>Внимание!</b> Для работы с чеками частичного возврата вам нужно получать информацию о чеке в коллбеке об
+            оплате. Для этого нужно отправить в запросе на оплату <b>1</b> в поле <b>callback_with_receipt</b> или
+            обратиться в чат поддержки, чтобы получение информации о чеке в коллбеке включили для вашего магазина на
+            постоянной основе.
+          </div>
+          <p class="mb-4">
+            В таком случае в основной запрос добавляется поле <b>refund_items</b>, содержащее json с возвращаемыми
+            позициями. Формат аналогичен полю <b>receipt_items</b> из запроса на формирование оплаты.
+          </p>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Структура refund_items</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Имя</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">initial_item</td>
+                  <td class="px-2 py-1">ID айтема, по которому будет возврат, возвращается в коллбеке об оплате</td>
+                  <td class="px-2 py-1">+</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">Сумма возврата</td>
+                  <td class="px-2 py-1">–</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">quantity</td>
+                  <td class="px-2 py-1">Количество возврата</td>
+                  <td class="px-2 py-1">+</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример: исходная продажа с чеком</h3>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="receipt-items-example">Копировать</button><code id="receipt-items-example" class="language-json">[
+  {
+    "name": "Консультация",
+    "sno": "osn",
+    "payment_object": "service",
+    "payment_method": "full_prepayment",
+    "price": "1000",
+    "vat": "none",
+    "quantity": 1
+  },
+  {
+    "name": "Консультация доп.",
+    "sno": "osn",
+    "payment_object": "service",
+    "payment_method": "full_prepayment",
+    "price": "200",
+    "vat": "none",
+    "quantity": 5
+  }
+]</code></pre>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Примеры refund_items для возврата</h3>
+          <ul class="mb-4 list-disc ml-6">
+            <li>Если нужно вернуть только 1 консультацию по 1000р (или все пять по 200р):</li>
+          </ul>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-item-1">Копировать</button><code id="refund-item-1" class="language-json">{
+  "quantity": 1,
+  "initial_item": "01934a95-4edf-47aa-b177-4e7858b6b983"
+}
+// или
+{
+  "quantity": 5,
+  "initial_item": "a07534aff-43da-445a-b177-b4c395acb111"
+}</code></pre>
+          </div>
+          <ul class="mb-4 list-disc ml-6">
+            <li>Если нужно вернуть произвольную сумму, например 600р из 1000р по позиции "Консультация" (или 300р из
+              400р за две из пяти шт. по позиции "Консультация доп."):</li>
+          </ul>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-item-2">Копировать</button><code id="refund-item-2" class="language-json">{
+  "quantity": 1,
+  "initial_item": "01934a95-4edf-47aa-b177-4e7858b6b983",
+  "amount": 600
+}
+
+// или
+
+{
+  "quantity": 2,
+  "initial_item": "a07534aff-43da-445a-b177-b4c395acb111",
+  "amount": 300
+}</code></pre>
+          </div>
+          <div class="mb-4">
+            В первом случае сначала сформируется чек полного возврата позиции "Консультация" (на 1000р), а затем чек
+            продажи позиции "Консультация" по новой цене (400р). Покупателю на карту вернется 600р.<br>
+            Во втором случае сначала сформируется чек полного возврата двух шт. по позиции "Консультация доп." (400р), а
+            затем чек продажи позиции "Консультация доп." по новой цене (на 100р, количество — 2, цена — 50р).
+            Покупателю на карту вернется 300р.
+          </div>
+        </section>
+        <section id="receipt-items" class="max-w-3xl mx-auto mb-12" data-title="Отправка чеков (для соответствия 54-ФЗ)"
+          data-keywords="чеки, 54-ФЗ, receipt_items, позиции чека, modulbank, фискализация">
+          <h2 class="text-2xl font-semibold mb-4">Отправка чеков (для соответствия 54-ФЗ)</h2>
+          <div class="text-gray-400 text-sm mb-4">
+            Список и расшифровка значений, отправляемых в списке товаров для чека<br>
+            Дата публикации: 17 мая 2022
+          </div>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-6">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Название</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Обязательность</th>
+                  <th class="px-2 py-1 text-left font-semibold">Формат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">name</td>
+                  <td class="px-2 py-1">Наименование товара</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Максимум 128 символов</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">quantity</td>
+                  <td class="px-2 py-1">Количество</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Максимум 5 символов до запятой и 3 символа после запятой</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">price</td>
+                  <td class="px-2 py-1">Цена за единицу товара (рубли, в формате 10.99)</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">Максимум 8 символов до запятой и 2 символа после запятой</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">discount_sum</td>
+                  <td class="px-2 py-1">Скидка на позицию (рубли, в формате 5.99). Используется только в работе через
+                    Модулькассу!</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Максимум 8 символов до запятой и 2 символа после запятой</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">sno</td>
+                  <td class="px-2 py-1">Система налогообложения</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">osn — Общая СН<br>
+                    usn_income — Упрощенная СН (доходы)<br>
+                    usn_income_outcome — Упрощенная СН (доходы минус расходы)<br>
+                    envd — Единый налог на вмененный доход<br>
+                    esn — Единый сельскохозяйственный налог<br>
+                    patent — Патентная СН</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">payment_object</td>
+                  <td class="px-2 py-1">Предмет расчета</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">commodity — Товар<br>
+                    excise — Подакцизный товар<br>
+                    job — Работа<br>
+                    service — Услуга<br>
+                    gambling_bet — Ставка азартной игры<br>
+                    gambling_prize — Выигрыш азартной игры<br>
+                    lottery — Лотерейный билет<br>
+                    lottery_prize — Выигрыш лотереи<br>
+                    intellectual_activity — Предоставление результатов интеллектуальной деятельности<br>
+                    payment — Платеж<br>
+                    agent_commission — Агентское вознаграждение<br>
+                    composite — Составной предмет расчета<br>
+                    another — Другое</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">payment_method</td>
+                  <td class="px-2 py-1">Метод платежа</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">full_prepayment — Предоплата 100%<br>
+                    prepayment — Предоплата<br>
+                    advance — Аванс<br>
+                    full_payment — Полный расчет<br>
+                    partial_payment — Частичный расчет и кредит<br>
+                    credit — Передача в кредит<br>
+                    credit_payment — Оплата кредита</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">vat</td>
+                  <td class="px-2 py-1">Ставка НДС</td>
+                  <td class="px-2 py-1">Да</td>
+                  <td class="px-2 py-1">none — Без НДС<br>
+                    vat0 — НДС по ставке 0%<br>
+                    vat10 — НДС чека по ставке 10%<br>
+                    vat20 — НДС чека по ставке 20%<br>
+                    vat110 — НДС чека по расчетной ставке 10%<br>
+                    vat120 — НДС чека по расчетной ставке 20%<br>
+                    vat5 — НДС чека по ставке 5%<br>
+                    vat105 — НДС чека по расчетной ставке 5%<br>
+                    vat7 — НДС чека по ставке 7%<br>
+                    vat107 — НДС чека по расчетной ставке 7%</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">nomenclature_code</td>
+                  <td class="px-2 py-1">Код товара (тэг 1162)</td>
+                  <td class="px-2 py-1">Нет</td>
+                  <td class="px-2 py-1">Строка в шестнадцатеричном представлении с пробелами. Максимальная длина — 32
+                    байта<br>Пример: 00 00 00 01 00 21 FA 41 00 23 05 41 00 0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mb-4">
+            <b>Общая сумма позиций чека с учетом всех скидок должна совпадать с суммой, передаваемой в поле
+              <code>amount</code>.</b>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Алгоритм округления итоговой суммы для чека с несколькими
+            позициями:</h3>
+          <ul class="list-decimal ml-6 mb-4">
+            <li>Для каждой позиции считается <b>price × quantity - discount_sum</b> (если он есть);</li>
+            <li>Полученная сумма для каждой позиции округляется по <b>ROUND_HALF_UP</b>;</li>
+            <li>Сумма полученных округленных сумм по всем позициям должна совпадать со значением, передаваемым в поле
+              <b>amount</b> платежного запроса.
+            </li>
+          </ul>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Пример <code>json</code>-объекта:</h3>
+          <div class="code-block-container mb-8">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="receipt-items-json">Копировать</button><code id="receipt-items-json" class="language-json">[
+  {
+    "discount_sum": 40,
+    "name": "Товар 1",
+    "payment_method": "full_prepayment",
+    "payment_object": "commodity",
+    "price": 48,
+    "quantity": 10,
+    "sno": "osn",
+    "vat": "vat10"
+  },
+  {
+    "name": "Товар 2",
+    "payment_method": "full_prepayment",
+    "payment_object": "commodity",
+    "price": 533,
+    "quantity": 1,
+    "sno": "osn",
+    "vat": "vat10"
+  }
+]</code></pre>
+          </div>
+        </section>
+        <section id="base-url-auth-token" class="max-w-3xl mx-auto mb-12"
+          data-title="Базовый адрес и получение токена для авторизации"
+          data-keywords="базовый адрес, эндпоинт, modulbank, API, токен, авторизация, sp2">
+          <h2 class="text-2xl font-semibold mb-4">Базовый адрес и получение токена для авторизации запроса</h2>
+          <div class="mb-4">
+            <b>Базовый адрес:</b><br>
+            <code>https://pay.modulbank.ru/sp2/</code>
+          </div>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Получение токена для авторизации запроса</h3>
+          <p class="mb-4">
+            Генерация токена проводится в веб-версии личного кабинета банка:<br>
+            <b>Кнопка "+" → "Полное меню" → Генерация токена"</b>.<br>
+            <span class="text-red-700 font-semibold">Важно:</span> После закрытия слоя токен скрывается маской и не
+            подлежит восстановлению. Генерация нового токена прекращает работу ранее созданного.<br>
+            Также можно открыть дополнительный расчетный счет в банке для проведения выплат и сгенерировать для него
+            токен.
+          </p>
+          <h3 class="font-semibold text-lg mt-6 mb-2">Авторизация</h3>
+          <p class="mb-4">
+            Все запросы должны использовать авторизацию с помощью HTTP-хедера:<br>
+            <code>Authorization: {api_token}</code>
+          </p>
+          <div class="mb-4">
+            Дополнительную информацию можно уточнить по ссылке: <a href="https://pay.modulbank.ru/sp2/swagger"
+              target="_blank" class="text-blue-600 underline">https://pay.modulbank.ru/sp2/swagger</a>
+          </div>
+        </section>
+        <section id="account-work" class="max-w-3xl mx-auto mb-12" data-title="Работа со счётом"
+          data-keywords="счёт, account, фильтр, получение данных, баланс, modulbank, API">
+          <h2 class="text-2xl font-semibold mb-4">Работа со счётом</h2>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных с применением фильтра</h3>
+          <div class="mb-2">
+            <b>Описание:</b> Получение списка счетов с возможностью фильтрации.<br>
+            <b>Пример ответа:</b>
+          </div>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="accounts-filter-response-2">Копировать</button><code id="accounts-filter-response-2" class="language-json">{
+  "status": "string",
+  "data": [
+    {
+      "id": "string",
+      "ogrn": "string | null",
+      "inn": "string | null",
+      "kpp": "string | null",
+      "name": "string | null",
+      "number": "string",
+      "status": "string",
+      "balance": "decimal"
+    }
+  ]
+}</code></pre>
+          </div>
+
+          <h4 class="font-semibold text-md mt-4 mb-2">Поля в объекте <code>data</code>:</h4>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">string (UUID)</td>
+                  <td class="px-2 py-1">Уникальный идентификатор счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ogrn</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">ОГРН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">inn</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">ИНН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">kpp</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">КПП организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">name</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">Наименование организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">number</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Номер расчётного счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">status</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Статус счёта: none, submitted, processing, enabled</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">balance</td>
+                  <td class="px-2 py-1">decimal</td>
+                  <td class="px-2 py-1">Баланс счёта</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных по ID счёта</h3>
+          <div class="mb-2">
+            <b>Описание:</b> Получение информации о счёте по его уникальному идентификатору.<br>
+            Уточнить ID счёта можно в ответе на запрос с применением фильтра.
+          </div>
+          <div class="mb-2">
+            <b>Метод:</b> <code>GET accounts/{id}</code>
+          </div>
+          <div class="overflow-x-auto mb-2">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-6">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Наименование</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Расположение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">Уникальный идентификатор счёта</td>
+                  <td class="px-2 py-1">string (guid)</td>
+                  <td class="px-2 py-1">path</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <b>Пример ответа:</b>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="accounts-by-id-response-2">Копировать</button><code id="accounts-by-id-response-2" class="language-json">{
+  "status": "ok",
+  "data": [
+    {
+      "id": "e577840a-54a2-4d96-886f-2a1dd050e0eb",
+      "ogrn": "1021929129694",
+      "inn": "1473593687",
+      "kpp": "107643484",
+      "name": "ПАО Бесконечность и Ъ",
+      "number": "40702810123456789012",
+      "status": "enabled",
+      "balance": 150000.50
+    }
+  ]
+}</code></pre>
+          </div>
+          <h4 class="font-semibold text-md mt-4 mb-2">Поля в объекте <code>data</code>:</h4>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">string (GUID)</td>
+                  <td class="px-2 py-1">Уникальный идентификатор счёта в формате GUID</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ogrn</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">ОГРН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">inn</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">ИНН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">kpp</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">КПП организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">name</td>
+                  <td class="px-2 py-1">string | null</td>
+                  <td class="px-2 py-1">Наименование организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">number</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Номер расчётного счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">status</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Статус счёта: none, submitted, processing, enabled, failed</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">balance</td>
+                  <td class="px-2 py-1">decimal</td>
+                  <td class="px-2 py-1">Баланс счёта (число с плавающей точкой)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 class="font-semibold text-md mt-4 mb-2">Статусы счёта (<code>status</code>):</h4>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Значение</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">none</td>
+                  <td class="px-2 py-1">Счёт не имеет активного статуса</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">submitted</td>
+                  <td class="px-2 py-1">Счёт отправлен на обработку</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">processing</td>
+                  <td class="px-2 py-1">Счёт находится в обработке</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">enabled</td>
+                  <td class="px-2 py-1">Счёт активирован и готов к использованию</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">failed</td>
+                  <td class="px-2 py-1">Ошибка при открытии или обработке счёта</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="account-filter" class="max-w-3xl mx-auto mb-12" data-title="Работа со счётом"
+          data-keywords="счёт, account, фильтр, получение данных, баланс, API">
+          <h2 class="text-2xl font-semibold mb-4">Работа со счётом</h2>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных с применением фильтра</h3>
+          <div class="mb-2">
+            <b>Пример ответа:</b>
+          </div>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="account-filter-response">Копировать</button><code id="account-filter-response" class="language-json">{
+  "status": "string",
+  "data": [
+    {
+      "id": "string",
+      "ogrn": "string | null",
+      "inn": "string | null",
+      "kpp": "string | null",
+      "name": "string | null",
+      "number": "string",
+      "status": "string",
+      "balance": "decimal"
+    }
+  ]
+}</code></pre>
+          </div>
+
+          <h4 class="font-semibold text-md mt-4 mb-2">Поля в объекте <code>data</code>:</h4>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">string (UUID)</td>
+                  <td class="px-2 py-1">Уникальный идентификатор счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ogrn</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">ОГРН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">inn</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">ИНН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">kpp</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">КПП организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">name</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">Наименование организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">number</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Номер расчётного счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">status</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Статус счёта: none, submitted, processing, enabled</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">balance</td>
+                  <td class="px-2 py-1">decimal</td>
+                  <td class="px-2 py-1">Баланс счёта</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mb-4">
+            <b>Возможные значения поля <code>status</code>:</b>
+            <ul class="list-disc ml-6">
+              <li><code>none</code> — счёт не имеет активного статуса</li>
+              <li><code>submitted</code> — счёт отправлен на обработку</li>
+              <li><code>processing</code> — счёт находится в обработке</li>
+              <li><code>enabled</code> — счёт активирован и готов к использованию</li>
+            </ul>
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных по ID счёта</h3>
+          <div class="mb-2">
+            <b>Описание:</b> Уточнить ID счёта можно в ответе на запрос применения фильтра.
+          </div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /api/v1/accounts/{id}</pre>
+          </div>
+          <div class="mb-2">
+            <b>Параметры:</b>
+          </div>
+          <div class="overflow-x-auto mb-2">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-6">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Наименование</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Расположение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">Уникальный идентификатор счёта</td>
+                  <td class="px-2 py-1">string (GUID)</td>
+                  <td class="px-2 py-1">path</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <b>Пример ответа:</b>
+          <div class="code-block-container mb-4">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="account-id-response">Копировать</button><code id="account-id-response" class="language-json">{
+  "status": "ok",
+  "data": [
+    {
+      "id": "e577840a-54a2-4d96-886f-2a1dd050e0eb",
+      "ogrn": "1021929129694",
+      "inn": "1473593687",
+      "kpp": "107643484",
+      "name": "ПАО Бесконечность и Ъ",
+      "number": "40702810123456789012",
+      "status": "enabled",
+      "balance": 150000.50
+    }
+  ]
+}</code></pre>
+          </div>
+          <h4 class="font-semibold text-md mt-4 mb-2">Поля в объекте <code>data</code>:</h4>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">string (GUID)</td>
+                  <td class="px-2 py-1">Уникальный идентификатор счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ogrn</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">ОГРН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">inn</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">ИНН организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">kpp</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">КПП организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">name</td>
+                  <td class="px-2 py-1">string &#124; null</td>
+                  <td class="px-2 py-1">Наименование организации (может отсутствовать)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">number</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Номер расчётного счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">status</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Статус счёта: none, submitted, processing, enabled, failed</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">balance</td>
+                  <td class="px-2 py-1">decimal</td>
+                  <td class="px-2 py-1">Баланс счёта (число с плавающей точкой)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mb-4">
+            <b>Дополнительное значение <code>status</code>:</b>
+            <ul class="list-disc ml-6">
+              <li><code>failed</code> — счёт заблокирован или отклонён</li>
+            </ul>
+          </div>
+        </section>
+        <section id="card-token" class="max-w-3xl mx-auto mb-12" data-title="Работа с картой"
+          data-keywords="карта, токен, токенизация, карта выплаты, form_url, pan, token">
+          <h2 class="text-2xl font-semibold mb-4">Работа с картой</h2>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Присвоение токена для карты</h3>
+          <div class="mb-2">Позволяет получить токен для карты на основе её номера (PAN).</div>
+          <h4 class="font-semibold mt-4 mb-1">Запрос</h4>
+          <div class="code-block-container mb-3">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="card-token-request">Копировать</button><code id="card-token-request" class="language-json">{
+  "pan": "string"
+}</code></pre>
+          </div>
+
+          <h4 class="font-semibold mt-4 mb-1">Ответ</h4>
+          <div class="code-block-container mb-3">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="card-token-response">Копировать</button><code id="card-token-response" class="language-json">{
+  "status": "string",
+  "data": { 
+    "id": "string",
+    "token": "string"
+  }
+}</code></pre>
+          </div>
+
+          <h4 class="font-semibold mt-4 mb-1">Поля</h4>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">id</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Уникальный идентификатор</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">token</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">Токен карты для последующих запросов на выплату</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr class="my-8">
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Запрос формы для токенизации карты</h3>
+          <div class="mb-2">Генерация формы для самостоятельного ввода данных карты пользователем и получения токена.
+          </div>
+
+          <h4 class="font-semibold mt-4 mb-1">Параметры</h4>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Наименование</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Ограничение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">lifetime_sec</td>
+                  <td class="px-2 py-1">Время жизни сессии для ввода данных карты (сек.)</td>
+                  <td class="px-2 py-1">int32</td>
+                  <td class="px-2 py-1">от 30 до 86400 секунд (24 часа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">redirect_url</td>
+                  <td class="px-2 py-1">URL для перенаправления после успешной токенизации</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">nullable</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">callback_url</td>
+                  <td class="px-2 py-1">URL для серверного коллбэка</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">nullable</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="font-semibold mt-4 mb-1">Пример запроса</h4>
+          <div class="code-block-container mb-3">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="card-form-request">Копировать</button><code id="card-form-request" class="language-json">{
+  "lifetime_sec": 0,
+  "redirect_url": "string",
+  "callback_url": "string"
+}</code></pre>
+          </div>
+
+          <h4 class="font-semibold mt-4 mb-1">Ответ</h4>
+          <div class="code-block-container mb-6">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="card-form-response">Копировать</button><code id="card-form-response" class="language-json">{
+  "status": "string",
+  "data": {
+    "id": "string",
+    "card_token": "string",
+    "status": "wait_pan",
+    "form_url": "string",
+    "lifetime_sec": 0,
+    "redirect_url": "string",
+    "callback_url": "string"
+  }
+}</code></pre>
+          </div>
+
+          <hr class="my-8">
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Проверка статуса сохранения номера карты</h3>
+          <div class="mb-2">Используется для уточнения статуса сохранения карты по идентификатору запроса токена.</div>
+          <h4 class="font-semibold mt-4 mb-1">Ответ</h4>
+          <div class="code-block-container mb-6">
+            <pre class="language-json"><button class="copy-btn" data-copy-target="card-save-status-response">Копировать</button><code id="card-save-status-response" class="language-json">{
+  "status": "string",
+  "data": {
+    "id": "string",
+    "card_token": "string",
+    "status": "wait_pan",
+    "form_url": "string",
+    "lifetime_sec": 0,
+    "redirect_url": "string",
+    "callback_url": "string",
+    "pan_mask": "string",
+    "pan_hash": "string"
+  }
+}</code></pre>
+          </div>
+        </section>
+        <section id="card-payout" class="max-w-3xl mx-auto mb-12" data-title="Выплата на карту"
+          data-keywords="выплата на карту, payouts, пан, card_token, account_id, status, ошибки">
+          <h2 class="text-2xl font-semibold mb-4">Выплата на карту</h2>
+          <div class="mb-6 text-gray-700">
+            <b>Примечание:</b> Платеж обрабатывается <b>асинхронно</b>. Для получения результата используйте метод
+            <b>получения статуса выплаты</b>.
+          </div>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Запрос выплаты на карту</h3>
+          <div class="mb-2"><b>Описание:</b></div>
+          <ol class="list-decimal ml-8 mb-2">
+            <li>В теле запроса в качестве параметра выбора счёта можно использовать <code>account_id</code> или
+              <code>account_number</code>.</li>
+            <li>Для зачисления на карту передавайте <code>pan</code> карты или <code>card_token</code>.</li>
+          </ol>
+
+          <h4 class="font-semibold text-md mt-4 mb-2">Параметры</h4>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border rounded bg-gray-50">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                  <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold">Ограничения / описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">pan</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">от 12 до 20 символов</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">card_token</td>
+                  <td class="px-2 py-1">string (GUID)</td>
+                  <td class="px-2 py-1">токен карты</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">account_id</td>
+                  <td class="px-2 py-1">string (GUID)</td>
+                  <td class="px-2 py-1">номер счёта</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">account_number</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">maxLength: 20</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">amount</td>
+                  <td class="px-2 py-1">number (decimal)</td>
+                  <td class="px-2 py-1">min: 1, max: 999999999</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">description</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">minLength: 1, maxLength: 8192</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">phone</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">maxLength: 50</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">oid</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">maxLength: 50</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">sender_name</td>
+                  <td class="px-2 py-1">object</td>
+                  <td class="px-2 py-1">содержит <code>first_name</code>, <code>last_name</code></td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">sender_address</td>
+                  <td class="px-2 py-1">object</td>
+                  <td class="px-2 py-1">содержит <code>zip</code>, <code>city</code>, <code>street</code></td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">sender_phone</td>
+                  <td class="px-2 py-1">string</td>
+                  <td class="px-2 py-1">maxLength: 15</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">recipient_name</td>
+                  <td class="px-2 py-1">object</td>
+                  <td class="px-2 py-1">содержит <code>first_name</code>, <code>last_name</code></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-xs text-gray-600 mt-3">
+              <b>Обязательные поля:</b> <code>first_name</code>, <code>last_name</code>, <code>zip</code>,
+              <code>city</code>, <code>street</code>.<br>
+              В <code>first_name</code> и <code>last_name</code> нельзя передавать: числа, пробелы, знак вопроса.
+            </div>
+          </div>
+
+          <h4 class="font-semibold text-md mt-4 mb-2">Пример запроса</h4>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "account_id": "string",
+  "account_number": "string",
+  "pan": "string",
+  "card_token": "string",
+  "amount": 999999999,
+  "description": "string",
+  "phone": "string",
+  "oid": "string",
+  "sender_address": {
+    "zip": "string",
+    "city": "string",
+    "street": "string"
+  },
+  "sender_name": {
+    "first_name": "string",
+    "last_name": "string"
+  },
+  "sender_phone": "string",
+  "recipient_name": {
+    "first_name": "string",
+    "last_name": "string"
+  }
+}</code></pre>
+
+          <h4 class="font-semibold text-md mt-4 mb-2">Ответ</h4>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "status": "string",
+  "data": {
+    "id": "string"
+  }
+}</code></pre>
+          <table class="w-full text-sm border rounded bg-gray-50 mb-8">
+            <thead>
+              <tr>
+                <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                <th class="px-2 py-1 text-left font-semibold">Описание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-2 py-1">id</td>
+                <td class="px-2 py-1">string (GUID)</td>
+                <td class="px-2 py-1">Уникальный идентификатор выплаты для проверки статуса</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение статуса выплаты</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /api/payouts/{id}</pre>
+          <div class="mb-2"><b>Параметры:</b></div>
+          <table class="w-full text-sm border rounded bg-gray-50 mb-4">
+            <thead>
+              <tr>
+                <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                <th class="px-2 py-1 text-left font-semibold">Ограничение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-2 py-1">id</td>
+                <td class="px-2 py-1">string (GUID)</td>
+                <td class="px-2 py-1">GUID</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="font-semibold text-md mt-4 mb-2">Ответ</h4>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "status": "string",
+  "data": {
+    "id": "string",
+    "status": "string",
+    "transactions": [
+      {
+        "id": "string",
+        "account_number": "string",
+        "amount": 0,
+        "commission": 0,
+        "description": "string",
+        "status": "string",
+        "reason": "string",
+        "reason_code": "string",
+        "gate": "string",
+        "created": "2021-04-20T10:08:28.920Z"
+      }
+    ]
+  }
+}</code></pre>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Получение списка выплат</h3>
+          <div class="mb-2"><b>Запрос:</b></div>
+          <pre
+            class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /api/payouts?AccountId={guid}&AccountNumber={string}</pre>
+          <div class="mb-2"><b>Параметры:</b></div>
+          <table class="w-full text-sm border rounded bg-gray-50 mb-4">
+            <thead>
+              <tr>
+                <th class="px-2 py-1 text-left font-semibold">Поле</th>
+                <th class="px-2 py-1 text-left font-semibold">Тип</th>
+                <th class="px-2 py-1 text-left font-semibold">Расположение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-2 py-1">AccountId</td>
+                <td class="px-2 py-1">string (GUID)</td>
+                <td class="px-2 py-1">query</td>
+              </tr>
+              <tr>
+                <td class="px-2 py-1">AccountNumber</td>
+                <td class="px-2 py-1">string</td>
+                <td class="px-2 py-1">query</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="font-semibold text-md mt-4 mb-2">Ответ</h4>
+          <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "status": "string",
+  "data": [
+    {
+      "id": "string",
+      "status": "string",
+      "transactions": [
+        {
+          "id": "string",
+          "account_number": "string",
+          "amount": 0,
+          "commission": 0,
+          "description": "string",
+          "status": "string",
+          "reason": "string",
+          "reason_code": "string",
+          "gate": "string",
+          "created": "2021-04-20T10:16:16.961Z"
+        }
+      ]
+    }
+  ],
+  "offset": 0,
+  "take": 0
+}</code></pre>
+
+          <h3 class="font-semibold text-lg mt-8 mb-2">Коды ошибок</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border rounded bg-gray-50 mb-6">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold">Код ошибки</th>
+                  <th class="px-2 py-1 text-left font-semibold">Описание</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_PAN</td>
+                  <td class="px-2 py-1">Неверный PAN карты</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_AMOUNT</td>
+                  <td class="px-2 py-1">Неверная сумма</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_DESCRIPTION</td>
+                  <td class="px-2 py-1">Неверное описание</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_PHONE</td>
+                  <td class="px-2 py-1">Неверный номер телефона</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_OID</td>
+                  <td class="px-2 py-1">Неверный внешний ID</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_ACCOUNT_NUMBER</td>
+                  <td class="px-2 py-1">Неверный формат номера счета</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_PAN_TOKEN_NOT_ALLOWED</td>
+                  <td class="px-2 py-1">PAN и токен карты не могут быть указаны одновременно</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_ACCOUNT_ID_NUMBER_NOT_ALLOWED</td>
+                  <td class="px-2 py-1">ID и номер счета не могут быть указаны одновременно</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_LIFETIME</td>
+                  <td class="px-2 py-1">Неверный лайфтайм запроса формы токенизации карты</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_SENDER_ADDRESS_REQUIRED</td>
+                  <td class="px-2 py-1">Не указан адрес отправителя</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_SENDER_ADDRESS_ZIP</td>
+                  <td class="px-2 py-1">Неверный формат ZIP-кода</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_SENDER_ADDRESS_CITY</td>
+                  <td class="px-2 py-1">Неверный город отправителя</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_SENDER_ADDRESS_STREET</td>
+                  <td class="px-2 py-1">Неверная улица в адресе отправителя</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_SENDER_NAME_REQUIRED</td>
+                  <td class="px-2 py-1">Не указано имя отправителя</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_SENDER_NAME</td>
+                  <td class="px-2 py-1">Неверное имя отправителя</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_VALIDATION_INVALID_BIN</td>
+                  <td class="px-2 py-1">BIN карты не поддерживается</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INVALID_SESSION</td>
+                  <td class="px-2 py-1">Неверный ID сессии</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_ABS_FAILURE</td>
+                  <td class="px-2 py-1">Ошибка взаимодействия с АБС</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INVALID_CARD_TOKEN</td>
+                  <td class="px-2 py-1">Неверный токен карты</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INVALID_TOKEN</td>
+                  <td class="px-2 py-1">Неверный токен доступа</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INVALID_TOKEN_ROLE</td>
+                  <td class="px-2 py-1">Неверное имя роли токена</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INVALID_ACCOUNT</td>
+                  <td class="px-2 py-1">Неверный номер счета (счет не существует или нет доступа)</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INVALID_ACCOUNT_STATUS</td>
+                  <td class="px-2 py-1">Неверное состояние счета</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_ACCOUNT_BLOCKED</td>
+                  <td class="px-2 py-1">Счет заблокирован</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INSUFFICIENT_BALANCE</td>
+                  <td class="px-2 py-1">Недостаточно средств</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_HOLD_FAILED</td>
+                  <td class="px-2 py-1">Ошибка проверки баланса и холдирования средств</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_APPROVE_FAILED</td>
+                  <td class="px-2 py-1">Ошибка фиксации платежа в АБС</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_PAYMENT_GATE_FAILURE</td>
+                  <td class="px-2 py-1">Ошибка взаимодействия с платежным гейтом</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_PAYMENT_GATE_VALIDATION_FAILED</td>
+                  <td class="px-2 py-1">Ошибка валидации данных</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_INTERNAL_FAILURE</td>
+                  <td class="px-2 py-1">Внутренняя ошибка сервера</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_FRAUD_MONITOR_FAILURE</td>
+                  <td class="px-2 py-1">Ошибка отправки запроса на проверку в систему фродмониторинга</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1">ERR_FRAUD_MONITOR_REJECTED</td>
+                  <td class="px-2 py-1">Отказ системы фродмониторинга по выплате</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="payouts-sbp" class="max-w-3xl mx-auto mb-12" data-title="Платежи СБП B2C (в тестовом режиме)" data-keywords="СБП, B2C, выплаты, массовые выплаты, SBP, NSPK, регистрация ЮЛ, телефон, банк-участник, статус, тестовый режим">
+  <h2 class="text-2xl font-semibold mb-4">Платежи СБП B2C (в тестовом режиме)</h2>
+  <div class="mb-4 text-gray-700">
+    <b>Это переводы средств со счёта организации на карту физических лиц по номеру телефона через НСПК.<br>
+    Для использования функционала необходимо заново сгенерировать токен доступа в ЛК банка, если он был создан до 6 декабря 2021 года.</b>
+  </div>
+
+  <!-- Регистрация ЮЛ в СБП -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Регистрация ЮЛ в СБП</h3>
+  <div class="mb-2"><b>Запрос:</b></div>
+  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/legal-entity/register</pre>
+  <div class="text-xs text-gray-600 mb-2">Пример: <code>POST https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code></div>
+  <div class="mb-2"><b>Ответ:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "status": "success"
+}</code></pre>
+
+  <!-- Получение статуса регистрации ЮЛ в СБП -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Получение статуса регистрации ЮЛ в СБП</h3>
+  <div class="mb-2"><b>Запрос:</b></div>
+  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/legal-entity/status</pre>
+  <div class="mb-2"><b>Ответ:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "data": {
+    "status": "not_found",
+    "reason": "Юридическое лицо не зарегистрировано"
+  },
+  "status": "success"
+}</code></pre>
+  <div class="mb-2">
+    <b>Возможные значения <code>status</code>:</b>
+    <ul class="list-disc ml-6">
+      <li><code>not_found</code> — ЮЛ не зарегистрировано</li>
+      <li><code>not_registered</code> — ЮЛ не зарегистрировано</li>
+      <li><code>registered</code> — ЮЛ зарегистрировано</li>
+      <li><code>locked</code> — ЮЛ заблокировано</li>
+    </ul>
+  </div>
+
+  <!-- Валидация реквизитов получателя -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Валидация реквизитов получателя</h3>
+  <div class="mb-2"><b>Запрос:</b></div>
+  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</pre>
+  <div class="mb-2"><b>Ответ:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "data": {
+    "code": "legal_entity_is_not_registered",
+    "reason": "Для валидации платежных реквизитов необходимо зарегистрировать ЮЛ"
+  },
+  "status": "success"
+}</code></pre>
+
+  <!-- Получение списка банков-участников -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Получение списка банков-участников</h3>
+  <div class="mb-2"><b>Запрос:</b></div>
+  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/participants</pre>
+  <div class="mb-2"><b>Ответ:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "data": {
+    "rcv_time": "2021-12-08T21:15:00+00:00",
+    "participants": [
+      {
+        "id": "100000000099",
+        "name_en": "CB Modulbank",
+        "name_ru": "КБ Модульбанк",
+        "effective_date": "20211209",
+        "bic": "043469751"
+      }
+    ]
+  },
+  "status": "success"
+}</code></pre>
+
+  <!-- Создание выплаты по номеру телефона -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Создание выплаты по номеру телефона</h3>
+  <div class="mb-2"><b>Запрос:</b></div>
+  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/payouts</pre>
+  <div class="mb-2"><b>Пример тела:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-2"><code>{
+  "account_number": "40802810470010123456",
+  "phone": "9059991234",
+  "bank_id": "100000000004",
+  "amount": "10",
+  "description": "spb_test"
+}</code></pre>
+  <div class="mb-2"><b>Ответ:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "data": {
+    "id": "eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc"
+  },
+  "status": "success"
+}</code></pre>
+
+  <!-- Получение выплаты по ID -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Получение выплаты по ID</h3>
+  <div class="mb-2"><b>Запрос:</b></div>
+  <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc</pre>
+  <div class="mb-2"><b>Ответ:</b></div>
+  <pre class="language-json bg-gray-100 border rounded p-2 mb-4"><code>{
+  "data": {
+    "id": "eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc",
+    "status": "completed"
+  },
+  "status": "success"
+}</code></pre>
+
+  <!-- Статусы выплат СБП -->
+  <h3 class="font-semibold text-lg mt-8 mb-2">Статусы выплат СБП</h3>
+  <div class="overflow-x-auto mb-10">
+    <table class="w-full text-sm border rounded bg-gray-50">
+      <thead>
+        <tr>
+          <th class="px-2 py-1 text-left font-semibold">Статус</th>
+          <th class="px-2 py-1 text-left font-semibold">Описание</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="px-2 py-1">completed</td><td class="px-2 py-1">Выплата успешно завершена</td></tr>
+        <tr><td class="px-2 py-1">in_progress</td><td class="px-2 py-1">Выплата в процессе</td></tr>
+        <tr><td class="px-2 py-1">failed</td><td class="px-2 py-1">Выплата завершилась ошибкой</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
       </main>
     </div>
   </div>
+  <!-- Prism.js подсветка кода -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
   <script src="search.js"></script>
+  <script src="code.js"></script>
 </body>
 
 </html>

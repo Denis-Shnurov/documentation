@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <article id="acquiring-signature-calculator">
+                <h3>Калькулятор signature</h3>
+                <p>Для просмотра примера расчёта:</p>
+                <!-- Поле secret_key расположено вне формы -->
+                <div class="form-group">
+                    <label for="secret_key">Secret Key:</label>
+                    <input type="text" id="secret_key" required>
+                </div>
+
+                <form id="payment-form" action="https://pay.modulbank.ru/pay" method="POST"
+                    onsubmit="return validateForm()" target="_blank">
+                    <!-- Обязательные поля -->
+                    <div class="form-group">
+                        <label for="merchant">Merchant ID:</label>
+                        <input type="text" id="merchant" name="merchant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="text" id="amount" name="amount" pattern="\d*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="order_id">Order ID:</label>
+                        <input type="text" id="order_id" name="order_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" id="description" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="success_url">Success URL:</label>
+                        <input type="text" id="success_url" name="success_url" required
+                            value="https://pay.modulbank.ru/success">
+                    </div>
+                    <div class="form-group">
+                        <label for="unix_timestamp">Unix Timestamp:</label>
+                        <input type="text" id="unix_timestamp" name="unix_timestamp" pattern="\d*" required>
+                    </div>
+                    <!-- Кнопка и выпадающий список для добавления дополнительных полей -->
+                    <div class="field-adder">
+                        <select id="field-selector">
+                            <option value="">--Select Additional Field--</option>
+                            <option value="custom_order_id">Custom Order ID</option>
+                            <option value="testing">Testing</option>
+                            <option value="callback_url">Callback URL</option>
+                            <option value="client_phone">Client Phone</option>
+                            <option value="client_name">Client Name</option>
+                            <option value="client_email">Client Email</option>
+                            <option value="client_id">Client ID</option>
+                            <option value="receipt_contact">Receipt Contact</option>
+                            <option value="receipt_items">Receipt Items</option>
+                            <option value="lifetime">Lifetime</option>
+                            <option value="timeout_url">Timeout URL</option>
+                            <option value="start_recurrent">Start Recurrent</option>
+                            <option value="preauth">Preauth</option>
+                            <option value="show_payment_methods">Show Payment Methods</option>
+                        </select>
+                        <button type="button" id="add-field-btn">Добавить поле</button>
+                    </div>
+
+                    <!-- Дополнительные поля будут добавляться здесь -->
+                    <div id="optional-fields-container"></div>
+
+                    <!-- Кнопка для расчета подписи -->
+                    <button type="button" id="calculate-signature-btn">Calculate Signature</button>
+
+                    <!-- Кнопка отправки формы -->
+                    <button type="submit">Submit Payment</button>
+                </form>
+                <p id="result"></p>
+            </article>
+            <script src="script_calc.js"></script>
+        <script src="script.js"></script>
+</body>
+</html>
