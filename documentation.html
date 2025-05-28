@@ -155,7 +155,7 @@
       <main class="flex-1 bg-white px-0 py-8 transition-all">
         <!-- Search Bar -->
 
-        <div id="search-bar" class="searchbar-sticky max-w-3xl mx-auto mb-8" style="top: 0;">
+        <div id="search-bar" class="searchbar-sticky max-w-3xl mx-auto mb-8 rounded-lg" style="top: 0;">
           <label for="search" class="sr-only">Поиск по документации</label>
           <input id="search" name="search" type="search" autocomplete="off" placeholder="Поиск по документации..."
             class="w-full border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
@@ -337,7 +337,28 @@
                     </tr>
                     <tr>
                       <td class="px-2 py-1 font-mono border">receipt_items</td>
-                      <td class="px-2 py-1 border">[{"discount_sum": 40, ...}, ...]</td>
+                      <td class="px-2 py-1 border">[
+                        [
+                        {
+                        "discount_sum": 40,
+                        "name": "Товар 1",
+                        "payment_method": "full_prepayment",
+                        "payment_object": "commodity",
+                        "price": 48,
+                        "quantity": 10,
+                        "sno": "osn",
+                        "vat": "vat10"
+                        },
+                        {
+                        "name": "Товар 2",
+                        "payment_method": "full_prepayment",
+                        "payment_object": "commodity",
+                        "price": 533,
+                        "quantity": 1,
+                        "sno": "osn",
+                        "vat": "vat10"
+                        }
+                        ]</td>
                     </tr>
                     <tr>
                       <td class="px-2 py-1 font-mono border">callback_url</td>
@@ -447,7 +468,6 @@
               href="#signature-examples" class="text-blue-600 underline">здесь</a>.
           </div>
         </section>
-
         <section id="signature-calculator" class="max-w-3xl mx-auto mb-12 flex justify-center"
           data-title="Калькулятор signature" data-keywords="signature калькулятор подпись hmac test">
           <div class="w-full border border-gray-200 rounded-xl p-8 bg-white flex flex-col items-center">
@@ -581,7 +601,6 @@
             </div>
           </div>
         </section>
-
         <section id="signature-examples" class="max-w-3xl mx-auto mb-12"
           data-title="Примеры расчета сигнатуры на разных языках"
           data-keywords="signature примеры сигнатура php python nodejs c# sha1 base64">
@@ -877,9 +896,11 @@ public static class SignatureCalculator
             Данный метод предназначен для создания запроса на оплату. В случае корректного составления запроса откроется
             платёжная форма для плательщика.
           </p>
-
-          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
-          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/pay</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST https://pay.modulbank.ru/pay</pre>
+          </div>
           <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
 
           <div class="overflow-x-auto mb-8">
@@ -1128,8 +1149,11 @@ public static class SignatureCalculator
           </ol>
           </p>
           <h3 class="font-semibold text-lg mt-8 mb-2">Подтверждение предавторизации</h3>
-          <div class="mb-2"><b>Формат запроса</b></div>
-          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/capture/</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST https://pay.modulbank.ru/api/v1/capture</pre>
+          </div>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50">
               <thead>
@@ -1249,8 +1273,12 @@ public static class SignatureCalculator
             </li>
           </ol>
 
-          <h3 class="font-semibold text-lg mt-8 mb-2">Формат запроса для последующих рекуррентных платежей</h3>
-          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/next_recurrent/</code></div>
+          <h3 class="font-semibold text-lg mt-8 mb-2">Набор параметров для последующих рекуррентных платежей</h3>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST https://pay.modulbank.ru/api/v1/next_recurrent</pre>
+          </div>
           <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
 
           <div class="overflow-x-auto mb-8">
@@ -1400,9 +1428,11 @@ public static class SignatureCalculator
             Данный метод предназначен для создания счета на оплату покупателю. В случае корректного составления запроса
             создается ссылка на оплату, которую необходимо отправить покупателю.
           </p>
-
-          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
-          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/bill/</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST https://pay.modulbank.ru/api/v1/bill/</pre>
+          </div>
           <p class="mb-4">Параметры запроса:</p>
 
           <div class="overflow-x-auto mb-8">
@@ -1657,8 +1687,11 @@ public static class SignatureCalculator
           <div class="text-gray-400 text-sm mb-4">
             Метод для получения информации о выставленном счёте на оплату
           </div>
-          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
-          <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/bill/</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET https://pay.modulbank.ru/api/v1/bill</pre>
+          </div>
           <p class="mb-4">Параметры запроса:</p>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50">
@@ -1751,7 +1784,11 @@ public static class SignatureCalculator
             приложении.
           </p>
           <h3 class="font-semibold text-lg mt-6 mb-2">Формирование запроса на оплату по СБП</h3>
-          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/sbp_payment</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST https://pay.modulbank.ru/api/v1/sbp_payment</pre>
+          </div>
           <div class="mb-4 text-red-700">
             <b>ВНИМАНИЕ!</b> Через 10 минут после получения QR (ссылки) операция переходит в таймаут, и оплата по ней
             зарегистрирована в ИЭ не будет.
@@ -2019,8 +2056,11 @@ public static class SignatureCalculator
           <div class="text-gray-400 text-sm mb-4">
             Метод для получения списка транзакций по платежам
           </div>
-          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
-          <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/transactions/</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET https://pay.modulbank.ru/api/v1/transactions</pre>
+          </div>
           <p class="mb-4">Параметры запроса:</p>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50">
@@ -2181,8 +2221,11 @@ public static class SignatureCalculator
           <div class="text-gray-400 text-sm mb-4">
             Данный метод предназначен для получения информации о транзакции по платежу.
           </div>
-          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
-          <div class="mb-2"><b>GET</b> — <code>https://pay.modulbank.ru/api/v1/transaction/</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET https://pay.modulbank.ru/api/v1/transaction</pre>
+          </div>
           <p class="mb-4">Параметры запроса:</p>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50">
@@ -2283,8 +2326,11 @@ public static class SignatureCalculator
             Данный метод предназначен для отмены платежа и возврата средств плательщику. Отмену платежа можно выполнить
             через личный кабинет либо через вызов метода API.
           </p>
-          <h3 class="font-semibold text-lg mt-6 mb-2">Формат запроса</h3>
-          <div class="mb-2"><b>POST</b> — <code>https://pay.modulbank.ru/api/v1/refund</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST https://pay.modulbank.ru/api/v1/refund</pre>
+          </div>
           <p class="mb-4">Для проведения платежа необходимо отправить POST-запросом форму со следующими полями:</p>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50">
@@ -2685,19 +2731,54 @@ public static class SignatureCalculator
           data-title="Базовый адрес и получение токена для авторизации"
           data-keywords="базовый адрес, эндпоинт, modulbank, API, токен, авторизация, sp2">
           <h2 class="text-2xl font-semibold mb-4">Введение</h2>
-          <div class="mb-4">
-            <b>Базовый адрес:</b><br>
-            <code>https://pay.modulbank.ru/sp2/</code>
+          <div class="mb-2">
+            <b>Базовый адрес:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">https://pay.modulbank.ru/sp2/</pre>
           </div>
           <h3 class="font-semibold text-lg mt-6 mb-2">Получение токена для авторизации запроса</h3>
           <p class="mb-4">
-            Генерация токена проводится в веб-версии личного кабинета банка:<br>
-            <b>Кнопка "+" → "Полное меню" → Генерация токена"</b>.<br>
-            <span class="text-red-700 font-semibold">Важно:</span> После закрытия слоя токен скрывается маской и не
-            подлежит восстановлению. Генерация нового токена прекращает работу ранее созданного.<br>
-            Также можно открыть дополнительный расчетный счет в банке для проведения выплат и сгенерировать для него
-            токен.
+            Генерация токена проводится в <a href="https://my.modulbank.ru" target="_blank"
+              class="text-blue-600 underline">веб-версии личного кабинета банка:</a>
+            <br>
           </p>
+          <ol class="list-decimal ml-8 mb-4 text-gray-700">
+            <li>Нажмите кнопку "+" в верхней части экрана в личном кабинете
+              <div class="flex flex-col items-start mb-8">
+                <img src="step_1.png" alt="Описание изображения" class="border rounded shadow max-w">
+              </div>
+            </li>
+            <li>Далее выберите "Полное меню"
+              <div class="flex flex-col items-start mb-8">
+                <img src="step_2.png" alt="Описание изображения" class="border rounded shadow max-w">
+              </div>
+            </li>
+            <li>После этого перейдите в раздел "Генерация токена"
+              <div class="flex flex-col items-start mb-8">
+                <img src="step_3.png" alt="Описание изображения" class="border rounded shadow max-w">
+              </div>
+            </li>
+            <li>В разделе "Генерация токена выплат" для нужного счёта нажмите "Сгенерировать токен"
+              <div class="flex flex-col items-start mb-8">
+                <img src="step_4.png" alt="Описание изображения" class="border rounded shadow max-w">
+              </div>
+            </li>
+          </ol>
+          <span class="text-red-700 font-semibold">Важно:</span>
+          <ul class="ml-8 mb-4 text-gray-700 max-w">
+            <li>
+              <span class="text-blue-500 mr-2">ℹ️</span>
+              <span>После закрытия слоя токен скрывается маской и не подлежит восстановлению.</span>
+            </li>
+            <li>
+              <span class="text-blue-500 mr-2">ℹ️</span>
+              <span>Генерация нового токена прекращает работу ранее созданного.</span>
+            </li>
+            <li>
+              <span class="text-blue-500 mr-2">ℹ️</span>
+              <span>Можно открыть дополнительный расчетный счет в банке для проведения выплат и сгенерировать для него
+                токен.</span>
+            </li>
+          </ul>
           <h3 class="font-semibold text-lg mt-6 mb-2">Авторизация</h3>
           <p class="mb-4">
             Все запросы должны использовать авторизацию с помощью HTTP-хедера:<br>
@@ -2711,10 +2792,52 @@ public static class SignatureCalculator
         <section id="account-work" class="max-w-3xl mx-auto mb-12" data-title="Работа со счётом"
           data-keywords="счёт, account, фильтр, получение данных, баланс, modulbank, API">
           <h2 class="text-2xl font-semibold mb-4">Работа со счётом</h2>
-
           <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных с применением фильтра</h3>
           <div class="mb-2">
-            <b>Описание:</b> Получение списка счетов с возможностью фильтрации.<br>
+            <b>Описание:</b> Данный метод используется для получения детальной информации о счёте, для которого был
+            сгенерирован токен. В запросе можно передавать один из параметров ОГРН/ИНН/Наименованию компании/Номер
+            счёта<br>
+            <div class="mb-2">
+              <b>Формат запроса:</b>
+              <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET api/accounts</pre>
+            </div>
+            <b>Возможные фильтры:</b>
+            <table class="w-full text-sm border rounded bg-gray-50 mb-6">
+              <thead>
+                <tr>
+                  <th class="px-2 py-1 text-left font-semibold border">Наименование</th>
+                  <th class="px-2 py-1 text-left font-semibold border">Описание</th>
+                  <th class="px-2 py-1 text-left font-semibold border">Тип</th>
+                  <th class="px-2 py-1 text-left font-semibold border">Расположение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-2 py-1 border">Ogrn</td>
+                  <td class="px-2 py-1 border">ОГРН Орг-ции</td>
+                  <td class="px-2 py-1 border">string</td>
+                  <td class="px-2 py-1 border">query</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1 border">Inn</td>
+                  <td class="px-2 py-1 border">ИНН Орг-ции</td>
+                  <td class="px-2 py-1 border">string</td>
+                  <td class="px-2 py-1 border">query</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1 border">Name</td>
+                  <td class="px-2 py-1 border">Наименование Орг-ции</td>
+                  <td class="px-2 py-1 border">string</td>
+                  <td class="px-2 py-1 border">query</td>
+                </tr>
+                <tr>
+                  <td class="px-2 py-1 border">Number</td>
+                  <td class="px-2 py-1 border">Номер расчётного счёта</td>
+                  <td class="px-2 py-1 border">string</td>
+                  <td class="px-2 py-1 border">query</td>
+                </tr>
+              </tbody>
+            </table>
             <b>Пример ответа:</b>
           </div>
           <div class="code-block-container mb-4">
@@ -2796,7 +2919,8 @@ public static class SignatureCalculator
             Уточнить ID счёта можно в ответе на запрос с применением фильтра.
           </div>
           <div class="mb-2">
-            <b>Метод:</b> <code>GET accounts/{id}</code>
+            <b>Формат запроса:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET accounts/{id}</pre>
           </div>
           <div class="overflow-x-auto mb-2">
             <table class="w-full text-sm border rounded bg-gray-50 mb-6">
@@ -2924,214 +3048,17 @@ public static class SignatureCalculator
             </table>
           </div>
         </section>
-        <section id="account-filter" class="max-w-3xl mx-auto mb-12" data-title="Работа со счётом"
-          data-keywords="счёт, account, фильтр, получение данных, баланс, API">
-          <h2 class="text-2xl font-semibold mb-4">Работа со счётом</h2>
-
-          <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных с применением фильтра</h3>
-          <div class="mb-2">
-            <b>Пример ответа:</b>
-          </div>
-          <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="account-filter-response">Копировать</button><code id="account-filter-response" class="language-json">{
-  "status": "string",
-  "data": [
-    {
-      "id": "string",
-      "ogrn": "string | null",
-      "inn": "string | null",
-      "kpp": "string | null",
-      "name": "string | null",
-      "number": "string",
-      "status": "string",
-      "balance": "decimal"
-    }
-  ]
-}</code></pre>
-          </div>
-
-          <h4 class="font-semibold text-md mt-4 mb-2">Поля в объекте <code>data</code>:</h4>
-          <div class="overflow-x-auto mb-8">
-            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
-              <thead>
-                <tr>
-                  <th class="px-2 py-1 text-left font-semibold border">Поле</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Тип</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Описание</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="px-2 py-1 border">id</td>
-                  <td class="px-2 py-1 border">string (UUID)</td>
-                  <td class="px-2 py-1 border">Уникальный идентификатор счёта</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">ogrn</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">ОГРН организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">inn</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">ИНН организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">kpp</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">КПП организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">name</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">Наименование организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">number</td>
-                  <td class="px-2 py-1 border">string</td>
-                  <td class="px-2 py-1 border">Номер расчётного счёта</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">status</td>
-                  <td class="px-2 py-1 border">string</td>
-                  <td class="px-2 py-1 border">Статус счёта: none, submitted, processing, enabled</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">balance</td>
-                  <td class="px-2 py-1 border">decimal</td>
-                  <td class="px-2 py-1 border">Баланс счёта</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="mb-4">
-            <b>Возможные значения поля <code>status</code>:</b>
-            <ul class="list-disc ml-6">
-              <li><code>none</code> — счёт не имеет активного статуса</li>
-              <li><code>submitted</code> — счёт отправлен на обработку</li>
-              <li><code>processing</code> — счёт находится в обработке</li>
-              <li><code>enabled</code> — счёт активирован и готов к использованию</li>
-            </ul>
-          </div>
-
-          <h3 class="font-semibold text-lg mt-8 mb-2">Получение данных по ID счёта</h3>
-          <div class="mb-2">
-            <b>Описание:</b> Уточнить ID счёта можно в ответе на запрос применения фильтра.
-          </div>
-          <div class="mb-2">
-            <b>Запрос:</b>
-            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /api/v1/accounts/{id}</pre>
-          </div>
-          <div class="mb-2">
-            <b>Параметры:</b>
-          </div>
-          <div class="overflow-x-auto mb-2">
-            <table class="w-full text-sm border rounded bg-gray-50 mb-6">
-              <thead>
-                <tr>
-                  <th class="px-2 py-1 text-left font-semibold border">Наименование</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Описание</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Тип</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Расположение</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="px-2 py-1 border">id</td>
-                  <td class="px-2 py-1 border">Уникальный идентификатор счёта</td>
-                  <td class="px-2 py-1 border">string (GUID)</td>
-                  <td class="px-2 py-1 border">path</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <b>Пример ответа:</b>
-          <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="account-id-response">Копировать</button><code id="account-id-response" class="language-json">{
-  "status": "ok",
-  "data": [
-    {
-      "id": "e577840a-54a2-4d96-886f-2a1dd050e0eb",
-      "ogrn": "1021929129694",
-      "inn": "1473593687",
-      "kpp": "107643484",
-      "name": "ПАО Бесконечность и Ъ",
-      "number": "40702810123456789012",
-      "status": "enabled",
-      "balance": 150000.50
-    }
-  ]
-}</code></pre>
-          </div>
-          <h4 class="font-semibold text-md mt-4 mb-2">Поля в объекте <code>data</code>:</h4>
-          <div class="overflow-x-auto mb-8">
-            <table class="w-full text-sm border rounded bg-gray-50 mb-2">
-              <thead>
-                <tr>
-                  <th class="px-2 py-1 text-left font-semibold border">Поле</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Тип</th>
-                  <th class="px-2 py-1 text-left font-semibold border">Описание</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="px-2 py-1 border">id</td>
-                  <td class="px-2 py-1 border">string (GUID)</td>
-                  <td class="px-2 py-1 border">Уникальный идентификатор счёта</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">ogrn</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">ОГРН организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">inn</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">ИНН организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">kpp</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">КПП организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">name</td>
-                  <td class="px-2 py-1 border">string &#124; null</td>
-                  <td class="px-2 py-1 border">Наименование организации (может отсутствовать)</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">number</td>
-                  <td class="px-2 py-1 border">string</td>
-                  <td class="px-2 py-1 border">Номер расчётного счёта</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">status</td>
-                  <td class="px-2 py-1 border">string</td>
-                  <td class="px-2 py-1 border">Статус счёта: none, submitted, processing, enabled, failed</td>
-                </tr>
-                <tr>
-                  <td class="px-2 py-1 border">balance</td>
-                  <td class="px-2 py-1 border">decimal</td>
-                  <td class="px-2 py-1 border">Баланс счёта (число с плавающей точкой)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="mb-4">
-            <b>Дополнительное значение <code>status</code>:</b>
-            <ul class="list-disc ml-6">
-              <li><code>failed</code> — счёт заблокирован или отклонён</li>
-            </ul>
-          </div>
-        </section>
         <section id="card-token" class="max-w-3xl mx-auto mb-12" data-title="Работа с картой"
           data-keywords="карта, токен, токенизация, карта выплаты, form_url, pan, token">
           <h2 class="text-2xl font-semibold mb-4">Работа с картой</h2>
-
           <h3 class="font-semibold text-lg mt-8 mb-2">Присвоение токена для карты</h3>
-          <div class="mb-2">Позволяет получить токен для карты на основе её номера (PAN).</div>
-          <h4 class="font-semibold mt-4 mb-1">Запрос</h4>
+          <div class="mb-2">В запросе передаётся PAN-номер карты для сохранения в нашей системе/присваивается токен, по
+            которому можно производить выплату в дальнейшем.</div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST api/cards</pre>
+          </div>
+          <h4 class="font-semibold mt-4 mb-1">Body:</h4>
           <div class="code-block-container mb-3">
             <pre class="language-json"><button class="copy-btn" data-copy-target="card-token-request">Копировать</button><code id="card-token-request" class="language-json">{
   "pan": "string"
@@ -3179,7 +3106,10 @@ public static class SignatureCalculator
           <h3 class="font-semibold text-lg mt-8 mb-2">Запрос формы для токенизации карты</h3>
           <div class="mb-2">Генерация формы для самостоятельного ввода данных карты пользователем и получения токена.
           </div>
-
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST api/cards/tokens</pre>
+          </div>
           <h4 class="font-semibold mt-4 mb-1">Параметры</h4>
           <div class="overflow-x-auto mb-4">
             <table class="w-full text-sm border rounded bg-gray-50">
@@ -3682,7 +3612,8 @@ public static class SignatureCalculator
           <h3 class="font-semibold text-lg mt-6 mb-2">Регистрация юридического лица в СБП</h3>
           <div class="mb-2"><b>POST</b> — <code>/sp2/api/sbp/legal-entity/register</code></div>
           <div class="mb-2 text-xs text-gray-600">Пример:
-            <code>POST https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code></div>
+            <code>POST https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code>
+          </div>
           <div class="code-block-container">
             <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-le-register">Копировать</button><code id="sbp-le-register" class="language-json">{
   "status": "success"
@@ -3714,7 +3645,8 @@ public static class SignatureCalculator
           <!-- Валидация реквизитов получателя -->
           <h3 class="font-semibold text-lg mt-8 mb-2">Валидация реквизитов получателя</h3>
           <div class="mb-2"><b>GET</b> —
-            <code>/sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</code></div>
+            <code>/sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</code>
+          </div>
           <div class="code-block-container">
             <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-validate">Копировать</button><code id="sbp-validate" class="language-json">{
   "data": {
@@ -3853,9 +3785,30 @@ public static class SignatureCalculator
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
   <script src="search.js"></script>
   <script src="code.js"></script>
-  <script src="script_calculator.js"></script>
+  <script src="script_calculator.js"></script>  
   <script src="char_counter.js"></script>
   <script src="sidebar-menu.js"></script>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })
+      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102221413, "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true
+    });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/102221413" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
 </body>
 
 </html>
