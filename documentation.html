@@ -146,6 +146,27 @@
                         выплат</a></li>
                   </ul>
                 </li>
+                <li><a href="#payouts-sbp" class="block px-3 py-2 rounded-md hover:bg-gray-100 font-medium">Выплаты по
+                    реквизитам счёта B2B</a>
+                  <ul class="ml-4 mt-1 space-y-1 text-sm">
+                    <li><a href="#terms-and-definitions" class="block px-3 py-2 rounded-md hover:bg-gray-100">Термины и
+                        определения</a></li>
+                    <li><a href="#security-architecture"
+                        class="block px-3 py-2 rounded-md hover:bg-gray-100">Архитектура безопасности</a></li>
+                    <li><a href="#working-with-certificates" class="block px-3 py-2 rounded-md hover:bg-gray-100">Работа
+                        с сертификатами</a></li>
+                    <li><a href="#payout-B2B" class="block px-3 py-2 rounded-md hover:bg-gray-100">Создание выплаты по
+                        реквизитам счёта B2B</a></li>
+                    <li><a href="#checking-status-payout-B2B"
+                        class="block px-3 py-2 rounded-md hover:bg-gray-100">Уточнение статуса выплаты по реквизитам
+                        счёта B2B</a></li>
+                    <li><a href="#code-fails-B2B" class="block px-3 py-2 rounded-md hover:bg-gray-100">Коды ошибок по
+                        платежам B2B</a></li>
+                    <li><a href="#additional-information"
+                        class="block px-3 py-2 rounded-md hover:bg-gray-100">Дополнительная информация</a></li>
+
+                  </ul>
+                </li>
               </ul>
             </div>
           </nav>
@@ -607,7 +628,8 @@
           <h2 class="text-2xl font-semibold mb-4">Примеры расчёта сигнатуры на разных языках</h2>
           <h3 class="font-semibold text-lg mt-8 mb-2">PHP</h3>
           <div class="code-block-container">
-            <pre class="language-php"><button class="copy-btn" data-copy-target="php-example">Копировать</button><code id="php-example" class="language-php"><?php
+            <button class="copy-btn" data-copy-target="php-example">Копировать</button>
+            <pre class="language-php"><code id="php-example" class="language-php"><?php
 /* Определяем массив с параметрами для расчета.
 В этот массив должны войти все параметры, отправляемые в вашей форме (за исключением самого поля signature, значение которого вычисляем).
 Получив вашу форму, система ИЭ аналогичным образом вычислит из ее параметров signature и сравнит значение с вычисленным на стороне вашего магазина. */
@@ -661,7 +683,8 @@ function get_signature(array $params, $key = 'signature') {
 
           <h3 class="font-semibold text-lg mt-8 mb-2">NodeJS</h3>
           <div class="code-block-container">
-            <pre class="language-javascript"><button class="copy-btn" data-copy-target="nodejs-example">Копировать</button><code id="nodejs-example" class="language-javascript">const Base64 = require('js-base64').Base64;
+            <button class="copy-btn" data-copy-target="nodejs-example">Копировать</button>
+            <pre class="language-javascript"><code id="nodejs-example" class="language-javascript">const Base64 = require('js-base64').Base64;
 const SHA1 = require('crypto-js/sha1');
 
 /* Определяем массив с параметрами для расчета.
@@ -710,7 +733,8 @@ function GetSignature(secretKey, formData) {
             <b>crypto-js</b> и <b>js-base64</b>.
           </div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="nodejs-package-json">Копировать</button><code id="nodejs-package-json" class="language-json">{
+            <button class="copy-btn" data-copy-target="nodejs-package-json">Копировать</button>
+            <pre class="language-json"><code id="nodejs-package-json" class="language-json">{
   "name": "runner",
   "version": "1.0.0",
   "description": "",
@@ -729,7 +753,8 @@ function GetSignature(secretKey, formData) {
 </code></pre>
           </div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="nodejs-package-lock-json">Копировать</button><code id="nodejs-package-lock-json" class="language-json">{
+            <button class="copy-btn" data-copy-target="nodejs-package-lock-json">Копировать</button>
+            <pre class="language-json"><code id="nodejs-package-lock-json" class="language-json">{
   "name": "runner",
   "version": "1.0.0",
   "lockfileVersion": 1,
@@ -752,7 +777,8 @@ function GetSignature(secretKey, formData) {
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Python</h3>
           <div class="code-block-container">
-            <pre class="language-python"><button class="copy-btn" data-copy-target="python-example">Копировать</button><code id="python-example" class="language-python">import base64
+            <button class="copy-btn" data-copy-target="python-example">Копировать</button>
+            <pre class="language-python"><code id="python-example" class="language-python">import base64
 import hashlib
  
 def get_raw_signature(params):
@@ -809,7 +835,8 @@ if __name__ == '__main__':
 
           <h3 class="font-semibold text-lg mt-8 mb-2">C#</h3>
           <div class="code-block-container">
-            <pre class="language-csharp"><button class="copy-btn" data-copy-target="csharp-example">Копировать</button><code id="csharp-example" class="language-csharp">using System;
+            <button class="copy-btn" data-copy-target="csharp-example">Копировать</button>
+            <pre class="language-csharp"><code id="csharp-example" class="language-csharp">using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -1078,7 +1105,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример отправляемой формы</h3>
           <div class="code-block-container">
-            <pre class="language-html"><button class="copy-btn" data-copy-target="payment-form">Копировать</button><code id="payment-form" class="language-html">&lt;form method="post" action="https://pay.modulbank.ru/pay"&gt;
+            <button class="copy-btn" data-copy-target="payment-form">Копировать</button>
+            <pre class="language-html"><code id="payment-form" class="language-html">&lt;form method="post" action="https://pay.modulbank.ru/pay"&gt;
   &lt;input type="hidden" name="testing" value="1"&gt;
   &lt;input type="hidden" name="salt" value="dPUTLtbMfcTGzkaBnGtseKlcQymCLrYI"&gt;
   &lt;input type="hidden" name="order_id" value="14425840"&gt;
@@ -1107,8 +1135,9 @@ public static class SignatureCalculator
             <b>success_url</b>. В параметры GET будет добавлен id транзакции.
           </p>
           <div class="code-block-container">
+            <button class="copy-btn" data-copy-target="payment-redirect">Копировать</button>
             <pre
-              class="language-text"><button class="copy-btn" data-copy-target="payment-redirect">Копировать</button><code id="payment-redirect" class="language-text">https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY</code></pre>
+              class="language-text"><code id="payment-redirect" class="language-text">https://pay.modulbank.ru/success?transaction_id=yiSEn5H905COse1biIvoCY</code></pre>
           </div>
         </section>
         <section id="hold-2step" class="max-w-3xl mx-auto mb-12" data-title="Холдирование"
@@ -1616,7 +1645,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="bill-request">Копировать</button><code id="bill-request" class="language-json">{
+            <button class="copy-btn" data-copy-target="bill-request">Копировать</button>
+            <pre class="language-json"><code id="bill-request" class="language-json">{
   "signature": "2aad6f9bb04458b39b77811a7efcfbc10f0b09d8",
   "amount": 83,
   "send_letter": "1",
@@ -1631,7 +1661,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="bill-response">Копировать</button><code id="bill-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="bill-response">Копировать</button>
+            <pre class="language-json"><code id="bill-response" class="language-json">{
   "bill": {
     "amount": "83",
     "client_email": "test@test.ru",
@@ -1743,12 +1774,14 @@ public static class SignatureCalculator
           </div>
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
           <div class="code-block-container">
+            <button class="copy-btn" data-copy-target="bill-info-request">Копировать</button>
             <pre
-              class="language-text"><button class="copy-btn" data-copy-target="bill-info-request">Копировать</button><code id="bill-info-request" class="language-text">https://pay.modulbank.ru/api/v1/bill/?id=GGgEgDY3fvrDpVb25HMg2o&amp;merchant=ad25ef06-1824-413f-8ef1-c08115b9b979&amp;unix_timestamp=1542080393&amp;signature=7e0829ce9a2aee5a27f9837580f211419c97f2b9&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf</code></pre>
+              class="language-text"><code id="bill-info-request" class="language-text">https://pay.modulbank.ru/api/v1/bill/?id=GGgEgDY3fvrDpVb25HMg2o&amp;merchant=ad25ef06-1824-413f-8ef1-c08115b9b979&amp;unix_timestamp=1542080393&amp;signature=7e0829ce9a2aee5a27f9837580f211419c97f2b9&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf</code></pre>
           </div>
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="bill-info-response">Копировать</button><code id="bill-info-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="bill-info-response">Копировать</button>
+            <pre class="language-json"><code id="bill-info-response" class="language-json">{
   "bill": {
     "amount": "83",
     "client_email": "test@test.ru",
@@ -1937,7 +1970,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ошибки</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-error">Копировать</button><code id="sbp-error" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-error">Копировать</button>
+            <pre class="language-json"><code id="sbp-error" class="language-json">{
   "field_errors": {
     "amount": "Введите число.; Неверное значение суммы операции",
     "receipt_items": "Сумма позиций чека не равна amount"
@@ -1950,7 +1984,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример успешного запроса ссылки</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-success-link">Копировать</button><code id="sbp-success-link" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-success-link">Копировать</button>
+            <pre class="language-json"><code id="sbp-success-link" class="language-json">{
   "sbp_link": "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B",
   "status": "ok"
 }</code></pre>
@@ -1958,11 +1993,10 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример успешного запроса картинки</h3>
           <div class="code-block-container">
-
             <pre class="language-text"><div class="flex flex-col items-start mb-8">
     <span class="text-gray-500 mb-2">Пример отображения QR-кода по ссылке:</span>
     <img src="qr-code.png" alt="QR-код для оплаты по СБП" class="border rounded shadow max-w-xs">
-  </div><button class="copy-btn" data-copy-target="sbp-success-img">Копировать</button><code id="sbp-success-img" class="language-text">Ответ приходит с Content-Type: image/png
+  </div><code id="sbp-success-img" class="language-text">Ответ приходит с Content-Type: image/png
 (тело ответа — картинка QR-кода)</code></pre>
           </div>
         </section>
@@ -1987,7 +2021,8 @@ public static class SignatureCalculator
           </p>
           <h3 class="font-semibold text-lg mt-8 mb-2">Вид ответа (успешная транзакция):</h3>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="callback-success">Копировать</button><code id="callback-success" class="language-json">{
+            <button class="copy-btn" data-copy-target="callback-success">Копировать</button>
+            <pre class="language-json"><code id="callback-success" class="language-json">{
   "testing": "0",
   "pan_mask": "220011******4440",
   "unix_timestamp": "1570161434",
@@ -2015,7 +2050,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Вид ответа (неуспешная транзакция):</h3>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="callback-failed">Копировать</button><code id="callback-failed" class="language-json">{
+            <button class="copy-btn" data-copy-target="callback-failed">Копировать</button>
+            <pre class="language-json"><code id="callback-failed" class="language-json">{
   "testing": "0",
   "pan_mask": "220011******4440",
   "unix_timestamp": "1570161434",
@@ -2138,12 +2174,14 @@ public static class SignatureCalculator
           </div>
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
           <div class="code-block-container">
+            <button class="copy-btn" data-copy-target="transactions-request">Копировать</button>
             <pre
-              class="language-text"><button class="copy-btn" data-copy-target="transactions-request">Копировать</button><code id="transactions-request" class="language-text">https://pay.modulbank.ru/api/v1/transactions/?unix_timestamp=1542795615&amp;testing=1&amp;date_to=2019-01-31T00:00:00.123+04:00&amp;date_from=2018-01-31T00:00:00.123+04:00&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf&amp;signature=31ba86af6bce6423d28b79f0ac53ea1fd7acbeca&amp;state=COMPLETE&amp;merchant=25b649d7-03f2-4c14-a847-83205a4d913b</code></pre>
+              class="language-text"><code id="transactions-request" class="language-text">https://pay.modulbank.ru/api/v1/transactions/?unix_timestamp=1542795615&amp;testing=1&amp;date_to=2019-01-31T00:00:00.123+04:00&amp;date_from=2018-01-31T00:00:00.123+04:00&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf&amp;signature=31ba86af6bce6423d28b79f0ac53ea1fd7acbeca&amp;state=COMPLETE&amp;merchant=25b649d7-03f2-4c14-a847-83205a4d913b</code></pre>
           </div>
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="transactions-response">Копировать</button><code id="transactions-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="transactions-response">Копировать</button>
+            <pre class="language-json"><code id="transactions-response" class="language-json">{
   "transactions": [
     {
       "created_datetime": "2018-11-15 06:06:13",
@@ -2271,13 +2309,15 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
           <div class="code-block-container">
+            <button class="copy-btn" data-copy-target="transaction-info-request">Копировать</button>
             <pre
-              class="language-text"><button class="copy-btn" data-copy-target="transaction-info-request">Копировать</button><code id="transaction-info-request" class="language-text">https://pay.modulbank.ru/api/v1/transaction/?transaction_id=qo9Kjd1vW68Pn1h9g2173e&amp;merchant=ad25ef06-1824-413f-8ef1-c08115b9b979&amp;unix_timestamp=1542080393&amp;signature=b47025989516768fc1fc60a5b38ab1d5cc3a8fbf&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf</code></pre>
+              class="language-text"><code id="transaction-info-request" class="language-text">https://pay.modulbank.ru/api/v1/transaction/?transaction_id=qo9Kjd1vW68Pn1h9g2173e&amp;merchant=ad25ef06-1824-413f-8ef1-c08115b9b979&amp;unix_timestamp=1542080393&amp;signature=b47025989516768fc1fc60a5b38ab1d5cc3a8fbf&amp;salt=GfudKOAsXobWVpNovJHCreKmJXNkLqtf</code></pre>
           </div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="transaction-info-response">Копировать</button><code id="transaction-info-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="transaction-info-response">Копировать</button>
+            <pre class="language-json"><code id="transaction-info-response" class="language-json">{
   "status": "ok",
   "transaction": {
     "amount": "1000.00",
@@ -2389,7 +2429,8 @@ public static class SignatureCalculator
           </div>
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-request">Копировать</button><code id="refund-request" class="language-json">{
+            <button class="copy-btn" data-copy-target="refund-request">Копировать</button>
+            <pre class="language-json"><code id="refund-request" class="language-json">{
   "merchant": "46197191-2311-40b5-a8d3-6659602fd332",
   "amount": "100",
   "transaction": "nRo9bxb7hLOqVwtWMbHp5Y",
@@ -2399,7 +2440,8 @@ public static class SignatureCalculator
           </div>
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример ответа</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-response">Копировать</button><code id="refund-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="refund-response">Копировать</button>
+            <pre class="language-json"><code id="refund-response" class="language-json">{
   "message": "Успешно",
   "refund": {
     "amount": "100.00",
@@ -2512,7 +2554,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример: исходная продажа с чеком</h3>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="receipt-items-example">Копировать</button><code id="receipt-items-example" class="language-json">[
+            <button class="copy-btn" data-copy-target="receipt-items-example">Копировать</button>
+            <pre class="language-json"><code id="receipt-items-example" class="language-json">[
   {
     "name": "Консультация",
     "sno": "osn",
@@ -2539,7 +2582,8 @@ public static class SignatureCalculator
             <li>Если нужно вернуть только 1 консультацию по 1000р (или все пять по 200р):</li>
           </ul>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-item-1">Копировать</button><code id="refund-item-1" class="language-json">{
+            <button class="copy-btn" data-copy-target="refund-item-1">Копировать</button>
+            <pre class="language-json"><code id="refund-item-1" class="language-json">{
   "quantity": 1,
   "initial_item": "01934a95-4edf-47aa-b177-4e7858b6b983"
 }
@@ -2554,14 +2598,13 @@ public static class SignatureCalculator
               400р за две из пяти шт. по позиции "Консультация доп."):</li>
           </ul>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="refund-item-2">Копировать</button><code id="refund-item-2" class="language-json">{
+            <button class="copy-btn" data-copy-target="refund-item-2">Копировать</button>
+            <pre class="language-json"><code id="refund-item-2" class="language-json">{
   "quantity": 1,
   "initial_item": "01934a95-4edf-47aa-b177-4e7858b6b983",
   "amount": 600
 }
-
 // или
-
 {
   "quantity": 2,
   "initial_item": "a07534aff-43da-445a-b177-b4c395acb111",
@@ -2704,7 +2747,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример <code>json</code>-объекта:</h3>
           <div class="code-block-container mb-8">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="receipt-items-json">Копировать</button><code id="receipt-items-json" class="language-json">[
+            <button class="copy-btn" data-copy-target="receipt-items-json">Копировать</button>
+            <pre class="language-json"><code id="receipt-items-json" class="language-json">[
   {
     "discount_sum": 40,
     "name": "Товар 1",
@@ -2841,7 +2885,8 @@ public static class SignatureCalculator
             <b>Пример ответа:</b>
           </div>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="accounts-filter-response-2">Копировать</button><code id="accounts-filter-response-2" class="language-json">{
+            <button class="copy-btn" data-copy-target="accounts-filter-response-2">Копировать</button>
+            <pre class="language-json"><code id="accounts-filter-response-2" class="language-json">{
   "status": "string",
   "data": [
     {
@@ -2944,7 +2989,8 @@ public static class SignatureCalculator
           </div>
           <b>Пример ответа:</b>
           <div class="code-block-container mb-4">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="accounts-by-id-response-2">Копировать</button><code id="accounts-by-id-response-2" class="language-json">{
+            <button class="copy-btn" data-copy-target="accounts-by-id-response-2">Копировать</button>
+            <pre class="language-json"><code id="accounts-by-id-response-2" class="language-json">{
   "status": "ok",
   "data": [
     {
@@ -3060,14 +3106,16 @@ public static class SignatureCalculator
           </div>
           <h4 class="font-semibold mt-4 mb-1">Body:</h4>
           <div class="code-block-container mb-3">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-token-request">Копировать</button><code id="card-token-request" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-token-request">Копировать</button>
+            <pre class="language-json"><code id="card-token-request" class="language-json">{
   "pan": "string"
 }</code></pre>
           </div>
 
           <h4 class="font-semibold mt-4 mb-1">Ответ</h4>
           <div class="code-block-container mb-3">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-token-response">Копировать</button><code id="card-token-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-token-response">Копировать</button>
+            <pre class="language-json"><code id="card-token-response" class="language-json">{
   "status": "string",
   "data": { 
     "id": "string",
@@ -3146,7 +3194,8 @@ public static class SignatureCalculator
 
           <h4 class="font-semibold mt-4 mb-1">Пример запроса</h4>
           <div class="code-block-container mb-3">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-form-request">Копировать</button><code id="card-form-request" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-form-request">Копировать</button>
+            <pre class="language-json"><code id="card-form-request" class="language-json">{
   "lifetime_sec": 0,
   "redirect_url": "string",
   "callback_url": "string"
@@ -3155,7 +3204,8 @@ public static class SignatureCalculator
 
           <h4 class="font-semibold mt-4 mb-1">Ответ</h4>
           <div class="code-block-container mb-6">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-form-response">Копировать</button><code id="card-form-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-form-response">Копировать</button>
+            <pre class="language-json"><code id="card-form-response" class="language-json">{
   "status": "string",
   "data": {
     "id": "string",
@@ -3175,7 +3225,8 @@ public static class SignatureCalculator
           <div class="mb-2">Используется для уточнения статуса сохранения карты по идентификатору запроса токена.</div>
           <h4 class="font-semibold mt-4 mb-1">Ответ</h4>
           <div class="code-block-container mb-6">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-save-status-response">Копировать</button><code id="card-save-status-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-save-status-response">Копировать</button>
+            <pre class="language-json"><code id="card-save-status-response" class="language-json">{
   "status": "string",
   "data": {
     "id": "string",
@@ -3206,7 +3257,10 @@ public static class SignatureCalculator
           </p>
 
           <h3 class="font-semibold text-lg mt-6 mb-2">Формирование запроса на выплату на карту</h3>
-          <div class="mb-2"><b>POST</b> — <code>/api/payouts</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /api/payouts</pre>
+          </div>
           <div class="overflow-x-auto mb-8">
             <table class="w-full text-sm border rounded bg-gray-50">
               <thead>
@@ -3301,7 +3355,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Пример запроса</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-payout-request">Копировать</button><code id="card-payout-request" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-payout-request">Копировать</button>
+            <pre class="language-json"><code id="card-payout-request" class="language-json">{
   "account_id": "string",
   "account_number": "string",
   "pan": "string",
@@ -3329,7 +3384,8 @@ public static class SignatureCalculator
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Ответ на запрос</h3>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-payout-response">Копировать</button><code id="card-payout-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-payout-response">Копировать</button>
+            <pre class="language-json"><code id="card-payout-response" class="language-json">{
   "status": "string",
   "data": {
     "id": "string"
@@ -3356,7 +3412,10 @@ public static class SignatureCalculator
           </div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Получение статуса выплаты</h3>
-          <div class="mb-2"><b>GET</b> — <code>/api/payouts/{id}</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /api/payouts/{id}</pre>
+          </div>
           <div class="overflow-x-auto mb-4">
             <table class="w-full text-sm border rounded bg-gray-50">
               <thead>
@@ -3376,7 +3435,8 @@ public static class SignatureCalculator
             </table>
           </div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-payout-status">Копировать</button><code id="card-payout-status" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-payout-status">Копировать</button>
+            <pre class="language-json"><code id="card-payout-status" class="language-json">{
   "status": "string",
   "data": {
     "id": "string",
@@ -3400,7 +3460,11 @@ public static class SignatureCalculator
           </div>
 
           <h3 class="font-semibold text-lg mt-8 mb-2">Получение списка выплат</h3>
-          <div class="mb-2"><b>GET</b> — <code>/api/payouts?AccountId={guid}&AccountNumber={string}</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /api/payouts?AccountId={guid}&AccountNumber={string}</pre>
+          </div>
           <div class="overflow-x-auto mb-4">
             <table class="w-full text-sm border rounded bg-gray-50">
               <thead>
@@ -3425,7 +3489,8 @@ public static class SignatureCalculator
             </table>
           </div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="card-payout-list">Копировать</button><code id="card-payout-list" class="language-json">{
+            <button class="copy-btn" data-copy-target="card-payout-list">Копировать</button>
+            <pre class="language-json"><code id="card-payout-list" class="language-json">{
   "status": "string",
   "data": [
     {
@@ -3597,7 +3662,7 @@ public static class SignatureCalculator
         <section id="payouts-sbp" class="max-w-3xl mx-auto mb-12" data-title="Платежи СБП B2C (в тестовом режиме)"
           data-keywords="СБП, B2C, выплаты, массовые выплаты, SBP, NSPK, регистрация ЮЛ, телефон, банк-участник, статус, тестовый режим">
 
-          <h2 class="text-2xl font-semibold mb-4">Платежи СБП B2C (в тестовом режиме)</h2>
+          <h2 class="text-2xl font-semibold mb-4">Платежи СБП B2C</h2>
           <div class="text-gray-400 text-sm mb-4">
             Переводы средств со счёта организации на карту физического лица по номеру телефона через НСПК.<br>
             <b>Внимание!</b> Для использования сервиса необходимо заново сгенерировать токен доступа в личном кабинете
@@ -3610,21 +3675,31 @@ public static class SignatureCalculator
 
           <!-- Регистрация ЮЛ в СБП -->
           <h3 class="font-semibold text-lg mt-6 mb-2">Регистрация юридического лица в СБП</h3>
-          <div class="mb-2"><b>POST</b> — <code>/sp2/api/sbp/legal-entity/register</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/legal-entity/register</pre>
+          </div>
           <div class="mb-2 text-xs text-gray-600">Пример:
             <code>POST https://pay.modulbank.ru/sp2/api/sbp/legal-entity/register</code>
           </div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-le-register">Копировать</button><code id="sbp-le-register" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-le-register">Копировать</button>
+            <pre class="language-json"><code id="sbp-le-register" class="language-json">{
   "status": "success"
 }</code></pre>
           </div>
 
           <!-- Получение статуса регистрации ЮЛ -->
           <h3 class="font-semibold text-lg mt-8 mb-2">Получение статуса регистрации ЮЛ в СБП</h3>
-          <div class="mb-2"><b>GET</b> — <code>/sp2/api/sbp/legal-entity/status</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/legal-entity/status</pre>
+          </div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-le-status">Копировать</button><code id="sbp-le-status" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-le-status">Копировать</button>
+            <pre class="language-json"><code id="sbp-le-status" class="language-json">{
   "data": {
     "status": "not_found",
     "reason": "Юридическое лицо не зарегистрировано"
@@ -3644,8 +3719,10 @@ public static class SignatureCalculator
 
           <!-- Валидация реквизитов получателя -->
           <h3 class="font-semibold text-lg mt-8 mb-2">Валидация реквизитов получателя</h3>
-          <div class="mb-2"><b>GET</b> —
-            <code>/sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</code>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre
+              class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/validate?phone=9012345678&amp;bank_id=100000000030</pre>
           </div>
           <div class="code-block-container">
             <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-validate">Копировать</button><code id="sbp-validate" class="language-json">{
@@ -3661,7 +3738,8 @@ public static class SignatureCalculator
           <h3 class="font-semibold text-lg mt-8 mb-2">Получение списка банков-участников</h3>
           <div class="mb-2"><b>GET</b> — <code>/sp2/api/sbp/participants</code></div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-participants">Копировать</button><code id="sbp-participants" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-participants">Копировать</button>
+            <pre class="language-json"><code id="sbp-participants" class="language-json">{
   "data": {
     "rcv_time": "2021-12-08T21:15:00+00:00",
     "participants": [
@@ -3680,7 +3758,10 @@ public static class SignatureCalculator
 
           <!-- Создание выплаты по номеру телефона -->
           <h3 class="font-semibold text-lg mt-8 mb-2">Создание выплаты по номеру телефона</h3>
-          <div class="mb-2"><b>POST</b> — <code>/sp2/api/sbp/payouts</code></div>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /sp2/api/sbp/payouts</pre>
+          </div>
           <div class="mb-2"><b>Пример тела запроса:</b></div>
           <div class="code-block-container">
             <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-payout-create">Копировать</button><code id="sbp-payout-create" class="language-json">{
@@ -3693,7 +3774,8 @@ public static class SignatureCalculator
           </div>
           <div class="mb-2"><b>Ответ:</b></div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-payout-response">Копировать</button><code id="sbp-payout-response" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-payout-response">Копировать</button>
+            <pre class="language-json"><code id="sbp-payout-response" class="language-json">{
   "data": {
     "id": "eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc"
   },
@@ -3702,10 +3784,15 @@ public static class SignatureCalculator
           </div>
 
           <!-- Получение выплаты по ID -->
-          <h3 class="font-semibold text-lg mt-8 mb-2">Получение выплаты по ID</h3>
-          <div class="mb-2"><b>GET</b> — <code>/sp2/api/sbp/payouts/{id}</code></div>
+          <h3 id="sbp-payout-by-id" class="font-semibold text-lg mt-8 mb-2">Получение выплаты по ID</h3>
+          <div class="mb-2">
+            <b>Запрос:</b>
+            <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">GET /sp2/api/sbp/payouts/{id}</pre>
+          </div>
+          <div class="mb-2"><b>Ответ:</b></div>
           <div class="code-block-container">
-            <pre class="language-json"><button class="copy-btn" data-copy-target="sbp-payout-by-id">Копировать</button><code id="sbp-payout-by-id" class="language-json">{
+            <button class="copy-btn" data-copy-target="sbp-payout-by-id-code">Копировать</button>
+            <pre id="sbp-payout-by-id-code" class="language-json"><code class="language-json">{
   "data": {
     "id": "eac6ccc1-b5fc-43a3-bf29-bc555d75e3cc",
     "status": "completed"
@@ -3715,7 +3802,7 @@ public static class SignatureCalculator
           </div>
 
           <!-- Статусы выплат СБП -->
-          <h3 class="font-semibold text-lg mt-8 mb-2">Статусы выплат СБП</h3>
+          <h3 id="sbp-payout-status" class="font-semibold text-lg mt-8 mb-2">Статусы выплат СБП</h3>
           <div class="overflow-x-auto mb-10">
             <table class="w-full text-sm border rounded bg-gray-50">
               <thead>
@@ -3741,6 +3828,368 @@ public static class SignatureCalculator
             </table>
           </div>
 
+        </section>
+        <section id="b2b-crypto-payouts" class="max-w-3xl mx-auto mb-12"
+          data-title="Криптографическое подписание и шифрование выплат по реквизитам счёта получателя через API Сервиса Массовых Выплат"
+          data-keywords="криптография, шифрование, JWS, JWE, B2B, выплаты, RSA, сертификаты, массовые выплаты, модульбанк">
+
+          <h2 class="text-2xl font-semibold mb-4">Выплаты по реквизитам счёта B2B</h2>
+
+          <div class="text-gray-400 text-sm mb-4">
+            Документ объясняет, как разработчик клиентской организации подключается к публичному API Сервиса Массовых
+            Выплат для B2B-выплат по реквизитам счёта.
+            <br>
+            <b>Функциональность доступна начиная с версии v2.</b>
+          </div>
+
+          <!-- Термины и определения -->
+          <h3 id="terms-and-definitions" class="font-semibold text-lg mt-8 mb-2">Термины и определения</h3>
+          <p class="mb-4 text-gray-700">
+          <ul class="list-disc ml-6">
+            <li><strong>DN (Distinguished Name)</strong> — реквизиты владельца сертификата; используются при
+              формировании CSR.</li>
+            <li><strong>CSR (Certificate Signing Request)</strong> — запрос на выпуск сертификата; содержит DN и
+              открытый ключ.</li>
+            <li><strong>RSA-сертификат</strong> — X.509-сертификат, ключевая пара которого использует алгоритм RSA.</li>
+            <li><strong>JWS (JSON Web Signature)</strong> — формат электронных подписей (RFC 7515).</li>
+            <li><strong>JWE (JSON Web Encryption)</strong> — формат шифрования сообщений (RFC 7516).</li>
+          </ul>
+          </p>
+
+          <!-- Архитектура безопасности -->
+          <h3 id="security-architecture" class="font-semibold text-lg mt-8 mb-2">Архитектура безопасности</h3>
+          <pre class="bg-gray-100 p-4 rounded text-xs overflow-x-auto mb-4">
+┌──────────────┐      JWE (AES-256-GCM + RSA-OAEP)
+│  Клиент      │────────────────────────────────────────►│ SecurePortal │
+│ (private key)│   (зашифрованная JWS)                   │ (private key)│
+└──────────────┘◄────────────────────────────────────────┘
+      ▲                      JWE
+      │  (JWS / RSA-SHA-512)  ▼
+  RSA private key       RSA public key банка
+  </pre>
+
+          <p class="mb-4 text-gray-700">
+            <strong>Кратко:</strong>
+          <ol class="list-decimal ml-6">
+            <li>Клиент формирует JSON-payload и подписывает его RSA-SHA-512 (JWS).</li>
+            <li>Получившийся JWS шифруется:
+              <ul class="list-circle ml-6">
+                <li>Контент — AES-256-GCM;</li>
+                <li>Ключ контента — RSA-OAEP (публичный ключ банка).</li>
+              </ul>
+            </li>
+            <li>В итоге получается строка вида <code>aesKeyCipherB64||ivB64||cipherTextB64</code>.</li>
+            <li>Сервис Массовых Выплат расшифровывает данные, проверяет JWS-подпись и исполняет платёж.</li>
+            <li>Ответ шифруется в формате JWE публичным ключом клиента.</li>
+          </ol>
+          </p>
+
+          <h3 id="working-with-certificates" class="font-semibold text-lg mt-8 mb-2">Работа с сертификатами</h4>
+
+            <h5 class="font-medium text-sm mt-3 mb-1">Сформировать запрос на выпуск</h5>
+            <p class="mb-2 text-gray-700">
+              Сгенерируйте CSR:
+            </p>
+            <div class="code-block-container">
+              Сервис способен принимать самоподписные сертфикаты. Вы можете воспользоваться утилитой из этой
+              документации. Ссылка на скачивание находится в конце страницы.
+            </div>
+
+            <h4 class="font-medium text-sm mt-3 mb-1">Выпустить сертфикат на стороне банка</h4>
+            <div class="mb-2">
+              <b>Запрос:</b>
+              <pre
+                class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /api/certificates/create</pre>
+            </div>
+            <div class="code-block-container">
+              <button class="copy-btn" data-copy-target="csr-created-request">Копировать</button>
+              <pre id="csr-created-request" class="language-json"><code class="language-json">
+              {
+                "csr": "string",
+                "algorithm": "rsa"
+              }
+            </code></pre>
+            </div>
+            <div class="mb-2"><b>Ответ:</b></div>
+            <div class="code-block-container">
+              <button class="copy-btn" data-copy-target="csr-created-answer">Копировать</button>
+              <pre id="csr-created-answer" class="language-json"><code class="language-json">
+{
+  "status": "OK"
+}
+            </code></pre>
+            </div>
+            <h4 class="font-medium text-sm mt-3 mb-1">Получить публичный ключ банка</h5>
+              <p class="mb-2 text-gray-700">
+                Обратитесь в поддержку через чат в личном кабинете, чтобы получить файл <code>bank_pub.pem</code>. Он
+                понадобится для шифрования запросов на выплату.
+              </p>
+
+              <h4 class="font-medium text-sm mt-3 mb-1">Уточнить статус клиентского сертификата</h4>
+              <div class="mb-2">
+                <b>Запрос:</b>
+                <pre
+                  class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /api/certificates/status</pre>
+                  <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="csr-status-request">Копировать</button>
+                <pre id="csr-status-request" class="language-json"><code class="language-json">
+              {
+                "csr": "string"
+              }
+            </code></pre>
+              </div>
+              </div>
+              <div class="mb-2"><b>Ответ:</b></div>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="csr-status-answer">Копировать</button>
+                <pre id="csr-status-answer" class="language-json"><code class="language-json">
+              {
+    "status": "Activated",
+    "certificate": "string"
+}
+            </code></pre>
+              </div>
+              <h4 class="font-medium text-sm mt-3 mb-1">Получить информацию о клиентском сертификате</h4>
+              <div class="mb-2">
+                <b>Запрос:</b>
+                <pre
+                  class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /api/certificates/info</pre>
+                  <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="csr-info-request">Копировать</button>
+                <pre id="csr-info-request" class="language-json"><code class="language-json">
+              {
+                "csr": "string",
+                "algorithm": "rsa"
+              }</code></pre>
+              </div>
+              </div>
+              <div class="mb-2"><b>Ответ:</b></div>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="csr-info-answer">Копировать</button>
+                <pre id="csr-info-answer" class="language-json"><code class="language-json">
+                  {
+    "algorithm": "SHA256WITHRSA",
+    "serial_number": "735455866041258933426926877252888149",
+    "begin_date": "2025-05-30T09:05:01.214297",
+    "expire_date": "2026-05-30T09:05:01.214297",
+    "issuer": "C=RU,O=Modulbank,OU=Information Systems,CN=TaxiCA",
+    "owner": "CN=test.ru,O=IP Shnurov,C=ru",
+    "status": "Activated",
+    "certificate_body": "string"
+}
+                </code></pre>
+              </div>
+
+              <div class="mb-4">
+                <b>Возможные значения <code>status</code>:</b>
+                <ul class="list-disc ml-6">
+                  <li><code>new</code></li>
+                  <li><code>in_progress</code></li>
+                  <li><code>activated</code></li>
+                  <li><code>failed</code></li>
+                  <li><code>expired</code></li>
+                </ul>
+              </div>
+
+              <!-- Создание B2B-выплаты -->
+              <h3 id="payout-B2B" class="font-semibold text-lg mt-8 mb-2">Создание B2B-выплаты</h3>
+
+              <h4 class="font-semibold text-md mt-4 mb-1">Исходный JSON-payload</h4>
+
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="payout-B2B-request">Копировать</button>
+                <pre id="payout-B2B-request" class="language-json"><code class="language-json">
+              {
+                "account_id": "6f02c895-4b3f-4f30-b094-0b9c06005566",
+                "amount": 1000.50,
+                "description": "Оплата по договору №123",
+                "document_number": 123,
+                "date": "2025-05-20",
+                "recipient_name": "ООО «Ромашка»",
+                "recipient_inn": "7701234567",
+                "recipient_kpp": "770101001",
+                "recipient_account": "40702810900000000001",
+                "recipient_bank_bic": "044525225"
+              }
+            </code></pre>
+              </div>
+
+              <h4 class="font-semibold text-md mt-4 mb-1">Подпись (JWS RS512)</h4>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="signing-code">Копировать</button>
+                <pre class="language-text"><code id="signing-code" class="language-text">
+                var payload = File.ReadAllText("payload.json");
+                var cert    = new X509Certificate2("client_sign.pfx", "pa\$\$");
+                string jws  = Jose.JWT.Encode(
+                  payload,
+                  cert.GetRSAPrivateKey(),
+                  Jose.JwsAlgorithm.RS512,
+                  extraHeaders: new Dictionary<string, object>{{"typ","JWS"}});
+              </code></pre>
+              </div>
+
+              <h4 class="font-semibold text-md mt-4 mb-1">Шифрование (AES-256-GCM + RSA-OAEP)</h4>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="encryption-code">Копировать</button>
+                <pre class="language-text"><code id="encryption-code" class="language-text">
+                string bankPem = File.ReadAllText("bank_pub.pem");
+var pubKey = (RsaKeyParameters)new PemReader(new StringReader(bankPem)).ReadObject();
+
+string encrypted = EncryptJws(jws, pubKey);   // см. Приложение A
+var body = new { encrypted_request = encrypted };</code></pre>
+              </div>
+
+              <h4 class="font-semibold text-md mt-4 mb-1">HTTP-вызов</h4>
+              <div class="mb-2">
+                <b>Запрос:</b>
+                <pre class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /api/v2/b2b/payouts</pre>
+              </div>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="encrypted-request">Копировать</button>
+                <pre id="encrypted-request" class="language-json"><code class="language-json">
+              {
+                "encrypted_request": "string"
+              }
+            </code></pre>
+              </div>
+              <h4 class="font-semibold text-md mt-4 mb-1">Пример ответа</h4>
+
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="encrypted-answer">Копировать</button>
+                <pre class="language-text"><code id="encrypted-answer" class="language-text">eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00iLCJ0eXAiOiJKV0UifQ.J7jqOpl5c-T7cbeB9Z_sdHTIsNLNHbQtxTCKkvkp2cpmZJm769abC7AGWHePf1BdHr3CltOJRo_upPlnmNIwSbUdvVvcXyr2_xro-HDu-f61FtD2OgsXxHg9ni5bUwF8MqauTr1MGZ3GLheh8VPdC8JXyz3piTVun6UTHkXs5p3SMoKQUou1y7-xe238u3x0cuuoWqJXUEjX5BADw6j09QtNSYOXF7qigIxfyjI4vyn5RCmnCCP268muUdzEJMo3KyZFBW7Qs6_5GaLJ1FYpCIzTjR-_k0HnL1rMO0vgdaOuiAf7nN-7HA0jgVXqUNSLex5I2U5h6BcNx9sQ_UcBTcr7x55zlihKoRykVnL7D0YXCd2icCr8nryDSJ4EnZvGq0v1B3ZfPh810pKDYQGmmLmehQnG-2dsmvzG9fgKObhTalgUjb0aH6OvhuwVubIo_6FoXHQuJs65-RJbc_YvVuLzHUeM151MvaJdYxRpc_Tr4UWOBeoCt37AO7QjoaLPdWqI4KgHK5C17j0KYHzNPzoXRGl_aOQI85kgKztwvPRH7q_CUdO-aX2kPNTzNWAVkSGFXWqEjBM4J3Sk9BduP7MJcMsZfkUfW3w39ga7OHtYS6q69VFxh-L8wgBW7G4wjypw_vfueNab5W7oHIGR-IiWzogP-9tu69tDLHefryI.1yls3nDs5ifOPfZv.U9jxWDQJq4p9FEGUAnqwAtLGeICSVAPKaOKQg-P1uFZjnLu-uz2K5Q-ij8nwCQwy2lTKxejRIeT7tCosiKBOKwU4RsOeU5QrAw.16AVgSaomGJb3X_fFIKGFg
+              </code></pre>
+              </div>
+
+              <h4 class="font-semibold text-md mt-4 mb-1">Расшифровка ответа</h4>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="decrypted-answer">Копировать</button>
+                <pre class="language-text"><code id="decrypted-answer" class="language-text">
+                string jwe  = await response.Content.ReadAsStringAsync();
+string json = Jose.JWT.Decode(jwe, cert.GetRSAPrivateKey());</code></pre>
+              </div>
+
+              <!-- Получение информации о платеже -->
+              <h3 id="checking-status-payout-B2B" class="font-semibold text-lg mt-8 mb-2">Получение информации о платеже
+              </h3>
+              <div class="mb-2">
+                <b>Запрос:</b>
+                <pre
+                  class="bg-gray-100 border rounded p-2 overflow-x-auto text-xs mb-2">POST /api/v2/b2b/payouts/info</pre>
+              </div>
+              <div class="mb-2"><b>Ответ:</b></div>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="status-payout-B2B-info">Копировать</button>
+                <pre id="status-payout-B2B-info" class="language-json">
+                  <code class="language-json">
+{
+"id": "PAYMENT_ID"
+}
+            </code>
+          </pre>
+        </div>
+
+              <!-- Коды ошибок -->
+              <h3 id="code-fails-B2B" class="font-semibold text-lg mt-8 mb-2">Коды ошибок</h3>
+              <div class="overflow-x-auto mb-10">
+                <table class="w-full text-sm border rounded bg-gray-50">
+                  <thead>
+                    <tr>
+                      <th class="px-2 py-1 text-left font-semibold border">Код</th>
+                      <th class="px-2 py-1 text-left font-semibold border">Описание</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="px-2 py-1 border">400</td>
+                      <td class="px-2 py-1 border">ERR_INVALID_TOKEN, ERR_INVALID_SIGNATURE — неверный токен или
+                        подпись.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 border">401</td>
+                      <td class="px-2 py-1 border">Отсутствует Authorization или просрочен TLS-сертификат.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 border">403</td>
+                      <td class="px-2 py-1 border">Токен не имеет права payouts.create / payouts.view.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 border">422</td>
+                      <td class="px-2 py-1 border">ERR_VALIDATION — ошибка валидации JSON.</td>
+                    </tr>
+                    <tr>
+                      <td class="px-2 py-1 border">500</td>
+                      <td class="px-2 py-1 border">Внутреннее исключение на стороне банка.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- FAQ -->
+              <h3 id="additional-information" class="font-semibold text-lg mt-8 mb-2">FAQ</h3>
+              <div class="mb-2">
+                <b>Какой алгоритм подписи применяется?</b><br>
+                — RSASSA-PKCS1-v1_5 + SHA-512 (идентификатор <code>RS512</code>).
+              </div>
+              <div class="mb-2">
+                <b>Срок действия сертификатов?</b><br>
+                — 1 год (проверьте <code>/api/certificates/info</code>).
+              </div>
+
+              <!-- Приложение A -->
+              <h3 class="font-semibold text-lg mt-8 mb-2">Приложение A — вспомогательные скрипты</h3>
+              <p class="mb-4 text-gray-700">
+              <ul class="list-disc ml-6">
+                <li><code>scripts/gen-csr.ps1</code> — пример генерации CSR.</li>
+                <li><code>samples/EncryptUtil.cs</code> — реализация <code>EncryptJws</code>.</li>
+                <li><code>samples/DecryptResponse.cs</code> — расшифровка JWE.</li>
+              </ul>
+              </p>
+
+              <h4 class="font-semibold text-md mt-4 mb-1">Мини-версия <code>EncryptJws</code></h4>
+              <div class="code-block-container">
+                <button class="copy-btn" data-copy-target="EncryptJws">Копировать</button>
+                <pre class="language-text"><code id="EncryptJws" class="language-text">
+string EncryptJws(string jws, AsymmetricKeyParameter bankKey)
+{
+using var aes = Aes.Create();
+aes.KeySize = 256;
+aes.GenerateKey();
+aes.GenerateIV();
+byte[] cipher;
+using (var ms = new MemoryStream())
+using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+using (var sw = new StreamWriter(cs))
+{
+sw.Write(jws);
+sw.Flush();
+cs.FlushFinalBlock();
+cipher = ms.ToArray();
+}
+var oaep = new OaepEncoding(new RsaEngine());
+oaep.Init(true, bankKey);
+var keyCipher = oaep.ProcessBlock(aes.Key, 0, aes.Key.Length);
+return $"{Convert.ToBase64String(keyCipher)}||{Convert.ToBase64String(aes.IV)}||{Convert.ToBase64String(cipher)}";
+}
+                </code></pre>
+              </div>
+              <!-- Блок загрузки утилиты -->
+              <div
+                class="mt-8 mb-10 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg shadow-sm text-center">
+                <h4 class="text-lg font-semibold text-gray-800 mb-2">Скачайте утилиту для тестирования</h4>
+                <p class="text-sm text-gray-600 mb-4">
+                  В архиве: примеры кода, скрипты шифрования и инструкция по запуску.
+                </p>
+                <a href="Modulbank.Acquiring.EncryptionHelper.zip" download
+                  class="inline-flex items-center px-5 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  Скачать утилиту
+                </a>
+              </div>
         </section>
       </main>
     </div>
@@ -3785,7 +4234,7 @@ public static class SignatureCalculator
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
   <script src="search.js"></script>
   <script src="code.js"></script>
-  <script src="script_calculator.js"></script>  
+  <script src="script_calculator.js"></script>
   <script src="char_counter.js"></script>
   <script src="sidebar-menu.js"></script>
   <!-- Yandex.Metrika counter -->

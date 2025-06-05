@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Калькулятор Signature</title>
+  <script src="https://cdn.tailwindcss.com "></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+  <section id="signature-calculator" class="max-w-3xl mx-auto mb-12 flex justify-center"
+           data-title="Калькулятор signature" data-keywords="signature калькулятор подпись hmac test"
+           data-action="https://pay.modulbank.ru/pay ">
+    <div class="w-full border border-gray-200 rounded-xl p-8 bg-white flex flex-col items-center">
+      <h2 class="text-2xl font-semibold mb-4 text-center w-full">Калькулятор signature</h2>
+      <p class="mb-6 text-center w-full">Выберите метод платежа и заполните поля.</p>
+
+      <!-- Метод -->
+      <div class="form-group mb-4 w-full">
+        <label for="method-selector" class="block font-semibold mb-1">Метод:</label>
+        <select id="method-selector" class="form-select border border-gray-300 rounded-md h-10 px-2 w-full">
+          <option value="">--Выберите метод--</option>
+          <option value="one_stage_payment">one_stage_payment</option>
+          <option value="hold">hold</option>
+          <option value="recurrent">recurrent</option>
+          <option value="invoice_link">invoice_link</option>
+          <option value="refund">refund</option>
+          <option value="transaction_info">transaction_info</option>
+          <option value="transactions_list">transactions_list</option>
+          <option value="sbp_qr_link">sbp_qr_link</option>
+          <option value="invoice_info">invoice_info</option>
+        </select>
+      </div>
+
+      <!-- Форма -->
+      <form id="payment-form" action="" method="POST" target="_blank" class="w-full hidden">
+        <div id="required-fields-container" class="mb-4"></div>
+
+        <div class="flex items-center mb-4 gap-2">
+          <label for="field-selector" class="font-semibold">Дополнительные поля:</label>
+          <select id="field-selector" class="form-select border border-gray-300 rounded-md h-10 px-2 flex-1 min-w-0">
+            <option value="">--Выберите дополнительное поле--</option>
+            <option value="custom_order_id">Custom Order ID</option>
+            <option value="testing">Testing</option>
+            <option value="callback_url">Callback URL</option>
+            <option value="callback_on_failure">Callback on Failure</option>
+            <option value="client_phone">Client Phone</option>
+            <option value="client_name">Client Name</option>
+            <option value="client_email">Client Email</option>
+            <option value="client_id">Client ID</option>
+            <option value="meta">Meta (JSON)</option>
+            <option value="receipt_contact">Receipt Contact</option>
+            <option value="receipt_items">Receipt Items</option>
+            <option value="lifetime">Lifetime</option>
+            <option value="timeout_url">Timeout URL</option>
+            <option value="salt">Salt</option>
+            <option value="start_recurrent">Start Recurrent</option>
+            <option value="preauth">Preauth</option>
+            <option value="show_payment_methods">Show Payment Methods</option>
+            <option value="callback_with_receipt">Callback With Receipt</option>
+          </select>
+          <button type="button" id="add-field-btn"
+                  class="px-3 py-2 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 whitespace-nowrap h-10 flex items-center justify-center w-auto min-w-fit">
+            Добавить поле
+          </button>
+        </div>
+
+        <div id="optional-fields-container" class="mb-4"></div>
+
+        <div class="flex flex-wrap gap-2 mb-2">
+          <button type="button" id="calculate-signature-btn"
+                  class="px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">Рассчитать подпись</button>
+          <button type="submit"
+                  class="px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700">Отправить платёж</button>
+          <button type="button" id="reset-form-btn"
+                  class="px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-gray-600">Сбросить форму</button>
+        </div>
+
+        <p id="result" class="mt-4 text-lg"></p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // ====== Base64 and SHA1 helpers ======
+    function b64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    async function sha1Hex(str) {
+      const buf = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function calcSignature(secretKey, allFields, method) {
+      const allowedFields = [...METHODS[method].requiredFields, ...METHODS[method].optionalFields];
+      const filtered = Object.entries(allFields)
+        .filter(([k, v]) => allowedFields.includes(k) && k !== "signature" && v !== "");
+
+      filtered.sort(([a], [b]) => a.localeCompare(b));
+      const joined = filtered.map(([k, v]) => `${k}=${b64(v)}`).join("&");
+
+      const inner = await sha1Hex(secretKey + joined);
+      const outer = await sha1Hex(secretKey + inner);
+
+      console.log("Исходные параметры:", allFields);
+      console.log("Отфильтрованные параметры:", Object.fromEntries(filtered));
+      console.log("Строка для хэширования:", joined);
+      console.log("Первый SHA1:", inner);
+      console.log("Второй SHA1:", outer);
+      console.log("Signature:", outer);
+
+      return outer;
+    }
+
+    function getAllFormFields(form) {
+      const data = {};
+      form.querySelectorAll("input[name],select[name],textarea[name]").forEach(el => {
+        if ((el.type === "checkbox" || el.type === "radio") && !el.checked) return;
+        data[el.name] = el.value;
+      });
+      return data;
+    }
+
+    function validateForm(form, method) {
+      const fields = getAllFormFields(form);
+      const required = METHODS[method]?.requiredFields || [];
+
+      for (let key of required) {
+        if (!(key in fields)) {
+          resultEl.textContent = `Поле "${key}" обязательно`;
+          resultEl.className = "text-red-600";
+          return false;
+        }
+      }
+
+      for (let [key, value] of Object.entries(fields)) {
+        if (!value) continue;
+        switch (key) {
+          case 'amount':
+          case 'unix_timestamp':
+            if (!/^\d+$/.test(value.replace(/[.,]/g, ''))) {
+              resultEl.textContent = `Поле "${key}" должно быть числом`;
+              resultEl.className = "text-red-600";
+              return false;
+            }
+            break;
+          case 'client_email':
+            if (!/^[\w.-]+@[\w-]+\.[a-zA-Z]{2,}$/.test(value)) {
+              resultEl.textContent = `Поле "${key}" должно быть email`;
+              resultEl.className = "text-red-600";
+              return false;
+            }
+            break;
+          case 'callback_url':
+          case 'timeout_url':
+            if (!/^https?:\/\/.*$/.test(value)) {
+              resultEl.textContent = `Поле "${key}" должно быть корректным URL`;
+              resultEl.className = "text-red-600";
+              return false;
+            }
+            break;
+          case 'meta':
+          case 'receipt_items':
+          case 'refund_items':
+            try {
+              JSON.parse(value);
+            } catch (e) {
+              resultEl.textContent = `Поле "${key}" должно быть валидным JSON`;
+              resultEl.className = "text-red-600";
+              return false;
+            }
+            break;
+        }
+      }
+
+      return true;
+    }
+
+    function generateFieldHTML(name, meta) {
+      const label = meta.label || name;
+      const tip = meta.tip || "";
+      const maxlength = meta.maxlength || "";
+      const pattern = meta.pattern || "";
+      const placeholder = meta.placeholder || "";
+      const inputmode = meta.inputmode || "";
+      const textarea = meta.textarea || false;
+      const type = meta.type || "text";
+      const fieldId = `opt_${name}`;
+
+      let counterHtml = "";
+      if (maxlength) {
+        counterHtml = `<span class="text-gray-400 text-xs ml-auto" data-counter-for="${fieldId}">${0}/${maxlength}</span>`;
+      }
+
+      if (type === 'select' && meta.options) {
+        const options = meta.options.map(opt => `<option value="${opt.value}">${opt.text}</option>`).join('');
+        return `
+          <div class="form-group mb-4 relative">
+            <label for="${fieldId}" class="block font-semibold mb-1">${label}:</label>
+            <select id="${fieldId}" name="${name}" class="form-select border border-gray-300 rounded-md h-10 px-2 w-full max-w-xs mb-1">
+              ${options}
+            </select>
+            <small class="text-gray-500">${tip}</small>
+            <button type="button" class="text-red-500 hover:text-red-700 remove-opt-field absolute top-1 right-2">×</button>
+          </div>`;
+      }
+
+      if (textarea) {
+        return `
+          <div class="form-group mb-4 relative">
+            <label for="${fieldId}" class="block font-semibold mb-1">${label}:</label>
+            <textarea id="${fieldId}" name="${name}" class="form-input border border-gray-300 rounded-md w-full h-20 px-3 char-limited mb-1"${maxlength ? ` maxlength="${maxlength}"` : ''}${pattern ? ` pattern="${pattern}"` : ''}${placeholder ? ` placeholder="${placeholder}"` : ''}></textarea>
+            <small class="text-gray-500">${tip}</small>
+            <button type="button" class="text-red-500 hover:text-red-700 remove-opt-field absolute top-1 right-2">×</button>
+          </div>`;
+      }
+
+      return `
+        <div class="form-group mb-4 relative">
+          <label for="${fieldId}" class="block font-semibold mb-1">${label}:</label>
+          <input id="${fieldId}" name="${name}" type="text" class="form-input border border-gray-300 rounded-md w-full h-10 px-3 char-limited mb-1"${maxlength ? ` maxlength="${maxlength}"` : ''}${pattern ? ` pattern="${pattern}"` : ''}${placeholder ? ` placeholder="${placeholder}"` : ''}${inputmode ? ` inputmode="${inputmode}"` : ''}>
+          <small class="text-gray-500">${tip}</small>
+          <button type="button" class="text-red-500 hover:text-red-700 remove-opt-field absolute top-1 right-2">×</button>
+        </div>`;
+    }
+
+    function updateFormForMethod(method) {
+      const config = METHODS[method];
+      if (!config) return;
+
+      const reqContainer = document.getElementById('required-fields-container');
+      const optSelector = document.getElementById('field-selector');
+      const optContainer = document.getElementById('optional-fields-container');
+
+      reqContainer.innerHTML = '';
+      optContainer.innerHTML = '';
+      Array.from(optSelector.children).forEach(ch => ch.disabled = false);
+
+      config.requiredFields.forEach(key => {
+        const meta = FIELD_META[key];
+        if (!meta) return;
+        const html = generateFieldHTML(key, meta);
+        reqContainer.insertAdjacentHTML('beforeend', html);
+      });
+
+      Array.from(optSelector.children).forEach(ch => {
+        ch.disabled = !config.optionalFields.includes(ch.value);
+      });
+    }
+
+    const FIELD_META = {
+      merchant: { label: "Merchant ID", maxlength: 128, tip: "ASCII, максимум 128 символов.", pattern: "[\\x20-\\x7E]{1,128}" },
+      amount: { label: "Amount", tip: "Число, например: 100 или 100.00", inputmode: "decimal", pattern: "^\\d+([.,]\\d{1,2})?$" },
+      order_id: { label: "Order ID", maxlength: 50, tip: "Строка, максимум 50 символов." },
+      description: { label: "Description", maxlength: 250, tip: "Описание платежа, максимум 250 символов." },
+      success_url: { label: "Success URL", maxlength: 128, tip: "Максимум 128 символов." },
+      unix_timestamp: { label: "Unix Timestamp", pattern: "^\\d+$", tip: "Целое число (например: 1716361030)" },
+      transaction: { label: "Transaction ID", maxlength: 36, tip: "UUID, например: 123e4567-e89b-12d3-a456-426614174000" },
+      first_recurrent_transaction: { label: "First Recurrent Transaction", maxlength: 36, tip: "UUID транзакции" },
+      date_from: { label: "Date From (ISO)", tip: "Формат ISO8601, например: 2024-01-01T00:00:00Z", pattern: "^\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,3})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])?$" },
+      date_to: { label: "Date To (ISO)", tip: "Формат ISO8601", pattern: "^\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,3})?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])?$" },
+      salt: { label: "Salt", maxlength: 32, tip: "ASCII, максимум 32 символа.", pattern: "[\\x20-\\x7E]{1,32}" },
+      testing: { label: "Testing", type: "select", options: [{value: "1", text: "Тестовый"}, {value: "0", text: "Боевой"}], tip: "1 — тест, 0 — реальный" },
+      callback_url: { label: "Callback URL", maxlength: 128, tip: "Валидный URL", pattern: "^https?://.*$" },
+      timeout_url: { label: "Timeout URL", maxlength: 128, tip: "Валидный URL", pattern: "^https?://.*$" },
+      client_phone: { label: "Client Phone", maxlength: 15, tip: "Пример: +79123456789", placeholder: "+79123456789" },
+      client_email: { label: "Client Email", maxlength: 64, tip: "Email в формате user@example.com", pattern: "^[\\w.-]+@[\\w-]+\\.[a-zA-Z]{2,}$" },
+      meta: { label: "Meta (JSON)", textarea: true, maxlength: 1000, tip: "JSON-строка" },
+      receipt_contact: { label: "Receipt Contact", maxlength: 64, tip: "Email для чека", pattern: "^[\\w.-]+@[\\w-]+\\.[a-zA-Z]{2,}$" },
+      receipt_items: { label: "Receipt Items", textarea: true, maxlength: 1500, tip: "JSON с позициями чека" },
+      refund_items: { label: "Refund Items", textarea: true, maxlength: 1500, tip: "JSON с позициями возврата" },
+      lifetime: { label: "Lifetime", inputmode: "numeric", pattern: "^\\d+$", tip: "Время жизни ссылки (секунды)" },
+      start_recurrent: { label: "Start Recurrent", type: "select", options: [{value: "1", text: "Да"}, {value: "0", text: "Нет"}] },
+      preauth: { label: "Preauth", type: "select", options: [{value: "1", text: "Холдирование"}, {value: "0", text: "Оплата"}] },
+      show_payment_methods: { label: "Show Payment Methods", tip: "card, sbp, yandexpay", placeholder: '["card","sbp"]' },
+      callback_with_receipt: { label: "Callback With Receipt", type: "select", options: [{value: "1", text: "Да"}, {value: "0", text: "Нет"}] },
+      send_letter: { label: "Send Letter", type: "select", options: [{value: "1", text: "Да"}, {value: "0", text: "Нет"}] },
+      reusable: { label: "Reusable", type: "select", options: [{value: "1", text: "Да"}, {value: "0", text: "Нет"}] },
+      qr_image: { label: "QR Image", tip: "Base64 изображение QR-кода", textarea: true },
+      qr_lifetime: { label: "QR Lifetime", inputmode: "numeric", pattern: "^\\d+$", tip: "Время жизни QR (секунды)" },
+      state: { label: "State", tip: "Фильтр по статусу" },
+      id: { label: "ID", maxlength: 36, tip: "UUID инвойса" },
+      transaction_id: { label: "Transaction ID", maxlength: 36, tip: "UUID транзакции" }
+    };
+
+    const METHODS = {
+      one_stage_payment: {
+        requiredFields: ["merchant", "amount", "order_id", "description", "success_url", "unix_timestamp"],
+        optionalFields: ["custom_order_id", "testing", "callback_url", "callback_on_failure", "client_phone", "client_name", "client_email", "client_id", "meta", "receipt_contact", "receipt_items", "lifetime", "timeout_url", "salt", "start_recurrent", "preauth", "show_payment_methods", "callback_with_receipt"]
+      },
+      hold: {
+        requiredFields: ["merchant", "transaction", "amount", "unix_timestamp"],
+        optionalFields: ["salt", "receipt_contact", "receipt_items"]
+      },
+      recurrent: {
+        requiredFields: ["merchant", "first_recurrent_transaction", "amount", "order_id", "description", "receipt_items", "unix_timestamp"],
+        optionalFields: ["custom_order_id", "testing", "callback_url", "client_phone", "client_name", "client_email", "client_id", "meta", "receipt_contact", "salt", "start_recurrent", "preauth", "show_payment_methods", "callback_with_receipt"]
+      },
+      invoice_link: {
+        requiredFields: ["merchant", "amount", "description", "unix_timestamp", "success_url"],
+        optionalFields: ["testing", "client_email", "client_name", "custom_order_id", "lifetime", "send_letter", "receipt_contact", "receipt_items", "salt", "reusable", "callback_url", "callback_on_failure", "start_recurrent", "show_payment_methods", "preauth"]
+      },
+      refund: {
+        requiredFields: ["merchant", "amount", "transaction", "unix_timestamp"],
+        optionalFields: ["salt", "refund_items"]
+      },
+      transaction_info: {
+        requiredFields: ["merchant", "transaction_id", "unix_timestamp"],
+        optionalFields: ["salt"]
+      },
+      transactions_list: {
+        requiredFields: ["merchant", "unix_timestamp", "date_from", "date_to"],
+        optionalFields: ["state", "testing", "salt"]
+      },
+      sbp_qr_link: {
+        requiredFields: ["merchant", "amount", "order_id", "description", "unix_timestamp"],
+        optionalFields: ["custom_order_id", "callback_url", "callback_on_failure", "client_phone", "client_name", "client_email", "client_id", "meta", "receipt_contact", "receipt_items", "salt", "qr_image", "qr_lifetime"]
+      },
+      invoice_info: {
+        requiredFields: ["merchant", "id", "unix_timestamp"],
+        optionalFields: ["salt"]
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const methodSelector = document.getElementById('method-selector');
+      const fieldSelector = document.getElementById('field-selector');
+      const form = document.getElementById('payment-form');
+      const resultEl = document.getElementById('result');
+      const secretKeyInput = document.getElementById('secret_key');
+      const addFieldBtn = document.getElementById('add-field-btn');
+      const resetFormBtn = document.getElementById('reset-form-btn');
+
+      methodSelector.addEventListener('change', () => {
+        const method = methodSelector.value;
+        if (!method) {
+          form.classList.add('hidden');
+          return;
+        }
+        form.classList.remove('hidden');
+        updateFormForMethod(method);
+      });
+
+      addFieldBtn.addEventListener('click', () => {
+        const val = fieldSelector.value;
+        if (!val) return;
+        if (form.querySelector(`[name="${val}"]`)) return;
+
+        const meta = FIELD_META[val];
+        if (!meta) return;
+
+        const fieldId = `opt_${val}`;
+        let fieldHtml = generateFieldHTML(val, meta);
+
+        const div = document.createElement('div');
+        div.innerHTML = fieldHtml;
+        document.getElementById('optional-fields-container').appendChild(div);
+
+        const removeBtn = div.querySelector('.remove-opt-field');
+        removeBtn.addEventListener('click', () => {
+          div.remove();
+          enableOptionInSelector(val);
+        });
+
+        fieldSelector.querySelector(`option[value="${val}"]`).disabled = true;
+      });
+
+      resetFormBtn.addEventListener('click', () => {
+        const method = methodSelector.value;
+        form.reset();
+        resultEl.textContent = '';
+        document.getElementById('optional-fields-container').innerHTML = '';
+        fieldSelector.querySelectorAll('option').forEach(opt => opt.disabled = false);
+        if (method) updateFormForMethod(method);
+      });
+
+      document.getElementById('set-current-timestamp')?.addEventListener('click', () => {
+        document.getElementById('unix_timestamp').value = Math.floor(Date.now() / 1000);
+      });
+
+      document.getElementById('calculate-signature-btn').addEventListener('click', async () => {
+        const secretKey = secretKeyInput.value.trim();
+        if (!secretKey) {
+          resultEl.textContent = 'Введите Secret Key';
+          resultEl.className = 'text-red-600';
+          return;
+        }
+
+        const method = methodSelector.value;
+        if (!method) {
+          resultEl.textContent = 'Выберите метод';
+          resultEl.className = 'text-red-600';
+          return;
+        }
+
+        const allFields = getAllFormFields(form);
+        const allowedFields = [...METHODS[method].requiredFields, ...METHODS[method].optionalFields];
+        const filtered = Object.entries(allFields).filter(([k]) => allowedFields.includes(k));
+
+        console.log("Исходные параметры:", allFields);
+        console.log("Отфильтрованные параметры:", Object.fromEntries(filtered));
+
+        const joined = filtered
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([k, v]) => `${k}=${b64(v)}`)
+          .join('&');
+
+        console.log("Строка для хэширования:", joined);
+
+        const inner = await sha1Hex(secretKey + joined);
+        const outer = await sha1Hex(secretKey + inner);
+
+        console.log("Первый SHA1:", inner);
+        console.log("Второй SHA1:", outer);
+        console.log("Signature:", outer);
+
+        resultEl.textContent = `Signature: ${outer}`;
+        resultEl.className = "text-blue-700 font-mono my-2";
+
+        const oldSig = form.querySelector('input[name="signature"]');
+        if (oldSig) oldSig.remove();
+
+        const sigInput = document.createElement('input');
+        sigInput.type = 'hidden';
+        sigInput.name = 'signature';
+        sigInput.value = outer;
+        form.appendChild(sigInput);
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const method = methodSelector.value;
+        if (method !== 'one_stage_payment') {
+          resultEl.textContent = 'Платёж можно отправить только для метода one_stage_payment';
+          resultEl.className = 'text-red-600';
+          return;
+        }
+
+        const isValid = validateForm(form, method);
+        if (!isValid) return;
+
+        const fields = getAllFormFields(form);
+        const secretKey = secretKeyInput.value;
+        const signature = await calcSignature(secretKey, fields, method);
+
+        const oldSig = form.querySelector('input[name="signature"]');
+        if (oldSig) oldSig.remove();
+
+        const sigInput = document.createElement('input');
+        sigInput.type = 'hidden';
+        sigInput.name = 'signature';
+        sigInput.value = signature;
+        form.appendChild(sigInput);
+
+        form.setAttribute('action', form.dataset.action || 'https://pay.modulbank.ru/pay ');
+        form.submit();
+
+        resultEl.textContent = 'Платёж отправлен в новой вкладке';
+        resultEl.className = 'text-green-600';
+      });
+    });
+
+    function enableOptionInSelector(val) {
+      const option = document.getElementById('field-selector').querySelector(`option[value="${val}"]`);
+      if (option) option.disabled = false;
+    }
+  </script>
+</body>
+</html>
